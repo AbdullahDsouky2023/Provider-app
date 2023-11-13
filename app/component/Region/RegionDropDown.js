@@ -6,16 +6,8 @@ import useRegions from '../../../utils/useRegions';
 import { mainFont } from '../../constant/styles';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constant/styles';
-  const data = [
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
-  ];
+
+
 
   const RegionDropDown = ({onChange}) => {
     const [value, setValue] = useState("");
@@ -31,11 +23,11 @@ import { Colors } from '../../constant/styles';
         </View>
       );
     };
-    const getRegions = async()=>{
-    }
-    useEffect(()=>{
-        console.log(regions?.data[0]?.attributes?.name)
-    },[])
+    // const getRegions = async()=>{
+    // }
+    // useEffect(()=>{
+    //     console.log(regions?.data[0]?.attributes?.name)
+    // },[])
 
     return (
       <Dropdown
@@ -54,10 +46,12 @@ import { Colors } from '../../constant/styles';
         searchPlaceholder="Search..."
         value={value}
         onChange={item => {
-            console.log("chhhhhhh",value)
-            onChange(item?.attributes?.name)
-            setValue(item?.attributes?.name)
-        }}
+            const selectedName = item?.attributes?.name;
+            if (selectedName !== value) {
+              onChange(selectedName);
+              setValue(selectedName);
+            }
+          }}
         renderRightIcon={() => (
             <Ionicons name="location-outline" size={24} color="black" />
         )}

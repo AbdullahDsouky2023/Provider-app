@@ -5,11 +5,7 @@ export const settingsItemArray = [
     icon:"user",
     desc:""
 },
-     {
-    name:"العنوان ",
-    icon:"location-pin",
-    desc:""
-},
+   
     {
     name:"المحفظه",
     icon:"wallet",
@@ -23,11 +19,6 @@ export const settingsItemArray = [
     {
     name:"أتصل بنا ",
     icon:"call-end",
-    desc:""
-},
-    {
-    name:"الشكاوي والأ قتراحات",
-    icon:"speech",
     desc:""
 },
    

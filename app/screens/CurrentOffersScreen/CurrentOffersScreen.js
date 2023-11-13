@@ -7,38 +7,37 @@ import {
   StyleSheet,
   FlatList,
   Dimensions,
-  TouchableOpacity,
 } from "react-native";
 import { Colors, Sizes } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import AppHeader from "../../component/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
-import useServices from "../../../utils/services";
 import { setServices } from "../../store/features/serviceSlice";
-import LoadingScreen from "../loading/LoadingScreen";
-import { ErrorScreen } from "../Error/ErrorScreen";
-import OffersServiceComponentList from "../../component/CurrentOffers/OffersListComponent";
-import AllOffersList from "../../component/CurrentOffers/AllOffersList";
 import { ScrollView } from "react-native-virtualized-view";
 import RegionDropDown from "../../component/Region/RegionDropDown";
+import useRegions from "../../../utils/useRegions";
+import OrderOfferCard from "../../component/orders/OrderOfferCard";
 
 const { width } = Dimensions.get("screen");
 
 const CurrentOffersScreen = ({route, navigation }) => {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.categories.categories);
-  const [selectedItem, setSelectedItem] = useState("all");
-  const [region,setRegion]=useState(0)
+  const {data:regions} = useRegions()
+  const [region,setRegion]=useState(null)
+  const [selectedItemsData,setselectedItemsData] = useState()
 
-  const selectedItemsData = categories?.data?.find(
-    (category) => category?.attributes?.name === selectedItem
-  );
-  console.log("region value",region)
-  const { data, isLoading, isError } = useServices();
-  const services = data?.data?.filter(
-    (item) => item?.attributes?.category?.data?.id === selectedItemsData?.id
-  );
+   useEffect(() => {
+    if(region !== null){
 
+      const selectedOrders = regions?.data.filter((item)=>item?.attributes?.name === region)
+      setselectedItemsData(selectedOrders[0]?.attributes?.orders?.data)
+      console.log(selectedOrders[0]?.attributes?.orders?.data?.length,"this is selecte")
+    }else {
+      setRegion(regions?.data[0]?.attributes?.name)
+
+    }
+    }, [region])
+    
  const getServices = async () => {
     if (data) {
       dispatch(setServices(data));
@@ -47,38 +46,26 @@ const CurrentOffersScreen = ({route, navigation }) => {
     }
   };
 
- // Use useEffect to monitor changes in route.params.name
- useEffect(() => {
-  if (route.params?.name) {
-    console.log("setting the item ",route.params.name)
-    setSelectedItem(route.params.name);
-  }
-}, [route.params?.name]);
-
-useEffect(() => {
-  getServices();
-}, [dispatch, data]);
-
- 
-
-  if (isLoading) return <LoadingScreen />;
-  if (isError) return <ErrorScreen />;
-  // console.log(services.length,"abdul")
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
       <RegionDropDown onChange={setRegion}/>
       <ScrollView style={styles.container}>
+          <AppText text={region} centered={false} style={styles.RegionHeader}/>
         <View style={styles.listContainer}>
           <View style={{ paddingHorizontal: 10 }}>
+            <FlatList
+            data={selectedItemsData}
+            renderItem={({item})=>{
+              // console.log("this item",item)
+              return <OrderOfferCard item={item}/>
+
+            }}
+            />
           
-          <Text>
-            {region}
-          </Text>
           </View>
           </View>
-        
       </ScrollView>
     </SafeAreaView>
   );
@@ -88,11 +75,13 @@ const styles = StyleSheet.create({
   container: {
     // paddingBottom:1000,
     height: "100%",
+    // backgroundColor: "#333333",
+
   },
   listContainer: {
     display: "flex",
     paddingTop: 15,
-    paddingBottom: 20,
+    // paddingBottom: 20,
     width: width * 1,
     alignItems: "center",
     flexDirection: "row",
@@ -119,7 +108,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
   },
-
+  
   animatedView: {
     backgroundColor: "#333333",
     position: "absolute",
@@ -131,6 +120,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  header:{
+    fontSize:18,
+    color:Colors.blackColor,
+    paddingHorizontal:18
+  },
+  RegionHeader:{
+    fontSize:22,
+    color:Colors.primaryColor,
+    paddingHorizontal:18
+  }
 });
 
 export default CurrentOffersScreen;

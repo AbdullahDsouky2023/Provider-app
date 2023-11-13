@@ -11,7 +11,7 @@ const api = axios.create({
  export default function useRegions() {
   const fetchRegions = async () => {
     try {
-      const response = await api.get(`/api/regions?populate=*`);
+      const response = await api.get(`/api/regions?populate=deep`);
       
       return response.data
     } catch (error) {

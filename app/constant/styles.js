@@ -4,7 +4,7 @@ export const Colors = {
     blackColor: "#1B1D21",
     primaryColor: '#f2652a',
     bodyBackColor: "#FFF",
-    grayColor: "#E0E0E6",
+    grayColor: "#E0E0E0",
     redColor: '#F5554A',
     orangeColor: '#FF4D4D',
     mediumcolor:"#BA59FE",

@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
   text: {
     ...Fonts.grayColor18Medium,
     fontFamily: mainFont.bold,
-    maxWidth: width*0.74,
+    maxWidth: width*0.64,
+    flexWrap:'wrap',
     writingDirection:'rtl',
     alignSelf:'flex-start'
   },
