@@ -22,28 +22,31 @@ import { ErrorScreen } from "../Error/ErrorScreen";
 import useOrders from "../../../utils/orders";
 import ProviderSectionCard from "../../component/ProviderHome/ProviderSectionCard";
 import { MY_ORDERS } from "../../navigation/routes";
+import { setRegions } from "../../store/features/regionSlice";
+import useRegions from "../../../utils/useRegions";
 
 const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
-  const { data, isLoading, isError } = useCategories()
+  const { data, isLoading, isError } = useRegions()
   const { data:services } = useServices()
   const { data:orders } = useOrders()
   const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
-      //  dispatch(setCategories(data));
+       dispatch(setRegions(data));
       //  dispatch(setServices(services));
-      //  dispatch(setOrders(orders));
-    } else if (isError) {
-      console.log(isError)
-      // Handle the error
-    }
+       dispatch(setOrders(orders));
+    } 
+    // else if (isError) {
+    //   console.log(isError)
+    //   // Handle the error
+    // }
   }
 
   useEffect(() => {    
     getData()
-  }, [dispatch,data]);
+  }, [data]);
 
   if (isLoading) return <LoadingScreen/>
   if (isError) return <ErrorScreen hanleRetry={getData}/>

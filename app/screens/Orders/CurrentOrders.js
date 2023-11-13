@@ -13,20 +13,17 @@ const { width } = Dimensions.get("screen");
 
 export default function CurrentOrders({navigation}) {
   
-  const user = useSelector((state) => state?.user?.user);
+  const user = useSelector((state) => state?.user?.userData);
   const ordersRedux = useSelector((state) => state?.orders?.orders);
-  const [orders,setOrders] = useState([])
-  const {data,isLoading} = useOrders()
+
 const [currentOrders,setCurrentData]=useState([])
   useEffect(()=>{
-      const currentOrders = ordersRedux?.data?.filter(
-        (order) => order?.attributes?.phoneNumber === user?.phoneNumber
-        );
-        setCurrentData(currentOrders)
-      console.log("from the current order Screen", currentOrders?.length);
-    },[])
+      const userId = user?.id;
+      const orders = ordersRedux?.data.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+      setCurrentData(orders)
+    },[user])
 
-    if(isLoading) return <LoadingScreen/>
+    // if(isLoading) return <LoadingScreen/>
     
   return (
     <>

@@ -7,16 +7,15 @@ import { useSelector } from "react-redux";
 import { getUserCurrentOrders } from "../../../utils/user";
 const { width } = Dimensions.get("screen");
 export default function ProviderSectionCard({ image, name, onPress }) {
-  const userOrders = useSelector((state) => state.user?.userData);
-  const [orders, setOrders] = useState([]);
-  const getOrders = async () => {
-    const data = await getUserCurrentOrders(userOrders?.id);
-    console.log(data);
-    setOrders(data);
-  };
-  useEffect(() => {
-    getOrders();
-  }, []);
+  const user = useSelector((state) => state?.user?.userData);
+  const ordersRedux = useSelector((state) => state?.orders?.orders);
+
+const [currentOrders,setCurrentData]=useState([])
+  useEffect(()=>{
+      const userId = user?.id;
+      const redux = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+      setCurrentData(redux)
+    },[user])
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
@@ -28,7 +27,7 @@ export default function ProviderSectionCard({ image, name, onPress }) {
           }}
         >
           <AppText text={"الطلبات : "} style={styles.text} centered={false} />
-          <AppText text={orders?.length} style={styles.text} />
+          <AppText text={currentOrders?.length} style={styles.text} />
         </View>
         <View>
           <AppText text={"عرض الكل"} style={styles.show} />

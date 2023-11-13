@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setServices } from "../../store/features/serviceSlice";
 import { ScrollView } from "react-native-virtualized-view";
 import RegionDropDown from "../../component/Region/RegionDropDown";
-import useRegions from "../../../utils/useRegions";
 import OrderOfferCard from "../../component/orders/OrderOfferCard";
 import { ITEM_DETAILS } from "../../navigation/routes";
 
@@ -23,22 +22,24 @@ const { width } = Dimensions.get("screen");
 
 const CurrentOffersScreen = ({route, navigation }) => {
   const dispatch = useDispatch();
-  const {data:regions} = useRegions()
+  const regions = useSelector((state)=>state?.regions?.regions)
   const [region,setRegion]=useState("")
   const [selectedItemsData,setselectedItemsData] = useState()
+  useEffect(() => {
+    console.log("regions",regions)
 
-   useEffect(() => {
-    if(region !== ""){
-
-      const selectedOrders = regions?.data.filter((item)=>item?.attributes?.name === region)
-      setselectedItemsData(selectedOrders[0]?.attributes?.orders?.data)
-      console.log(selectedOrders[0]?.attributes?.orders?.data?.length,"this is selecte")
-    }else {
-      const name = regions?.data[0]?.attributes?.name
-      if(name) setRegion(name)
-      console.log("add",regions?.data[0]?.attributes?.name) 
-    }
+      const selectedOrders = regions?.data?.filter((item)=>item?.attributes?.name === region)
+      const pendingOrders = selectedOrders[0]?.attributes?.orders?.data?.filter((item)=>item?.attributes?.provider?.data === null)
+     const orders = pendingOrders?.filter((item)=>item.attributes.region.data?.attributes?.name === region)
+      setselectedItemsData(orders)
+      // console.log(orders.length)
+    
     }, [region])
+
+    useEffect(() => {
+      setRegion(regions?.data[0]?.attributes?.name)
+    }, [])
+    
     
  const getServices = async () => {
     if (data) {
@@ -52,7 +53,7 @@ const CurrentOffersScreen = ({route, navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
-      {/* <RegionDropDown onChange={setRegion}/> */}
+      <RegionDropDown onChange={setRegion}/>
       <ScrollView style={styles.container}>
           <AppText text={region} centered={false} style={styles.RegionHeader}/>
         <View style={styles.listContainer}>

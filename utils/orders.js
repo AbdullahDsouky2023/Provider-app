@@ -34,6 +34,20 @@ export const cancleOrder = async (id) => {
     console.error("Error deleting the item :", error.message); // Log the error response
   }
 };
+export const acceptOrder = async (id,providerId) => {
+  try {
+    const data = await axios.put(`http://192.168.1.6:1337/api/orders/${id}`,{
+      data:{
+        provider:providerId
+      }
+    });
+    console.log("********************", data?.data?.data?.id);
+    if (data?.data?.data?.id) return true
+    return false;
+  } catch (error) {
+    console.error("Error accepting order   :", error.message); // Log the error response
+  }
+};
 
 export default function useOrders() {
   const fetchOrders = async () => {
