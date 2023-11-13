@@ -53,16 +53,12 @@ const RegisterScreen = ({ navigation,route}) => {
       setIsLoading(true);
       console.log("this is the use data will be submite",{
         email:values.emailAddress,
-        username:values.fullName,
-        password:SECRET_PASSWORD,
-        location:"lkjkln",
+        name:values.fullName,
         phoneNumber:phoneNumber
       });
       const res = await createUser({
         email:values.emailAddress,
-        username:values.fullName,
-        password:"hoohofyufyufdh",
-        location:userLocation,
+        name:values.fullName,
         phoneNumber:phoneNumber
       })
 

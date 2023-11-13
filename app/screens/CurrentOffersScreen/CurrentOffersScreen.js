@@ -20,6 +20,7 @@ import { ErrorScreen } from "../Error/ErrorScreen";
 import OffersServiceComponentList from "../../component/CurrentOffers/OffersListComponent";
 import AllOffersList from "../../component/CurrentOffers/AllOffersList";
 import { ScrollView } from "react-native-virtualized-view";
+import RegionDropDown from "../../component/Region/RegionDropDown";
 
 const { width } = Dimensions.get("screen");
 
@@ -27,10 +28,12 @@ const CurrentOffersScreen = ({route, navigation }) => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories.categories);
   const [selectedItem, setSelectedItem] = useState("all");
+  const [region,setRegion]=useState(0)
 
   const selectedItemsData = categories?.data?.find(
     (category) => category?.attributes?.name === selectedItem
   );
+  console.log("region value",region)
   const { data, isLoading, isError } = useServices();
   const services = data?.data?.filter(
     (item) => item?.attributes?.category?.data?.id === selectedItemsData?.id
@@ -65,55 +68,17 @@ useEffect(() => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
+      <RegionDropDown onChange={setRegion}/>
       <ScrollView style={styles.container}>
         <View style={styles.listContainer}>
           <View style={{ paddingHorizontal: 10 }}>
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              extraData={selectedItem}
-              ListHeaderComponent={
-                <TouchableOpacity
-                  style={selectedItem == "all" ? styles.activeItem : styles.item}
-                  onPress={() => setSelectedItem("all")}
-                >
-                  <AppText text={"الكل"} style={{ color: Colors.whiteColor }} />
-                </TouchableOpacity>
-              }
-              data={categories.data}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 10,
-                flex: 1,
-              }}
-              keyExtractor={(item, index) => item.id}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={
-                    item == selectedItemsData ? styles.activeItem : styles.item
-                  }
-                  onPress={() => setSelectedItem(item?.attributes?.name)}
-                >
-                  <AppText
-                    text={item?.attributes.name}
-                    style={{ color: Colors.whiteColor }}
-                  />
-                </TouchableOpacity>
-              )}
-            />
+          
+          <Text>
+            {region}
+          </Text>
           </View>
-        </View>
-        <View>
-          {selectedItem === "all" ? (
-            <AllOffersList categories={categories} />
-          ) : (
-            <OffersServiceComponentList
-              data={services}
-              selectedItem={selectedItem}
-            />
-          )}
-        </View>
+          </View>
+        
       </ScrollView>
     </SafeAreaView>
   );

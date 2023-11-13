@@ -7,9 +7,11 @@ const api = axios.create({
 
 export const createUser = async(data)=>{
     try {
-     const createdUser = await api.post('/api/users',{
+     const createdUser = await api.post('/api/providers',{
+        data:{
+
             ...data,
-            role:2,
+        }
         })
         console.log(createdUser,"this is the user will be created")
             return createdUser
@@ -25,16 +27,16 @@ export const getUserByPhoneNumber = async(phone)=>{
         if(phone){
             console.log("user phone from user is ",typeof(phone))
             
-            const user =    await api.get(`/api/users?filters[$and][0][phoneNumber][$eq]=`+phone)
-            console.log("usus",user?.data)
-            if(user?.data[0] && user?.data[0]?.phoneNumber) {
-                setUserData(user?.data[0])
-                console.log("userfound",user?.data)
+            const user =    await api.get(`/api/providers?populate=*?filters[$and][0][phoneNumber][$eq]=`+phone)
+            console.log("usus",user?.data?.data[0]?.attributes)
+            if(user?.data?.data[0]?.attributes && user?.data?.data[0]?.attributes?.phoneNumber) {
+                setUserData(user?.data?.data)
+                console.log("userfound",user?.data?.data?.attributes)
                 
-                return user?.data[0]
+                return user?.data?.data[0]
             }
             else {
-                console.log("userfound abdullah not ",user?.data)
+                console.log("userfound abdullah not ",user?.data?.data)
                 return null
 
             } 
@@ -45,14 +47,9 @@ export const getUserByPhoneNumber = async(phone)=>{
 }
 export const getUserCurrentOrders= async(id)=>{
     try {
-        // Remove the "+" symbol
-        // +201144254129
-        if(id){
-            console.log("user phone from user is ",typeof(phone))
-            
-            const user =    await api.get(`/api/users/${id}?populate=*`)
-            console.log("mom",user?.data?.orders)
-            return user?.data?.orders
+        if(id){            
+            const user =    await api.get(`/api/providers/${id}?populate=*`)
+            return user?.data?.data?.attributes?.orders?.data
         } 
     } catch (error) {
         console.log("Error getting the user ",error.message)
@@ -60,8 +57,10 @@ export const getUserCurrentOrders= async(id)=>{
 }
 export const updateUserData = async(id,data)=>{
 try {
-   const updatedUser =  await api.put(`/api/users/${id}`,{
+   const updatedUser =  await api.put(`/api/providers/${id}`,{
+    data:{
         ...data
+    }
     })
     console.log('====================================');
     console.log("update user",updatedUser);

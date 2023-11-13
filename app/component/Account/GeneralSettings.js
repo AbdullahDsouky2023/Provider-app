@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { ScrollView} from "react-native-virtualized-view";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";

@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: Colors.piege,
+    backgroundColor: Colors.whiteColor,
   },
 });
