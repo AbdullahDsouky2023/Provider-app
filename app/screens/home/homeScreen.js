@@ -22,7 +22,6 @@ import { ErrorScreen } from "../Error/ErrorScreen";
 import useOrders from "../../../utils/orders";
 import ProviderSectionCard from "../../component/ProviderHome/ProviderSectionCard";
 import { MY_ORDERS } from "../../navigation/routes";
-const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
 
@@ -33,9 +32,9 @@ const HomeScreen = ({ navigation }) => {
   const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
-       dispatch(setCategories(data));
-       dispatch(setServices(services));
-       dispatch(setOrders(orders));
+      //  dispatch(setCategories(data));
+      //  dispatch(setServices(services));
+      //  dispatch(setOrders(orders));
     } else if (isError) {
       console.log(isError)
       // Handle the error

@@ -17,24 +17,26 @@ import { ScrollView } from "react-native-virtualized-view";
 import RegionDropDown from "../../component/Region/RegionDropDown";
 import useRegions from "../../../utils/useRegions";
 import OrderOfferCard from "../../component/orders/OrderOfferCard";
+import { ITEM_DETAILS } from "../../navigation/routes";
 
 const { width } = Dimensions.get("screen");
 
 const CurrentOffersScreen = ({route, navigation }) => {
   const dispatch = useDispatch();
   const {data:regions} = useRegions()
-  const [region,setRegion]=useState(null)
+  const [region,setRegion]=useState("")
   const [selectedItemsData,setselectedItemsData] = useState()
 
    useEffect(() => {
-    if(region !== null){
+    if(region !== ""){
 
       const selectedOrders = regions?.data.filter((item)=>item?.attributes?.name === region)
       setselectedItemsData(selectedOrders[0]?.attributes?.orders?.data)
       console.log(selectedOrders[0]?.attributes?.orders?.data?.length,"this is selecte")
     }else {
-      setRegion(regions?.data[0]?.attributes?.name)
-
+      const name = regions?.data[0]?.attributes?.name
+      if(name) setRegion(name)
+      console.log("add",regions?.data[0]?.attributes?.name) 
     }
     }, [region])
     
@@ -50,7 +52,7 @@ const CurrentOffersScreen = ({route, navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
-      <RegionDropDown onChange={setRegion}/>
+      {/* <RegionDropDown onChange={setRegion}/> */}
       <ScrollView style={styles.container}>
           <AppText text={region} centered={false} style={styles.RegionHeader}/>
         <View style={styles.listContainer}>
@@ -59,7 +61,7 @@ const CurrentOffersScreen = ({route, navigation }) => {
             data={selectedItemsData}
             renderItem={({item})=>{
               // console.log("this item",item)
-              return <OrderOfferCard item={item}/>
+              return <OrderOfferCard onPress={()=>navigation.navigate(ITEM_DETAILS,{item})} item={item}/>
 
             }}
             />

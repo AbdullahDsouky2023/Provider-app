@@ -18,7 +18,6 @@ export default function HomeNavigator() {
         <Stack.Screen
                     name={t('Home')}
                     component={HomeScreen}
-                   
                 />
     </Stack.Navigator>
   )

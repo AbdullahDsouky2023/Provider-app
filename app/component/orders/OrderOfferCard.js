@@ -1,13 +1,13 @@
-import { View, Text, Dimensions } from "react-native";
+import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Sizes,Colors,Fonts } from "../../constant/styles";
 import AppText from "../AppText";
 const { width } = Dimensions.get("screen");
-export default function OrderOfferCard({item}) {
+export default function OrderOfferCard({item,onPress}) {
     // console.log("item",item?.attributes?.service?.data?.attributes?.name)
   return (
-    <View style={styles.orderCard}>
+    <TouchableOpacity onPress={onPress} style={styles.orderCard}>
       <View style={styles.headerContainer}>
         <AppText text={item?.attributes?.service?.data?.attributes?.name} style={styles.header} centered={false} />
      
@@ -28,7 +28,7 @@ export default function OrderOfferCard({item}) {
           style={styles.content}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({
