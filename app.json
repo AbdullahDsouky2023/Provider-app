@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "RN HomeService User App",
+    "slug": "rn-HomeService",
+    "version": "1.0.0",
+    "writingDirection": "ltr",
+    "orientation": "portrait",
+    "icon": "./app/assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./app/assets/images/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.render.rnhomeserviceuser",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.render.rnhomeserviceuser",
+      "versionCode": 3,
+      "adaptiveIcon": {
+        "foregroundImage": "./app/assets/images/icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./app/assets/favicon.png"
+    },
+    "plugins":[
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+
+          "ios":{
+            "useFrameworks":"static"
+          }
+        }
+      ]
+    ]
+  }
+}
