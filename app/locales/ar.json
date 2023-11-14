@@ -65,5 +65,10 @@
       "Add":"أضافه",
       "comfirm":"تأكيد",
       "Please add the location":"من فضلك ادخل العنوان",
-      "accept offer":"قبول العرض"
+      "accept offer":"قبول العرض",
+      "finish work":"انهاء العمل",
+      "reject work":"رفض الطلب",
+      "Comfirm":"تأكيد",
+      "Cancle":"الغاء"
+
 }

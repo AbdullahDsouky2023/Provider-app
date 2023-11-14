@@ -19,6 +19,7 @@ export default function CurrentOrderCard({ item }) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
+    style={styles.scrollContainer}
       onPress={() => navigation.navigate(ORDERS_DETAILS, { item })}
     >
       <View style={styles.orderCardContainer}>
@@ -37,28 +38,20 @@ export default function CurrentOrderCard({ item }) {
             style={styles.title}
           />
         </View>
-        {/* Price */}
+        
         <View style={styles.date}>
-          <FontAwesome5 name="money-check" size={18} color="black" />
-          <PriceTextComponent
-            price={item?.attributes?.service?.data?.attributes?.Price}
-           />
-        </View>
-        {/* date */}
-        <View style={styles.date}>
-          <FontAwesome name="calendar" size={24} color="black" />
+          <Ionicons name="time-outline" size={24} color="black" />
           <AppText
-            text={item?.attributes?.date}
+            text={`${item?.attributes?.date} - ${item?.attributes?.time}`}
             centered={false}
             style={styles.title}
           />
         </View>
         <View style={styles.date}>
-          <Ionicons name="time-outline" size={24} color="black" />
           <AppText
-            text={item?.attributes?.time}
+            text={`الحاله`}
             centered={false}
-            style={styles.title}
+            style={styles.status}
           />
         </View>
         {/*time */}
@@ -69,9 +62,14 @@ export default function CurrentOrderCard({ item }) {
 }
 
 const styles = StyleSheet.create({
+  scrollContainer:{
+    height: "100%",
+    backgroundColor: Colors.redColor,
+
+  },
   container: {
     height: "100%",
-    backgroundColor: Colors.whiteColor,
+    backgroundColor: Colors.redColor,
     width: width,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -80,25 +78,38 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     width: width * 0.88,
     paddingHorizontal: 20,
-    height: 170,
+    height: "100%",
     marginTop: 12,
+    marginBottom:10,
     flex: 1,
     gap: 5,
-    backgroundColor: Colors.piege,
-    // elevation:1,
+    backgroundColor: Colors.whiteColor,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 1.41,
+
+    elevation: 4,
     borderColor: Colors.blackColor,
-    borderWidth: 0.4,
+    // borderWidth: 0.4,
     borderRadius: 8,
   },
   name: {
     color: Colors.blackColor,
-    fontSize: 15,
+    fontSize: 14,
   },
   title: {
     color: Colors.blackColor,
     fontSize: 14,
   },
   price: {
+    color: Colors.primaryColor,
+    fontSize: 14,
+  },
+  status: {
     color: Colors.primaryColor,
     fontSize: 14,
   },

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingVertical: Sizes.fixPadding,
     marginHorizontal: Sizes.fixPadding,
     borderRadius: Sizes.fixPadding - 5.0,
-    marginTop: Sizes.fixPadding * 4.0,
+    marginTop: Sizes.fixPadding * 1.0,
     paddingHorizontal: Sizes.fixPadding * 2.5,
     borderRadius: 40,
     backgroundColor: Colors.primaryColor,

@@ -23,7 +23,7 @@ const { width } = Dimensions.get("screen");
 const CurrentOffersScreen = ({route, navigation }) => {
   const dispatch = useDispatch();
   const regions = useSelector((state)=>state?.regions?.regions)
-  const [region,setRegion]=useState("")
+  const [region,setRegion]=useState(null)
   const [selectedItemsData,setselectedItemsData] = useState()
   useEffect(() => {
     console.log("regions",regions)
@@ -32,7 +32,7 @@ const CurrentOffersScreen = ({route, navigation }) => {
       const pendingOrders = selectedOrders[0]?.attributes?.orders?.data?.filter((item)=>item?.attributes?.provider?.data === null)
      const orders = pendingOrders?.filter((item)=>item.attributes.region.data?.attributes?.name === region)
       setselectedItemsData(orders)
-      // console.log(orders.length)
+      console.log(orders?.length)
     
     }, [region])
 
@@ -54,8 +54,11 @@ const CurrentOffersScreen = ({route, navigation }) => {
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
       <RegionDropDown onChange={setRegion}/>
+      <AppText text={region} centered={false} style={styles.RegionHeader}/>
+      {
+        selectedItemsData?.length > 0 ?
+     
       <ScrollView style={styles.container}>
-          <AppText text={region} centered={false} style={styles.RegionHeader}/>
         <View style={styles.listContainer}>
           <View style={{ paddingHorizontal: 10 }}>
             <FlatList
@@ -70,6 +73,10 @@ const CurrentOffersScreen = ({route, navigation }) => {
           </View>
           </View>
       </ScrollView>
+       : <View style={styles.noItemContainer}>
+      
+       <AppText text={"لا يوجد طلبات في المنطقه"} /> 
+       </View>}
     </SafeAreaView>
   );
 };
@@ -132,7 +139,15 @@ const styles = StyleSheet.create({
     fontSize:22,
     color:Colors.primaryColor,
     paddingHorizontal:18
-  }
+  }, noItemContainer:{
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    height:"80%",
+    width:width,
+    backgroundColor:Colors.whiteColor
+   }
+  
 });
 
 export default CurrentOffersScreen;

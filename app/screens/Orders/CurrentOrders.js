@@ -9,24 +9,39 @@ import AppText from "../../component/AppText";
 import useOrders from "../../../utils/orders";
 import LoadingScreen from "../loading/LoadingScreen";
 const { width } = Dimensions.get("screen");
+import { RefreshControl  } from 'react-native';
 
 
 export default function CurrentOrders({navigation}) {
   
   const user = useSelector((state) => state?.user?.userData);
   const ordersRedux = useSelector((state) => state?.orders?.orders);
-
+  const [refreshing, setRefreshing] = useState(false);
 const [currentOrders,setCurrentData]=useState([])
-  useEffect(()=>{
-      const userId = user?.id;
-      const orders = ordersRedux?.data.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-      setCurrentData(orders)
-    },[user])
+const { data ,isLoading}=useOrders()
+const fetchData = ()=>{
+  const userId = user?.id;
+  const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+  const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+  setCurrentData(orders)
+  console.log("rege",orders?.length,otherordes?.length)
+  setRefreshing(false);
 
-    // if(isLoading) return <LoadingScreen/>
-    
-  return (
-    <>
+
+}
+  useEffect(()=>{
+    fetchData()
+    },[data])
+
+    const onRefresh = () => {
+      setRefreshing(true);
+      fetchData();
+    };
+    if(isLoading) return <LoadingScreen/>
+    return (
+    <ScrollView style={styles.wrapper} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
     {currentOrders?.length === 0 ? 
       <View style={styles.noItemContainer}>
       
@@ -44,11 +59,17 @@ const [currentOrders,setCurrentData]=useState([])
       />
       </ScrollView>
     }
-        </>
+        </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper:{
+      height: "100%",
+      backgroundColor: Colors.whiteColor,
+      // paddingTop:10,
+      // paddingBottom:10,
+  },
   container: {
     height: "100%",
     backgroundColor: Colors.whiteColor,
@@ -60,13 +81,14 @@ const styles = StyleSheet.create({
   },
  listContainer:{
   display:"flex",
-  gap:10
+  gap:10,
+  height:"100%",
  },
  noItemContainer:{
   display:'flex',
   alignItems:'center',
   justifyContent:'center',
-  height:"100%",
+  height:400,
   width:width,
   backgroundColor:Colors.whiteColor
  }

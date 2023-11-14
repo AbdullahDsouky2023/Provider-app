@@ -26,7 +26,7 @@ export default function ItemScreen({ navigation, route }) {
   const { item } = route?.params;
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state)=>state?.user?.userData)  
- 
+  const {data} = useOrders()
 const dispatch = useDispatch()
 const handleOrderCancle = async (id) => {
   try {
@@ -34,8 +34,9 @@ const handleOrderCancle = async (id) => {
     const res = await acceptOrder(id,user?.id);
     if (res) {
     //   // Update Redux store to remove the cancelled order
-    //   dispatch(setOrders(orders.filter(order => order.id !== id)));
+    dispatch(setOrders(data));
       Alert.alert("تم قبول بنجاح");
+
       navigation.goBack();
     } else {
       Alert.alert("حدثت مشكله حاول مرة اخري");
