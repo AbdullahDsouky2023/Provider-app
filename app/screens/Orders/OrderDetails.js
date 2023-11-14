@@ -22,6 +22,7 @@ import { ScrollView } from "react-native";
 import LoadingScreen from "../loading/LoadingScreen";
 import { color } from "@rneui/base";
 import AppModal from "../../component/AppModal";
+import { CommonActions } from "@react-navigation/native";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
@@ -38,7 +39,12 @@ const handleOrderCancle = async (id) => {
     if (res) {
     //   // Update Redux store to remove the cancelled order
     dispatch(setOrders(data));
-    navigation.navigate(HOME);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: HOME}],
+      })
+    )
     Alert.alert("تم بنجاح");
     } else {
       Alert.alert("حدثت مشكله حاول مرة اخري");

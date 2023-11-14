@@ -15,40 +15,51 @@ import useOrders, { acceptOrder, cancleOrder } from "../../../utils/orders";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { ORDERS } from "../../navigation/routes";
+import { HOME, MY_ORDERS, OFFERS, ORDERS } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import LoadingScreen from "../loading/LoadingScreen";
+import AppModal from "../../component/AppModal";
+import { CommonActions } from "@react-navigation/native";
 
 const { width } = Dimensions.get("screen");
 export default function ItemScreen({ navigation, route }) {
   const { item } = route?.params;
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const user = useSelector((state)=>state?.user?.userData)  
-  const {data} = useOrders()
+  const {data,isLoading} = useOrders()
 const dispatch = useDispatch()
-const handleOrderCancle = async (id) => {
+const handleOrderAccept = async (id) => {
   try {
-    setIsLoading(true);
+    // setIsLoading(true);
     const res = await acceptOrder(id,user?.id);
     if (res) {
     //   // Update Redux store to remove the cancelled order
-    dispatch(setOrders(data));
-      Alert.alert("تم قبول بنجاح");
+    await dispatch(setOrders(data));
+    navigation.goBack()
+navigation.dispatch(
+  CommonActions.reset({
+    index: 0,
+    routes: [{ name: MY_ORDERS }],
+  })
+);
 
-      navigation.goBack();
+      // navigation.goBack()
+      Alert.alert("تم قبول بنجاح");
     } else {
       Alert.alert("حدثت مشكله حاول مرة اخري");
     }
   } catch (error) {
     console.log(error, "error deleting the order");
   } finally {
-    setIsLoading(false);
+    setModalVisible(false)
   }
 };
 
-  if(isLoading) return <LoadingScreen/>
+  // if(isLoading) return <LoadingScreen/>
   return (
     <ScrollView style={styles.scrollContainer}>
       <AppHeader subPage={true} />
@@ -125,9 +136,12 @@ const handleOrderCancle = async (id) => {
   
         <AppButton
           title={"accept offer"}
-          onPress={() => handleOrderCancle(item.id)}
+          onPress={() => setModalVisible(true)}
         />
       </ScrollView>
+      <AppModal isModalVisible={isModalVisible} 
+      message={"تأكيد قبول الطلب"}
+      setModalVisible={setModalVisible} onPress={()=> handleOrderAccept(item.id)}/>
       <LoadingModal visible={isLoading} />
     </ScrollView>
   );

@@ -13,9 +13,9 @@ export default function ProviderSectionCard({ image, name, onPress }) {
 const [currentOrders,setCurrentData]=useState([])
   useEffect(()=>{
       const userId = user?.id;
-      const redux = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-      setCurrentData(redux)
-    },[user])
+      const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+      setCurrentData(orders)
+    },[ordersRedux])
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>

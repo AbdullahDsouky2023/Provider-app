@@ -6,6 +6,8 @@ import {
   Text,
   StyleSheet,
   Dimensions,
+  ScrollView,
+  RefreshControl,
 } from "react-native";
 
 import { Colors } from "../../constant/styles";
@@ -31,13 +33,17 @@ const HomeScreen = ({ navigation }) => {
   const { data, isLoading, isError } = useRegions()
   const { data:services } = useServices()
   const { data:orders } = useOrders()
-  const getData =async()=>{
-    if (data) {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchData =async()=>{
+    // if (data) {
       // Dispatch the fetched categories to the Redux store
        dispatch(setRegions(data));
       //  dispatch(setServices(services));
        dispatch(setOrders(orders));
-    } 
+       setRefreshing(false);
+
+    // } 
     // else if (isError) {
     //   console.log(isError)
     //   // Handle the error
@@ -45,22 +51,30 @@ const HomeScreen = ({ navigation }) => {
   }
 
   useEffect(() => {    
-    getData()
+    fetchData()
   }, [data]);
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
 
   if (isLoading) return <LoadingScreen/>
   if (isError) return <ErrorScreen hanleRetry={getData}/>
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}
+    >
+
       <StatusBar backgroundColor={Colors.primaryColor} />
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
         <AppHeader />
        
             <View style={styles.cardContainer}>
               <ProviderSectionCard  onPress={()=>navigation.navigate(MY_ORDERS)}/>
             </View>
         
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

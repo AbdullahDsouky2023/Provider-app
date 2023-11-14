@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   Dimensions,
+  RefreshControl,
 } from "react-native";
 import { Colors, Sizes } from "../../constant/styles";
 import AppText from "../../component/AppText";
@@ -25,15 +26,20 @@ const CurrentOffersScreen = ({route, navigation }) => {
   const regions = useSelector((state)=>state?.regions?.regions)
   const [region,setRegion]=useState(null)
   const [selectedItemsData,setselectedItemsData] = useState()
-  useEffect(() => {
-    console.log("regions",regions)
+  const [refreshing, setRefreshing] = useState(false);
 
-      const selectedOrders = regions?.data?.filter((item)=>item?.attributes?.name === region)
-      const pendingOrders = selectedOrders[0]?.attributes?.orders?.data?.filter((item)=>item?.attributes?.provider?.data === null)
-     const orders = pendingOrders?.filter((item)=>item.attributes.region.data?.attributes?.name === region)
-      setselectedItemsData(orders)
-      console.log(orders?.length)
+  const fetchData= ()=>{
     
+    const selectedOrders = regions?.data?.filter((item)=>item?.attributes?.name === region)
+    const pendingOrders = selectedOrders[0]?.attributes?.orders?.data?.filter((item)=>item?.attributes?.provider?.data === null)
+   const orders = pendingOrders?.filter((item)=>item.attributes.region.data?.attributes?.name === region)
+    setselectedItemsData(orders)
+    console.log(orders?.length)
+    setRefreshing(false)
+  }
+  useEffect(() => {
+
+    fetchData()
     }, [region])
 
     useEffect(() => {
@@ -48,17 +54,24 @@ const CurrentOffersScreen = ({route, navigation }) => {
       console.log(isError);
     }
   };
-
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
       <RegionDropDown onChange={setRegion}/>
       <AppText text={region} centered={false} style={styles.RegionHeader}/>
+      <ScrollView   refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
+      
       {
         selectedItemsData?.length > 0 ?
-     
-      <ScrollView style={styles.container}>
+     <View style={styles.container}>
+
         <View style={styles.listContainer}>
           <View style={{ paddingHorizontal: 10 }}>
             <FlatList
@@ -72,11 +85,13 @@ const CurrentOffersScreen = ({route, navigation }) => {
           
           </View>
           </View>
-      </ScrollView>
+       </View>
        : <View style={styles.noItemContainer}>
       
        <AppText text={"لا يوجد طلبات في المنطقه"} /> 
-       </View>}
+       </View>
+       }
+         </ScrollView>
     </SafeAreaView>
   );
 };
@@ -143,7 +158,7 @@ const styles = StyleSheet.create({
     display:'flex',
     alignItems:'center',
     justifyContent:'center',
-    height:"80%",
+    height:"100%",
     width:width,
     backgroundColor:Colors.whiteColor
    }
