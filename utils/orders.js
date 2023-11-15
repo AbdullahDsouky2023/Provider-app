@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 // import api from './index';
 
-import axios from "axios";
+import api from './index'
 
-const api = axios.create({
-  baseURL: "http://192.168.1.5:1337",
-  headers: {
-    "Content-Type": "application/json",
-  }, // Set your base URL
-});
+// const api = axios.create({
+//   baseURL: "http://192.168.1.5:1337",
+//   headers: {
+//     "Content-Type": "application/json",
+//   }, // Set your base URL
+// });
 
 export const postOrder = async (values) => {
   try {
@@ -26,7 +26,7 @@ export const postOrder = async (values) => {
 
 export const cancleOrder = async (id) => {
   try {
-    const data = await axios.put(`http://192.168.1.5:1337/api/orders/${id}`,{
+    const data = await api.put(`/api/orders/${id}`,{
       data:{
         provider:null,
         status:"pending"
@@ -41,9 +41,24 @@ export const cancleOrder = async (id) => {
 };
 export const changeOrderStatus = async (id,status) => {
   try {
-    const data = await axios.put(`http://192.168.1.5:1337/api/orders/${id}`,{
+    const data = await api.put(`/api/orders/${id}`,{
       data:{
-        status:status
+        status:status,
+
+      }
+    });
+    console.log("******************** was finsihed", data?.data?.data?.id);
+    if ( data?.data?.data?.id) return true
+    return false;
+  } catch (error) {
+    console.error("Error accepting order   :", error.message); // Log the error response
+  }
+};
+export const requestPayment = async (id) => {
+  try {
+    const data = await api.put(`/api/orders/${id}`,{
+      data:{
+        PaymentStatus:"payment required"
       }
     });
     console.log("******************** was finsihed", data?.data?.data?.id);
@@ -55,7 +70,7 @@ export const changeOrderStatus = async (id,status) => {
 };
 export const acceptOrder = async (id,providerId) => {
   try {
-    const data = await axios.put(`http://192.168.1.5:1337/api/orders/${id}`,{
+    const data = await api.put(`/api/orders/${id}`,{
       data:{
         provider:providerId,
         status:"assigned"
@@ -72,7 +87,7 @@ export const acceptOrder = async (id,providerId) => {
 export default function useOrders() {
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.5:1337/api/orders?populate=*`);
+      const response = await api.get(`/api/orders?populate=*`);
 
       return response.data;
     } catch (error) {

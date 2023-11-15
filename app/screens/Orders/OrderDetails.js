@@ -11,7 +11,7 @@ import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
-import useOrders, { acceptOrder, cancleOrder, changeOrderStatus, finishOrder } from "../../../utils/orders";
+import useOrders, { acceptOrder, cancleOrder, changeOrderStatus, finishOrder, requestPayment } from "../../../utils/orders";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
@@ -56,11 +56,8 @@ const handleOrderCancle = async (id) => {
 };
 const handleFinishOrder = async (id) => {
   try {
-    // setIsLoading(true);
-    // const res = await finishOrder(id);
     const res = await changeOrderStatus(id,"finished")
     if (res) {
-    //   // Update Redux store to remove the cancelled order
     dispatch(setOrders(data));
     navigation.dispatch(
       CommonActions.reset({
@@ -75,7 +72,27 @@ const handleFinishOrder = async (id) => {
   } catch (error) {
     console.log(error, "error finsihed the order");
   } finally {
-    // setIsLoading(false);
+    setModalVisible(false)
+  }
+};
+const handleRequestPayment = async (id) => {
+  try {
+    const res = await requestPayment(id)
+    if (res) {
+    dispatch(setOrders(data));
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: HOME}],
+      })
+    )
+    Alert.alert("تم بنجاح");
+    } else {
+      Alert.alert("حدثت مشكله حاول مرة اخري");
+    }
+  } catch (error) {
+    console.log(error, "error finsihed the order");
+  } finally {
     setModalVisible(false)
   }
 };
@@ -158,7 +175,7 @@ const handleFinishOrder = async (id) => {
     <AppButton
     title={"Request Payment"}
           style={{backgroundColor:Colors.success}}
-          onPress={() => console.log("patment re")}
+          onPress={() => handleRequestPayment(item.id)}
           />:
           <View>
 

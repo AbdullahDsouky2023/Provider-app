@@ -54,7 +54,7 @@ export default function CurrentOrderCard({ item }) {
             style={styles.status}
           />
            <AppText
-            text={`${item?.attributes?.status}`}
+            text={`${item?.attributes?.status === "assigned"?"تم التعيين":"تم الانتهاء من العمل "}`}
             centered={false}
             style={styles.title}
           />

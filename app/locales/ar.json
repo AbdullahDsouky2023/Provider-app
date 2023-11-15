@@ -62,13 +62,14 @@
    "Manual Location":"العنوان اليدوي",
    "Add Address":" اضافه عنوان جديد",
    "choose region":"اختار المنطفه ",
-      "Add":"أضافه",
-      "comfirm":"تأكيد",
-      "Please add the location":"من فضلك ادخل العنوان",
-      "accept offer":"قبول العرض",
-      "finish work":"انهاء العمل",
-      "reject work":"رفض الطلب",
-      "Comfirm":"تأكيد",
-      "Cancle":"الغاء"
+    "Add":"أضافه",
+    "comfirm":"تأكيد",
+    "Please add the location":"من فضلك ادخل العنوان",
+    "accept offer":"قبول العرض",
+    "finish work":"انهاء العمل",
+    "reject work":"رفض الطلب",
+    "Comfirm":"تأكيد",
+    "Cancle":"الغاء",
+    "Request Payment":"طلب الدفع"
 
 }

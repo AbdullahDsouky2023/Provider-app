@@ -1,11 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: BASE_URL // Set your base URL
-});
-
-
+import api from './index'
 
 
  export default function useBanners() {

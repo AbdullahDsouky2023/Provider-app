@@ -21,31 +21,33 @@ import { ITEM_DETAILS } from "../../navigation/routes";
 
 const { width } = Dimensions.get("screen");
 
-const CurrentOffersScreen = ({route, navigation }) => {
+const CurrentOffersScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const regions = useSelector((state)=>state?.regions?.regions)
-  const orderRedux = useSelector((state)=>state?.orders?.orders)
-  const [region,setRegion]=useState(null)
-  const [selectedItemsData,setselectedItemsData] = useState()
+  const regions = useSelector((state) => state?.regions?.regions);
+  const orderRedux = useSelector((state) => state?.orders?.orders);
+  const [region, setRegion] = useState(null);
+  const [selectedItemsData, setselectedItemsData] = useState();
   const [refreshing, setRefreshing] = useState(false);
-  const fetchData= ()=>{
-    const orders = orderRedux?.data.filter((item)=>item?.attributes?.region?.data?.attributes?.name === region)
-    const pendingOrders = orders?.filter((item)=>item?.attributes?.status === "pending")
-    setselectedItemsData(pendingOrders)
-    console.log("regions",pendingOrders.length)
-    setRefreshing(false)
-  }
+  const fetchData = () => {
+    const orders = orderRedux?.data?.filter(
+      (item) => item?.attributes?.region?.data?.attributes?.name === region
+    );
+    const pendingOrders = orders?.filter(
+      (item) => item?.attributes?.status === "pending"
+    );
+    setselectedItemsData(pendingOrders);
+    console.log("regions", pendingOrders?.length);
+    setRefreshing(false);
+  };
   useEffect(() => {
+    fetchData();
+  }, [region]);
 
-    fetchData()
-    }, [region])
+  useEffect(() => {
+   setRegion(regions?.data[0]?.attributes?.name);
+  }, []);
 
-    useEffect(() => {
-      setRegion(regions?.data[0]?.attributes?.name)
-    }, [])
-    
-    
- const getServices = async () => {
+  const getServices = async () => {
     if (data) {
       dispatch(setServices(data));
     } else if (isError) {
@@ -60,51 +62,50 @@ const CurrentOffersScreen = ({route, navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
-      <RegionDropDown onChange={setRegion}/>
-      <AppText text={region} centered={false} style={styles.RegionHeader}/>
-      <ScrollView   refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }>
-      
-      {
-        selectedItemsData?.length > 0 ?
-     <View style={styles.container}>
-
-        <View style={styles.listContainer}>
-          <View style={{ paddingHorizontal: 10 }}>
-            <FlatList
-            data={selectedItemsData}
-            renderItem={({item})=>{
-              // console.log("this item",item)
-              return <OrderOfferCard onPress={()=>navigation.navigate(ITEM_DETAILS,{item})} item={item}/>
-
-            }}
-            />
-          
+      <RegionDropDown onChange={setRegion} />
+      <AppText text={region} centered={false} style={styles.RegionHeader} />
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {selectedItemsData?.length > 0 ? (
+          <View style={styles.container}>
+            <View style={styles.listContainer}>
+              <View style={{ paddingHorizontal: 10 }}>
+                <FlatList
+                  data={selectedItemsData}
+                  renderItem={({ item }) => {
+                    return (
+                      <OrderOfferCard
+                        onPress={() =>
+                          navigation.navigate(ITEM_DETAILS, { item })
+                        }
+                        item={item}
+                      />
+                    );
+                  }}
+                />
+              </View>
+            </View>
           </View>
+        ) : (
+          <View style={styles.noItemContainer}>
+            <AppText text={"لا يوجد طلبات في المنطقه"} />
           </View>
-       </View>
-       : <View style={styles.noItemContainer}>
-      
-       <AppText text={"لا يوجد طلبات في المنطقه"} /> 
-       </View>
-       }
-         </ScrollView>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // paddingBottom:1000,
     height: "100%",
-    // backgroundColor: "#333333",
-
   },
   listContainer: {
     display: "flex",
     paddingTop: 15,
-    // paddingBottom: 20,
     width: width * 1,
     alignItems: "center",
     flexDirection: "row",
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
   },
-  
+
   animatedView: {
     backgroundColor: "#333333",
     position: "absolute",
@@ -143,24 +144,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  header:{
-    fontSize:18,
-    color:Colors.blackColor,
-    paddingHorizontal:18
+  header: {
+    fontSize: 18,
+    color: Colors.blackColor,
+    paddingHorizontal: 18,
   },
-  RegionHeader:{
-    fontSize:22,
-    color:Colors.primaryColor,
-    paddingHorizontal:18
-  }, noItemContainer:{
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    height:"100%",
-    width:width,
-    backgroundColor:Colors.whiteColor
-   }
-  
+  RegionHeader: {
+    fontSize: 22,
+    color: Colors.primaryColor,
+    paddingHorizontal: 18,
+  },
+  noItemContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    width: width,
+    backgroundColor: Colors.whiteColor,
+  },
 });
 
 export default CurrentOffersScreen;

@@ -12,7 +12,7 @@ import LoadingScreen from "../loading/LoadingScreen";
 const { width } = Dimensions.get("screen");
 
 
-export default function CurrentOrders({navigation}) {
+export default function CompletedOrdersScreen({navigation}) {
   
   const user = useSelector((state) => state?.user?.userData);
   const ordersRedux = useSelector((state) => state?.orders?.orders);
@@ -23,8 +23,8 @@ const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-  const currentOrders = orders?.filter((item)=> item?.attributes?.PaymentStatus !== "payed")
-  setCurrentData(currentOrders)
+  const currentOrders = orders?.filter((item)=>item?.attributes?.PaymentStatus === "payed")
+  setCurrentData(orders)
   setRefreshing(false);
 
 

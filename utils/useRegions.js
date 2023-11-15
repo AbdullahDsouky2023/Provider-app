@@ -1,17 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://192.168.1.5:1337", // Set your base URL
-});
-
+import api from './index'
 
 
 
  export default function useRegions() {
   const fetchRegions = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.5:1337/api/regions?populate=deep`);
+      const response = await api.get(`/api/regions?populate=deep`);
       // console.log("bbb",response?.data)
       return response.data
     } catch (error) {

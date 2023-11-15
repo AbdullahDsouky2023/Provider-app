@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Colors, mainFont } from '../constant/styles';
 import CurrentOrders from '../screens/Orders/CurrentOrders';
+import CompletedOrdersScreen from '../screens/Orders/CompletedOrderScreen';
 
 export default function CurrentOrdersTabNavigator() {
     const Tab = createMaterialTopTabNavigator();
@@ -28,7 +29,7 @@ export default function CurrentOrdersTabNavigator() {
     >
     <Tab.Screen name={ORDERS} component={CurrentOrders} />
     <Tab.Screen name=
-    { PREVIOUS_ORDERS} component={CurrentOrders} />
+    { PREVIOUS_ORDERS} component={CompletedOrdersScreen} />
     </Tab.Navigator>
     
   )

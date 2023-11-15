@@ -10,13 +10,11 @@ import {
   RefreshControl,
 } from "react-native";
 
-import { Colors } from "../../constant/styles";
-
-import AppHeader from "../../component/AppHeader";
 import { useDispatch } from "react-redux";
-import useCategories from "../../../utils/categories";
-import { setCategories } from "../../store/features/categorySlice";
-import { setServices } from "../../store/features/serviceSlice";
+
+import { Colors } from "../../constant/styles";
+import AppHeader from "../../component/AppHeader";
+
 import { setOrders } from "../../store/features/ordersSlice";
 import useServices from "../../../utils/services";
 import LoadingScreen from "../loading/LoadingScreen";
@@ -26,23 +24,21 @@ import ProviderSectionCard from "../../component/ProviderHome/ProviderSectionCar
 import { MY_ORDERS } from "../../navigation/routes";
 import { setRegions } from "../../store/features/regionSlice";
 import useRegions from "../../../utils/useRegions";
+import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
 
 const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useRegions()
-  const { data:services } = useServices()
+  // const { data:services } = useServices()
   const { data:orders } = useOrders()
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData =async()=>{
     if (data) {
-      // Dispatch the fetched categories to the Redux store
        dispatch(setRegions(data));
-      //  dispatch(setServices(services));
        dispatch(setOrders(orders));
        setRefreshing(false);
-       console.log("dta",orders?.data[0]?.attributes?.region?.data?.attributes?.name)
 
     } 
     else if (isError) {
@@ -60,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   if (isLoading) return <LoadingScreen/>
-  if (isError) return <ErrorScreen hanleRetry={getData}/>
+  if (isError) return <ErrorScreen hanleRetry={fetchData}/>
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}
     >
@@ -73,6 +69,9 @@ const HomeScreen = ({ navigation }) => {
        
             <View style={styles.cardContainer}>
               <ProviderSectionCard  onPress={()=>navigation.navigate(MY_ORDERS)}/>
+            </View>
+            <View style={styles.cardContainer}>
+              <OverviewComponent />
             </View>
         
       </ScrollView>
