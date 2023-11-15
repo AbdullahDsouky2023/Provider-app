@@ -9,6 +9,7 @@ import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import useOrders from "../../../utils/orders";
 import LoadingScreen from "../loading/LoadingScreen";
+import { ORDERS_DETAILS } from '../../navigation/routes';
 const { width } = Dimensions.get("screen");
 
 
@@ -23,7 +24,7 @@ const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-  const currentOrders = orders?.filter((item)=> item?.attributes?.PaymentStatus !== "payed")
+  const currentOrders = orders?.filter((item)=>item?.attributes?.status !== "pending" && item?.attributes?.PaymentStatus !== "payed")
   setCurrentData(currentOrders)
   setRefreshing(false);
 
@@ -53,7 +54,7 @@ const fetchData = ()=>{
       data={currentOrders}
       style={styles.listContainer}
       renderItem={({item})=>{
-        return <CurrentOrderCard item={item}/>
+        return <CurrentOrderCard item={item} onPress={() => navigation.navigate(ORDERS_DETAILS, { item })}/>
       }}
       keyExtractor={(item)=>item?.id}
       />

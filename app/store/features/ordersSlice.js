@@ -3,10 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const orderSlice = createSlice({
   name: "orders",
-  initialState: { orders: [] , currentOrderData:{} },
+  initialState: { orders: [] , completedOrders:0 },
   reducers: {
     setOrders: (state, action) => {
       state.orders = action.payload;
+    },
+    setCompleteOrders: (state, action) => {
+      state.completedOrders = action.payload;
     },
     setCurrentOrderProperties: (state, action) => {
       
@@ -20,5 +23,5 @@ const orderSlice = createSlice({
  
 });
 
-export const { setOrders,setCurrentOrderProperties,clearCurrentOrder } = orderSlice.actions;
+export const { setOrders,setCurrentOrderProperties,clearCurrentOrder,setCompleteOrders } = orderSlice.actions;
 export default orderSlice.reducer;

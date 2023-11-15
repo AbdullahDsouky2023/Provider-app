@@ -58,7 +58,8 @@ export const requestPayment = async (id) => {
   try {
     const data = await api.put(`/api/orders/${id}`,{
       data:{
-        PaymentStatus:"payment required"
+        PaymentStatus:"payment required",
+        status:"finished",
       }
     });
     console.log("******************** was finsihed", data?.data?.data?.id);

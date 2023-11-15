@@ -39,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
        dispatch(setRegions(data));
        dispatch(setOrders(orders));
        setRefreshing(false);
-
+      
     } 
     else if (isError) {
       console.log(isError)

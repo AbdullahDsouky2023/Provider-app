@@ -1,7 +1,7 @@
 import { RefreshControl  } from 'react-native';
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-virtualized-view";
 import CurrentOrderCard from "../../component/orders/CurrentOrderCard";
 import { FlatList } from "react-native";
@@ -9,6 +9,8 @@ import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import useOrders from "../../../utils/orders";
 import LoadingScreen from "../loading/LoadingScreen";
+import { COMPLETE_ORDERS_DETAILS, ORDERS_DETAILS } from '../../navigation/routes';
+import { setCompleteOrders } from '../../store/features/ordersSlice';
 const { width } = Dimensions.get("screen");
 
 
@@ -17,14 +19,17 @@ export default function CompletedOrdersScreen({navigation}) {
   const user = useSelector((state) => state?.user?.userData);
   const ordersRedux = useSelector((state) => state?.orders?.orders);
   const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useDispatch()
 const [currentOrders,setCurrentData]=useState([])
 const { data ,isLoading}=useOrders()
 const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-  const currentOrders = orders?.filter((item)=>item?.attributes?.PaymentStatus === "payed")
-  setCurrentData(orders)
+  const currentOrders = orders?.filter((item)=>item?.attributes?.status !== "pending" && item?.attributes?.PaymentStatus === "payed")
+  setCurrentData(currentOrders)
+  dispatch(setCompleteOrders(currentOrders?.length))
+  // dispatch(setCompleteOrders(currentOrders?.length))
   setRefreshing(false);
 
 
@@ -53,7 +58,7 @@ const fetchData = ()=>{
       data={currentOrders}
       style={styles.listContainer}
       renderItem={({item})=>{
-        return <CurrentOrderCard item={item}/>
+        return <CurrentOrderCard item={item} onPress={() => navigation.navigate(COMPLETE_ORDERS_DETAILS, { item })}/>
       }}
       keyExtractor={(item)=>item?.id}
       />

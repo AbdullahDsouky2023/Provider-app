@@ -3,18 +3,22 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Colors, Fonts } from "../../constant/styles";
 import AppText from "../AppText";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserCurrentOrders } from "../../../utils/user";
+import { setCompleteOrders } from "../../store/features/ordersSlice";
 const { width } = Dimensions.get("screen");
 export default function OverviewComponent({ image, name, onPress }) {
   const user = useSelector((state) => state?.user?.userData);
   const ordersRedux = useSelector((state) => state?.orders?.orders);
-
+  const  dispatch = useDispatch()
+  const completedOrdersNumber = useSelector((state) => state?.orders?.completedOrders);
 const [currentOrders,setCurrentData]=useState([])
   useEffect(()=>{
       const userId = user?.id;
       const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
       setCurrentData(orders)
+      const currentOrders = orders?.filter((item)=>item?.attributes?.status !== "pending" && item?.attributes?.PaymentStatus === "payed")
+  dispatch(setCompleteOrders(currentOrders?.length))
     },[ordersRedux])
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -30,7 +34,7 @@ const [currentOrders,setCurrentData]=useState([])
           <AppText text={"الطلبات المكتمله   :"} style={styles.text} centered={false} />
         </View>
         <View>
-          <AppText text={currentOrders?.length} style={styles.text} />
+          <AppText text={completedOrdersNumber} style={styles.text} />
         </View>
       </View>
         <View style={styles.card}>

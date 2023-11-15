@@ -15,12 +15,12 @@ import { useNavigation } from "@react-navigation/native";
 import { ORDERS_DETAILS } from "../../navigation/routes";
 import PriceTextComponent from "../PriceTextComponent";
 const { width } = Dimensions.get("screen");
-export default function CurrentOrderCard({ item }) {
+export default function CurrentOrderCard({ item ,onPress}) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
     style={styles.scrollContainer}
-      onPress={() => navigation.navigate(ORDERS_DETAILS, { item })}
+      onPress={onPress}
     >
       <View style={styles.orderCardContainer}>
         {/* name */}
