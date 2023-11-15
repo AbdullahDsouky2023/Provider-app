@@ -1,11 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-  ScrollView,
-  Alert,
-} from "react-native";
+import { SafeAreaView, StatusBar, View, ScrollView, Alert } from "react-native";
 import * as yup from "yup";
 
 import ArrowBack from "../../component/ArrowBack";
@@ -17,19 +11,19 @@ import FormField from "../../component/Form/FormField";
 import SubmitButton from "../../component/Form/FormSubmitButton";
 import { auth } from "../../../firebaseConfig";
 
-
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 import { setUserData } from "../../store/features/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from "@react-navigation/native";
+import { HOME } from "../../navigation/routes";
 const UserInfo = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state) => state?.user?.userData);
-
 
   const validationSchema = yup.object().shape({
     fullName: yup
@@ -40,23 +34,26 @@ const UserInfo = ({ navigation }) => {
     location: yup.string(),
   });
 
-
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
       console.log("this is the use data will be submite", {
         email: values.emailAddress || userData?.email,
         name: values.fullName || userData?.username,
-       
       });
       const res = await updateUserData(userData?.id, {
-        email: values.emailAddress || userData?.attributes?.email,
-        name: values.fullName || userData?.attributes?.name,
+        email: values?.emailAddress || userData?.attributes?.email,
+        name: values?.fullName || userData?.attributes?.name,
       });
       if (res) {
         const gottenuser = await getUserByPhoneNumber(Number(validPhone));
         dispatch(setUserData(gottenuser));
         Alert.alert("تم التعديل بنجاح");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: HOME}],
+          }))
       } else {
         console.log(res);
         Alert.alert("Something goes wrong");
@@ -68,7 +65,6 @@ const UserInfo = ({ navigation }) => {
     }
   };
 
-  
   const getUserInfo = async () => {
     try {
       const userDataString = await AsyncStorage.getItem("userData");
@@ -98,7 +94,6 @@ const UserInfo = ({ navigation }) => {
   useEffect(() => {
     getUserInfo();
   }, [dispatch]);
-  console.log("ths is from user info ", userData);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -142,6 +137,5 @@ const UserInfo = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
 
 export default UserInfo;

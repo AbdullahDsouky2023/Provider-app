@@ -24,17 +24,15 @@ const { width } = Dimensions.get("screen");
 const CurrentOffersScreen = ({route, navigation }) => {
   const dispatch = useDispatch();
   const regions = useSelector((state)=>state?.regions?.regions)
+  const orderRedux = useSelector((state)=>state?.orders?.orders)
   const [region,setRegion]=useState(null)
   const [selectedItemsData,setselectedItemsData] = useState()
   const [refreshing, setRefreshing] = useState(false);
-
   const fetchData= ()=>{
-    
-    const selectedOrders = regions?.data?.filter((item)=>item?.attributes?.name === region)
-    const pendingOrders = selectedOrders[0]?.attributes?.orders?.data?.filter((item)=>item?.attributes?.provider?.data === null)
-   const orders = pendingOrders?.filter((item)=>item.attributes.region.data?.attributes?.name === region)
-    setselectedItemsData(orders)
-    console.log(orders?.length)
+    const orders = orderRedux?.data.filter((item)=>item?.attributes?.region?.data?.attributes?.name === region)
+    const pendingOrders = orders?.filter((item)=>item?.attributes?.status === "pending")
+    setselectedItemsData(pendingOrders)
+    console.log("regions",pendingOrders.length)
     setRefreshing(false)
   }
   useEffect(() => {

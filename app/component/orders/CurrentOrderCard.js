@@ -53,6 +53,11 @@ export default function CurrentOrderCard({ item }) {
             centered={false}
             style={styles.status}
           />
+           <AppText
+            text={`${item?.attributes?.status}`}
+            centered={false}
+            style={styles.title}
+          />
         </View>
         {/*time */}
         {/*time */}

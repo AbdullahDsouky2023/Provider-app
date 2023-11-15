@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.6:1337", // Set your base URL
+  baseURL: "http://192.168.1.5:1337", // Set your base URL
 });
 
 

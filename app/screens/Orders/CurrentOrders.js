@@ -23,8 +23,9 @@ const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+  const currentOrders = orders?.filter((item)=>item?.attributes?.status !== "pending")
   setCurrentData(orders)
-  console.log("rege",orders?.length,otherordes?.length)
+  console.log("rege",orders?.filter((item)=>item?.attributes?.status !== "pending"),otherordes?.length)
   setRefreshing(false);
 
 

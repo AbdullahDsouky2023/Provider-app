@@ -11,7 +11,7 @@ import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
-import useOrders, { acceptOrder, cancleOrder } from "../../../utils/orders";
+import useOrders, { acceptOrder, cancleOrder, changeOrderStatus } from "../../../utils/orders";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
@@ -38,12 +38,12 @@ const handleOrderAccept = async (id) => {
     const res = await acceptOrder(id,user?.id);
     if (res) {
     //   // Update Redux store to remove the cancelled order
-    await dispatch(setOrders(data));
+     dispatch(setOrders(data));
     navigation.goBack()
 navigation.dispatch(
   CommonActions.reset({
     index: 0,
-    routes: [{ name: MY_ORDERS }],
+    routes: [{ name: HOME }],
   })
 );
 

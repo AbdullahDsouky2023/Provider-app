@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.6:1337", // Set your base URL
+  baseURL: "http://192.168.1.5:1337", // Set your base URL
 });
 
 export const SetRegionsInLocal = async (regions) => {
@@ -18,8 +18,8 @@ export const SetRegionsInLocal = async (regions) => {
  export default function useRegions() {
   const fetchRegions = async () => {
     try {
-      const response = await api.get(`/api/regions?populate=*`);
-      
+      const response = await axios.get(`http://192.168.1.5:1337/api/regions?populate=*`);
+      console.log("reguibs are ",response?.data)
       return response.data
     } catch (error) {
       console.error("Error fetching regions:", error);

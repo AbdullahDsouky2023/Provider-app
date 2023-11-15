@@ -11,7 +11,7 @@ import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
-import useOrders, { acceptOrder, cancleOrder } from "../../../utils/orders";
+import useOrders, { acceptOrder, cancleOrder, changeOrderStatus, finishOrder } from "../../../utils/orders";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
@@ -34,8 +34,31 @@ export default function OrderDetails({ navigation, route }) {
 const dispatch = useDispatch()
 const handleOrderCancle = async (id) => {
   try {
-    // setIsLoading(true);
     const res = await cancleOrder(id);
+    if (res) {
+    dispatch(setOrders(data));
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: HOME}],
+      })
+    )
+    Alert.alert("تم بنجاح");
+    } else {
+      Alert.alert("حدثت مشكله حاول مرة اخري");
+    }
+  } catch (error) {
+    console.log(error, "error deleting the order");
+  } finally {
+    // setIsLoading(false);
+    setModalVisible(false)
+  }
+};
+const handleFinishOrder = async (id) => {
+  try {
+    // setIsLoading(true);
+    // const res = await finishOrder(id);
+    const res = await changeOrderStatus(id,"finished")
     if (res) {
     //   // Update Redux store to remove the cancelled order
     dispatch(setOrders(data));
@@ -50,7 +73,7 @@ const handleOrderCancle = async (id) => {
       Alert.alert("حدثت مشكله حاول مرة اخري");
     }
   } catch (error) {
-    console.log(error, "error deleting the order");
+    console.log(error, "error finsihed the order");
   } finally {
     // setIsLoading(false);
     setModalVisible(false)
@@ -131,17 +154,27 @@ const handleOrderCancle = async (id) => {
          )
           
         }
-  
-        <AppButton
-          title={"finish work"}
+  {item?.attributes?.status === "finished" ?
+    <AppButton
+    title={"Request Payment"}
           style={{backgroundColor:Colors.success}}
-          onPress={() => handleOrderCancle(item.id)}
-        />
+          onPress={() => console.log("patment re")}
+          />:
+          <View>
+
         <AppButton
-          title={"reject work"}
-          style={{backgroundColor:Colors.error}}
-          onPress={() => setModalVisible(true)}
+        title={"finish work"}
+        style={{backgroundColor:Colors.success}}
+        onPress={() => handleFinishOrder(item.id)}
         />
+    
+        <AppButton
+        title={"reject work"}
+        style={{backgroundColor:Colors.error}}
+        onPress={() => setModalVisible(true)}
+        />
+        </View>
+      }
       </ScrollView>
       <LoadingModal visible={isLoading} />
       <AppModal isModalVisible={isModalVisible} 

@@ -36,18 +36,19 @@ const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData =async()=>{
-    // if (data) {
+    if (data) {
       // Dispatch the fetched categories to the Redux store
        dispatch(setRegions(data));
       //  dispatch(setServices(services));
        dispatch(setOrders(orders));
        setRefreshing(false);
+       console.log("dta",orders?.data[0]?.attributes?.region?.data?.attributes?.name)
 
-    // } 
-    // else if (isError) {
-    //   console.log(isError)
+    } 
+    else if (isError) {
+      console.log(isError)
     //   // Handle the error
-    // }
+    }
   }
 
   useEffect(() => {    

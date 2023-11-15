@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.6:1337",
+  baseURL: "http://192.168.1.5:1337",
   headers: {
     "Content-Type": "application/json",
   }, // Set your base URL
@@ -26,9 +26,10 @@ export const postOrder = async (values) => {
 
 export const cancleOrder = async (id) => {
   try {
-    const data = await axios.put(`http://192.168.1.6:1337/api/orders/${id}`,{
+    const data = await axios.put(`http://192.168.1.5:1337/api/orders/${id}`,{
       data:{
-        provider:null
+        provider:null,
+        status:"pending"
       }
     });
     console.log("******************** was deleted", data?.data?.data?.id);
@@ -38,11 +39,26 @@ export const cancleOrder = async (id) => {
     console.error("Error accepting order   :", error.message); // Log the error response
   }
 };
+export const changeOrderStatus = async (id,status) => {
+  try {
+    const data = await axios.put(`http://192.168.1.5:1337/api/orders/${id}`,{
+      data:{
+        status:status
+      }
+    });
+    console.log("******************** was finsihed", data?.data?.data?.id);
+    if ( data?.data?.data?.id) return true
+    return false;
+  } catch (error) {
+    console.error("Error accepting order   :", error.message); // Log the error response
+  }
+};
 export const acceptOrder = async (id,providerId) => {
   try {
-    const data = await axios.put(`http://192.168.1.6:1337/api/orders/${id}`,{
+    const data = await axios.put(`http://192.168.1.5:1337/api/orders/${id}`,{
       data:{
-        provider:providerId
+        provider:providerId,
+        status:"assigned"
       }
     });
     console.log("********************", data?.data?.data?.id);
@@ -56,7 +72,7 @@ export const acceptOrder = async (id,providerId) => {
 export default function useOrders() {
   const fetchOrders = async () => {
     try {
-      const response = await api.get(`/api/orders?populate=*`);
+      const response = await axios.get(`http://192.168.1.5:1337/api/orders?populate=*`);
 
       return response.data;
     } catch (error) {

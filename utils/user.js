@@ -2,7 +2,7 @@ import { setUserData } from '../app/store/features/userSlice';
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.6:1337", // Set your base URL
+  baseURL: "http://192.168.1.5:1337", // Set your base URL
 });
 
 export const createUser = async(data)=>{
@@ -63,9 +63,9 @@ try {
     }
     })
     console.log('====================================');
-    console.log("update user",updatedUser);
+    console.log("update user",updatedUser?.data?.data);
     console.log('====================================');
-    if(updateUserData) return true
+    if(updatedUser?.data?.data) return true
     return false
 } catch (error) {
     console.log('error updating the user ',error.message) 

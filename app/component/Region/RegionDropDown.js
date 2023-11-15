@@ -29,6 +29,8 @@ import { Colors } from '../../constant/styles';
     //     console.log(regions?.data[0]?.attributes?.name)
     // },[])
 
+    console.log("drop dow",value)
+
     return (
       <Dropdown
         style={styles.dropdown}
@@ -41,7 +43,7 @@ import { Colors } from '../../constant/styles';
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder="اختار المنطقه"
+        placeholder={value || "اختار المنطقه" }
         
         searchPlaceholder="Search..."
         value={value}
