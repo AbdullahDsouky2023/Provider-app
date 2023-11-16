@@ -25,9 +25,9 @@ export const getUserByPhoneNumber = async(phone)=>{
         // Remove the "+" symbol
         // +201144254129
         if(phone){
-            console.log("user phone from user is ",typeof(phone))
+            console.log("user phone from user is ",(phone))
             
-            const user =    await api.get(`/api/providers?populate=*?filters[$and][0][phoneNumber][$eq]=`+phone)
+            const user =    await api.get(`/api/providers?filters[$and][0][phoneNumber][$eq]=`+phone)
             console.log("usus",user?.data?.data[0]?.attributes)
             if(user?.data?.data[0]?.attributes && user?.data?.data[0]?.attributes?.phoneNumber) {
                 setUserData(user?.data?.data)

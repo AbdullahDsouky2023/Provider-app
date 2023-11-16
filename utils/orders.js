@@ -29,7 +29,8 @@ export const cancleOrder = async (id) => {
     const data = await api.put(`/api/orders/${id}`,{
       data:{
         provider:null,
-        status:"pending"
+        status:"pending",
+        chat_channel_id:null
       }
     });
     console.log("******************** was deleted", data?.data?.data?.id);
@@ -69,12 +70,13 @@ export const requestPayment = async (id) => {
     console.error("Error accepting order   :", error.message); // Log the error response
   }
 };
-export const acceptOrder = async (id,providerId) => {
+export const acceptOrder = async (id,providerId,channel_id) => {
   try {
     const data = await api.put(`/api/orders/${id}`,{
       data:{
         provider:providerId,
-        status:"assigned"
+        status:"assigned",
+        // chat_channel_id:channel_id
       }
     });
     console.log("********************", data?.data?.data?.id);
@@ -99,6 +101,30 @@ export default function useOrders() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["order"],
+    queryFn: fetchOrders,
+  }); // Changed the query key to 'superheroes'
+
+  return {
+    data,
+    isLoading,
+    isError,
+  };
+}
+
+export function useOrder() {
+  const fetchOrders = async () => {
+    try {
+      const response = await api.get(`/api/orders?populate=*/${id}`);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching order:", error);
+      throw error;
+    }
+  };
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["singleorder"],
     queryFn: fetchOrders,
   }); // Changed the query key to 'superheroes'
 

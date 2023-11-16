@@ -28,16 +28,22 @@ export default function ItemScreen({ navigation, route }) {
   const { item } = route?.params;
   // const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-
   const user = useSelector((state)=>state?.user?.userData)  
+  const orders = useSelector((state)=>state?.orders?.orders)  
   const {data,isLoading} = useOrders()
 const dispatch = useDispatch()
+const createUniqueName = (userId, providerId, orderId) => {
+  return `user_${userId}_provider_${providerId}_order_${orderId}`;
+};
 const handleOrderAccept = async (id) => {
   try {
-    // setIsLoading(true);
-    const res = await acceptOrder(id,user?.id);
+    const selectedOrder = orders?.data.filter((order)=>order?.id === id)
+    const userId = selectedOrder[0]?.attributes?.user?.data?.id
+   const channel_id =  createUniqueName(userId,user?.id,id)
+    // console.log("acceptingorder",channel_id)
+    const res = await acceptOrder(userId,user?.id, channel_id);
     if (res) {
-    //   // Update Redux store to remove the cancelled order
+//     //   // Update Redux store to remove the cancelled order
      dispatch(setOrders(data));
     navigation.goBack()
 navigation.dispatch(

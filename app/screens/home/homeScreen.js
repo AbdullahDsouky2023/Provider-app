@@ -70,13 +70,13 @@ const user = useSelector((state)=>state?.user?.userData)
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }>
         <AppHeader />
-{/*        
+       
             <View style={styles.cardContainer}>
               <ProviderSectionCard  onPress={()=>navigation.navigate(MY_ORDERS)}/>
             </View>
             <View style={styles.cardContainer}>
-              <OverviewComponent /> */}
-            {/* </View> */}
+              <OverviewComponent />
+            </View>
        <AppButton onPress={()=>navigation.navigate("Chat")} />
       </ScrollView>
     </SafeAreaView>
