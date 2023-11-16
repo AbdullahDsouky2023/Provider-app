@@ -12,8 +12,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import { useNavigation } from "@react-navigation/native";
-import { ORDERS_DETAILS } from "../../navigation/routes";
+import { CHAT_ROOM, ORDERS_DETAILS } from "../../navigation/routes";
 import PriceTextComponent from "../PriceTextComponent";
+import AppButton from "../AppButton";
 const { width } = Dimensions.get("screen");
 export default function CurrentOrderCard({ item ,onPress}) {
   const navigation = useNavigation();

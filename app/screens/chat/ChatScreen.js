@@ -9,10 +9,10 @@ import { useChatContext } from '../../context/ChatContext';
 export default function ChatScreen({children}) {
   const navigation = useNavigation()
   const { clientIsReady } = useChatClient();
-  const { setChannel,channel } = useChatContext();
-console.log(channel?.id)
-
-if (!clientIsReady) {
+  const {channel, setChannel } = useChatContext();
+  console.log("channel",setChannel)
+  if (!clientIsReady) {
+  setChannel("global")
   return <Text>Loading chat ...</Text>
 }
   return (

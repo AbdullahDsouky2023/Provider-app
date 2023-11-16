@@ -10,6 +10,7 @@ import AppText from "../../component/AppText";
 import useOrders from "../../../utils/orders";
 import LoadingScreen from "../loading/LoadingScreen";
 import { ORDERS_DETAILS } from '../../navigation/routes';
+import { setcurrentChatChannel } from '../../store/features/ordersSlice';
 const { width } = Dimensions.get("screen");
 
 
@@ -38,6 +39,9 @@ const fetchData = ()=>{
       setRefreshing(true);
       fetchData();
     };
+    const handleCardPress =({item})=>{
+     
+    }
     if(isLoading) return <LoadingScreen/>
     return (
     <ScrollView style={styles.wrapper} refreshControl={
@@ -54,7 +58,11 @@ const fetchData = ()=>{
       data={currentOrders}
       style={styles.listContainer}
       renderItem={({item})=>{
-        return <CurrentOrderCard item={item} onPress={() => navigation.navigate(ORDERS_DETAILS, { item })}/>
+        return <CurrentOrderCard item={item} onPress={()=>{
+          navigation.navigate(ORDERS_DETAILS, { item })
+          setcurrentChatChannel(item?.attributes?.chat_channel_id)
+          console.log("setting ",item?.attributes?.chat_channel_id)
+        }}/>
       }}
       keyExtractor={(item)=>item?.id}
       />

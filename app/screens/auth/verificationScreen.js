@@ -118,7 +118,7 @@ const convertPhoneTovalid=(phone)=>{
             <AppText
               text={"enterOTPCode"}
               centered={false}
-              style={{ fontSize: 17 }}
+              style={{ fontSize: 17,maxWidth :width*0.75  }}
             />
           </View>
           <OtpFields
@@ -141,7 +141,7 @@ const convertPhoneTovalid=(phone)=>{
               text={"didntReceiveOTP"}
               style={{
                 fontSize: 18,
-                paddingTop: 44,
+                paddingTop: 20,
                 paddingRight: 20,
               }}
               centered={false}

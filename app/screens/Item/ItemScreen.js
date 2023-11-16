@@ -40,8 +40,8 @@ const handleOrderAccept = async (id) => {
     const selectedOrder = orders?.data.filter((order)=>order?.id === id)
     const userId = selectedOrder[0]?.attributes?.user?.data?.id
    const channel_id =  createUniqueName(userId,user?.id,id)
-    // console.log("acceptingorder",channel_id)
-    const res = await acceptOrder(userId,user?.id, channel_id);
+    console.log("acceptingorder",userId,user?.id,id)
+    const res = await acceptOrder(id,user?.id, channel_id);
     if (res) {
 //     //   // Update Redux store to remove the cancelled order
      dispatch(setOrders(data));

@@ -15,7 +15,7 @@ import useOrders, { acceptOrder, cancleOrder, changeOrderStatus, finishOrder, re
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { HOME, OFFERS, ORDERS } from "../../navigation/routes";
+import { CHAT_ROOM, HOME, OFFERS, ORDERS } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
@@ -141,6 +141,8 @@ const handleRequestPayment = async (id) => {
             style={styles.price}
           />
         </View>
+        {/* <AppButton title={"Chat"} onPress={()=>navigation.navigate("Chat")}/> */}
+
         {
            item?.attributes?.description && 
         <View style={styles.descriptionContainer}>

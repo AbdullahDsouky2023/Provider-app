@@ -10,7 +10,7 @@ export const ChatContext = React.createContext({
 });
 
 export const ChatProvider = ({ children }) => {
-  const [channel, setChannel] = useState();
+  const [channel, setChannel] = useState("");
   const [thread, setThread] = useState();
 
   return <ChatContext.Provider value={{ channel, setChannel, thread, setThread }}>{children}</ChatContext.Provider>;

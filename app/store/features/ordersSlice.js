@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const orderSlice = createSlice({
   name: "orders",
-  initialState: { orders: [] , completedOrders:0 },
+  initialState: { orders: [] , completedOrders:0 ,currentChatChannel:""},
   reducers: {
     setOrders: (state, action) => {
       state.orders = action.payload;
@@ -16,6 +16,9 @@ const orderSlice = createSlice({
       const propertiesToUpdate = action.payload;
       state.currentOrderData = { ...state.currentOrderData, ...propertiesToUpdate };
     },
+    setcurrentChatChannel: (state, action) => {
+      state.currentChatChannel = action.payload
+    },
     clearCurrentOrder: (state) => {
       state.currentOrderData = {};
     },
@@ -23,5 +26,5 @@ const orderSlice = createSlice({
  
 });
 
-export const { setOrders,setCurrentOrderProperties,clearCurrentOrder,setCompleteOrders } = orderSlice.actions;
+export const { setOrders,setCurrentOrderProperties,clearCurrentOrder,setCompleteOrders ,setcurrentChatChannel} = orderSlice.actions;
 export default orderSlice.reducer;

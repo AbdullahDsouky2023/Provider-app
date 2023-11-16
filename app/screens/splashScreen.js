@@ -72,7 +72,7 @@ const SplashScreen = ({ navigation }) => {
         const PhoneNumberValidated = convertPhoneTovalid(validPhone)
         console.log(PhoneNumberValidated," this is the use data in loca")
         if (userData?.phoneNumber ) {
-          const gottenuser = await getUserByPhoneNumber(PhoneNumberValidated )
+          const gottenuser = await getUserByPhoneNumber(PhoneNumberValidated)
           dispatch(setUserData(gottenuser));
           console.log("this function was called to app with user gooten from strapio ",gottenuser)
           dispatch(userRegisterSuccess(userData));

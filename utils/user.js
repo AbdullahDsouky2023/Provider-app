@@ -1,9 +1,6 @@
 import { setUserData } from '../app/store/features/userSlice';
-// import axios from "axios";
 import api from './index'
-// const api = axios.create({
-//   baseURL: "http://192.168.1.5:1337", // Set your base URL
-// });
+
 
 export const createUser = async(data)=>{
     try {
@@ -27,7 +24,7 @@ export const getUserByPhoneNumber = async(phone)=>{
         if(phone){
             console.log("user phone from user is ",(phone))
             
-            const user =    await api.get(`/api/providers?filters[$and][0][phoneNumber][$eq]=`+phone)
+            const user =    await api.get(`/api/providers?populate=*&filters[$and][0][phoneNumber][$eq]=`+phone)
             console.log("usus",user?.data?.data[0]?.attributes)
             if(user?.data?.data[0]?.attributes && user?.data?.data[0]?.attributes?.phoneNumber) {
                 setUserData(user?.data?.data)

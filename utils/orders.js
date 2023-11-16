@@ -76,7 +76,7 @@ export const acceptOrder = async (id,providerId,channel_id) => {
       data:{
         provider:providerId,
         status:"assigned",
-        // chat_channel_id:channel_id
+        chat_channel_id:channel_id
       }
     });
     console.log("********************", data?.data?.data?.id);

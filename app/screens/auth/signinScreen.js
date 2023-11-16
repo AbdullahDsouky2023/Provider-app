@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
@@ -19,7 +20,7 @@ import { Colors, Fonts, Sizes } from "../../constant/styles";
 import Logo from "../../component/Logo";
 import { auth, firebaseConfig } from "../../../firebaseConfig";
 import { errorMessages } from "../../data/signin";
-
+const { width } = Dimensions.get('screen')
 const SigninScreen = ({ navigation }) => {
   const [disabled, setDisabled] = useState(true);
   const [state, setState] = useState({ phoneNumber: null });
@@ -84,7 +85,7 @@ const SigninScreen = ({ navigation }) => {
             <AppText
               centered={true}
               text={"Signin with Phone Number"}
-              style={{ marginBottom: 10 }}
+              style={{ marginBottom: 10,maxWidth :width*0.75 }}
             />
           </View>
           <PhoneNumberTextField
