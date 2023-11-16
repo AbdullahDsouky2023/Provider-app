@@ -27,19 +27,23 @@ import useRegions from "../../../utils/useRegions";
 import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
 import ChatScreen from "../chat/ChatScreen";
 import AppButton from "../../component/AppButton";
+import { generateUserToken, useChatConfig } from "../chat/chatconfig";
+import { setUserStreamData } from "../../store/features/userSlice";
 
 const HomeScreen = ({ navigation }) => {
-
+const user = useSelector((state)=>state?.user?.userData)
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useRegions()
  const { data:orders } = useOrders()
+ 
   const [refreshing, setRefreshing] = useState(false);
   const fetchData =async()=>{
     if (data) {
        dispatch(setRegions(data));
        dispatch(setOrders(orders));
        setRefreshing(false);
-      
+       const chat = generateUserToken(user)
+       dispatch(setUserStreamData(chat));
     } 
     else if (isError) {
       console.log(isError)
