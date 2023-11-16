@@ -10,7 +10,7 @@ import {
   RefreshControl,
 } from "react-native";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
@@ -25,15 +25,15 @@ import { MY_ORDERS } from "../../navigation/routes";
 import { setRegions } from "../../store/features/regionSlice";
 import useRegions from "../../../utils/useRegions";
 import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
+import ChatScreen from "../chat/ChatScreen";
+import AppButton from "../../component/AppButton";
 
 const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useRegions()
-  // const { data:services } = useServices()
-  const { data:orders } = useOrders()
+ const { data:orders } = useOrders()
   const [refreshing, setRefreshing] = useState(false);
-
   const fetchData =async()=>{
     if (data) {
        dispatch(setRegions(data));
@@ -66,14 +66,14 @@ const HomeScreen = ({ navigation }) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }>
         <AppHeader />
-       
+{/*        
             <View style={styles.cardContainer}>
               <ProviderSectionCard  onPress={()=>navigation.navigate(MY_ORDERS)}/>
             </View>
             <View style={styles.cardContainer}>
-              <OverviewComponent />
-            </View>
-        
+              <OverviewComponent /> */}
+            {/* </View> */}
+       <AppButton onPress={()=>navigation.navigate("Chat")} />
       </ScrollView>
     </SafeAreaView>
   );
