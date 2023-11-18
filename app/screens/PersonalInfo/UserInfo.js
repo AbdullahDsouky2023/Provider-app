@@ -102,7 +102,7 @@ const UserInfo = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1, alignItems: "center" }}>
             <AppText
-              text={"Register Your Account"}
+              text={"Your Data"}
               style={{ color: Colors.primaryColor, marginBottom: 10 }}
             />
             <AppForm
@@ -118,6 +118,13 @@ const UserInfo = ({ navigation }) => {
                 icon={"user"}
                 placeholder={userData?.attributes?.name}
               />
+              {/* <FormField
+                autoCorrect={false}
+                name="fullName"
+                icon={"user"}
+                disabled
+                placeholder={userData?.attributes?.phoneNumber}
+              /> */}
 
               <FormField
                 autoCapitalize="none"

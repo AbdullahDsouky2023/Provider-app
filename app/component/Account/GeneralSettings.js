@@ -41,6 +41,10 @@ export default function GeneralSettings() {
       <View>
         <FlatList
           data={settingsItemArray}
+          style={{
+            display:"flex",
+            gap:20
+          }}
           renderItem={({ item }) => {
             return <SettingItem item={item} />;
           }}

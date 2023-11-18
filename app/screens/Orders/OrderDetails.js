@@ -11,7 +11,13 @@ import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
-import useOrders, { acceptOrder, cancleOrder, changeOrderStatus, finishOrder, requestPayment } from "../../../utils/orders";
+import useOrders, {
+  acceptOrder,
+  cancleOrder,
+  changeOrderStatus,
+  finishOrder,
+  requestPayment,
+} from "../../../utils/orders";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
@@ -30,74 +36,74 @@ export default function OrderDetails({ navigation, route }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const {data}=useOrders()
-const dispatch = useDispatch()
-const handleOrderCancle = async (id) => {
-  try {
-    const res = await cancleOrder(id);
-    if (res) {
-    dispatch(setOrders(data));
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: HOME}],
-      })
-    )
-    Alert.alert("تم بنجاح");
-    } else {
-      Alert.alert("حدثت مشكله حاول مرة اخري");
+  const { data } = useOrders();
+  const dispatch = useDispatch();
+  const handleOrderCancle = async (id) => {
+    try {
+      const res = await cancleOrder(id);
+      if (res) {
+        dispatch(setOrders(data));
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: HOME }],
+          })
+        );
+        Alert.alert("تم بنجاح");
+      } else {
+        Alert.alert("حدثت مشكله حاول مرة اخري");
+      }
+    } catch (error) {
+      console.log(error, "error deleting the order");
+    } finally {
+      // setIsLoading(false);
+      setModalVisible(false);
     }
-  } catch (error) {
-    console.log(error, "error deleting the order");
-  } finally {
-    // setIsLoading(false);
-    setModalVisible(false)
-  }
-};
-const handleFinishOrder = async (id) => {
-  try {
-    const res = await changeOrderStatus(id,"finished")
-    if (res) {
-    dispatch(setOrders(data));
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: HOME}],
-      })
-    )
-    Alert.alert("تم بنجاح");
-    } else {
-      Alert.alert("حدثت مشكله حاول مرة اخري");
+  };
+  const handleFinishOrder = async (id) => {
+    try {
+      const res = await changeOrderStatus(id, "finished");
+      if (res) {
+        dispatch(setOrders(data));
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: HOME }],
+          })
+        );
+        Alert.alert("تم بنجاح");
+      } else {
+        Alert.alert("حدثت مشكله حاول مرة اخري");
+      }
+    } catch (error) {
+      console.log(error, "error finsihed the order");
+    } finally {
+      setModalVisible(false);
     }
-  } catch (error) {
-    console.log(error, "error finsihed the order");
-  } finally {
-    setModalVisible(false)
-  }
-};
-const handleRequestPayment = async (id) => {
-  try {
-    const res = await requestPayment(id)
-    if (res) {
-    dispatch(setOrders(data));
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: HOME}],
-      })
-    )
-    Alert.alert("تم بنجاح");
-    } else {
-      Alert.alert("حدثت مشكله حاول مرة اخري");
+  };
+  const handleRequestPayment = async (id) => {
+    try {
+      const res = await requestPayment(id);
+      if (res) {
+        dispatch(setOrders(data));
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: HOME }],
+          })
+        );
+        Alert.alert("تم بنجاح");
+      } else {
+        Alert.alert("حدثت مشكله حاول مرة اخري");
+      }
+    } catch (error) {
+      console.log(error, "error finsihed the order");
+    } finally {
+      setModalVisible(false);
     }
-  } catch (error) {
-    console.log(error, "error finsihed the order");
-  } finally {
-    setModalVisible(false)
-  }
-};
+  };
 
-  if(isLoading) return <LoadingScreen/>
+  if (isLoading) return <LoadingScreen />;
   return (
     <ScrollView style={styles.scrollContainer}>
       <AppHeader subPage={true} />
@@ -112,8 +118,8 @@ const handleRequestPayment = async (id) => {
         <View style={styles.itemContainer}>
           <AppText centered={false} text={" السعر"} style={styles.title} />
           <PriceTextComponent
-          style={{color:Colors.blackColor,fontSize:14,marginTop:4}}
-          price={item?.attributes?.service?.data?.attributes?.name}
+            style={{ color: Colors.blackColor, fontSize: 14, marginTop: 4 }}
+            price={item?.attributes?.service?.data?.attributes?.name}
           />
         </View>
         <View style={styles.itemContainer}>
@@ -141,77 +147,86 @@ const handleRequestPayment = async (id) => {
             style={styles.price}
           />
         </View>
-        <AppButton title={"Chat"} onPress={()=>navigation.navigate("Chat")}/>
 
-        {
-           item?.attributes?.description && 
-        <View style={styles.descriptionContainer}>
-          <AppText centered={false} text={" ملاحظات"} style={styles.title} />
-          <AppText
-            centered={false}
-            text={
-              item?.attributes?.description
-                ? item?.attributes?.description
-                : "لا يوجد"
-            }
-            style={styles.price}
+        {item?.attributes?.description && (
+          <View style={styles.descriptionContainer}>
+            <AppText centered={false} text={" ملاحظات"} style={styles.title} />
+            <AppText
+              centered={false}
+              text={
+                item?.attributes?.description
+                  ? item?.attributes?.description
+                  : "لا يوجد"
+              }
+              style={styles.price}
+            />
+          </View>
+        )}
+        {item?.attributes?.images?.data && (
+          <View style={styles.descriptionContainer}>
+            <AppText
+              centered={false}
+              text={" صور للطلب"}
+              style={styles.title}
+            />
+            <Image
+              source={{
+                uri: item?.attributes?.images?.data[0]?.attributes?.url,
+              }}
+              style={{
+                height: 420,
+                width: width*0.85,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+        )}
+        <AppButton
+          title={"Chat"}
+          style={{ backgroundColor: Colors.success }}
+          onPress={() => navigation.navigate("Chat")}
+        />
+
+        {item?.attributes?.status === "finished" ? (
+          <AppButton
+            title={"Request Payment"}
+            style={{ backgroundColor: Colors.success }}
+            onPress={() => handleRequestPayment(item.id)}
           />
-        </View>
-        }
-         {
-            item?.attributes?.images?.data  && (
-        <View style={styles.descriptionContainer}>
-          <AppText centered={false} text={" صور للطلب"} style={styles.title} />
-           <Image 
-           source={{
-            uri:item?.attributes?.images?.data[0]?.attributes?.url}} style={{
-             height:120,
-             width:200,
-             borderRadius:10
-           }}/> 
-        </View>
-         )
-          
-        }
-  {item?.attributes?.status === "finished" ?
-    <AppButton
-    title={"Request Payment"}
-          style={{backgroundColor:Colors.success}}
-          onPress={() => handleRequestPayment(item.id)}
-          />:
+        ) : (
           <View>
+            <AppButton
+              title={"finish work"}
+              style={{ backgroundColor: Colors.success }}
+              onPress={() => handleFinishOrder(item.id)}
+            />
 
-        <AppButton
-        title={"finish work"}
-        style={{backgroundColor:Colors.success}}
-        onPress={() => handleFinishOrder(item.id)}
-        />
-    
-        <AppButton
-        title={"reject work"}
-        style={{backgroundColor:Colors.error}}
-        onPress={() => setModalVisible(true)}
-        />
-        </View>
-      }
+            <AppButton
+              title={"reject work"}
+              style={{ backgroundColor: Colors.error }}
+              onPress={() => setModalVisible(true)}
+            />
+          </View>
+        )}
       </ScrollView>
       <LoadingModal visible={isLoading} />
-      <AppModal isModalVisible={isModalVisible} 
-      message={"تأكيد رفض الطلب"}
-      setModalVisible={setModalVisible} onPress={()=> handleOrderCancle(item.id)}/>
+      <AppModal
+        isModalVisible={isModalVisible}
+        message={"تأكيد رفض الطلب"}
+        setModalVisible={setModalVisible}
+        onPress={() => handleOrderCancle(item.id)}
+      />
     </ScrollView>
   );
 }
 const styles = StyleSheet.create({
-  scrollContainer:{
+  scrollContainer: {
     height: "100%",
     backgroundColor: Colors.whiteColor,
-
   },
   container: {
     paddingVertical: 10,
     paddingHorizontal: 18,
-    
   },
   name: {
     fontSize: 17,
@@ -229,7 +244,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: Colors.whiteColor,
     gap: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,
@@ -251,7 +266,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: Colors.whiteColor,
     gap: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1,
@@ -270,4 +285,3 @@ const styles = StyleSheet.create({
     color: Colors.primaryColor,
   },
 });
-
