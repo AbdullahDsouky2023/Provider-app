@@ -62,7 +62,6 @@ const fetchData = ()=>{
         return <CurrentOrderCard item={item} onPress={()=>{
           navigation.navigate(ORDERS_DETAILS, { item })
          dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
-          console.log("setting ",item?.attributes?.chat_channel_id)
         }}/>
       }}
       keyExtractor={(item)=>item?.id}

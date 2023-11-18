@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Channel, MessageInput, MessageList } from "stream-chat-expo";
 import { useSelector } from "react-redux";
 import { useChatClient } from "./useChatClient";
 import LoadingScreen from "../loading/LoadingScreen";
 
 export default function ChatRoom() {
-  const { clientIsReady, chatClient } = useChatClient();
+  const { clientIsReady, chatClient,setIsInChatRoom } = useChatClient();
   const currentChannelName = useSelector(
     (state) => state?.orders?.currentChatChannel
   );
   const currentChatChannel =
     chatClient?.activeChannels[`messaging:${currentChannelName}`];
-
+    useEffect(() => {
+      console.log("USER is in room")
+      // Set the isInChatRoom state to true when the component mounts
+      setIsInChatRoom(true);
+      return () => {
+        console.log("USER is out of the  room")
+      //   // Set the isInChatRoom state to false when the component unmounts
+        setIsInChatRoom(false);
+      };
+    }, []);
   if (!currentChatChannel || !clientIsReady) {
     return <LoadingScreen />;
   }
