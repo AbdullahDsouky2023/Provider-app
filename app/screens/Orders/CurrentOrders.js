@@ -1,7 +1,7 @@
 import { RefreshControl  } from 'react-native';
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-virtualized-view";
 import CurrentOrderCard from "../../component/orders/CurrentOrderCard";
 import { FlatList } from "react-native";
@@ -17,6 +17,7 @@ const { width } = Dimensions.get("screen");
 export default function CurrentOrders({navigation}) {
   
   const user = useSelector((state) => state?.user?.userData);
+  const dispatch = useDispatch()
   const ordersRedux = useSelector((state) => state?.orders?.orders);
   const [refreshing, setRefreshing] = useState(false);
 const [currentOrders,setCurrentData]=useState([])
@@ -60,7 +61,7 @@ const fetchData = ()=>{
       renderItem={({item})=>{
         return <CurrentOrderCard item={item} onPress={()=>{
           navigation.navigate(ORDERS_DETAILS, { item })
-          setcurrentChatChannel(item?.attributes?.chat_channel_id)
+         dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
           console.log("setting ",item?.attributes?.chat_channel_id)
         }}/>
       }}

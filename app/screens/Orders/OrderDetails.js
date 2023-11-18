@@ -141,7 +141,7 @@ const handleRequestPayment = async (id) => {
             style={styles.price}
           />
         </View>
-        {/* <AppButton title={"Chat"} onPress={()=>navigation.navigate("Chat")}/> */}
+        <AppButton title={"Chat"} onPress={()=>navigation.navigate("Chat")}/>
 
         {
            item?.attributes?.description && 

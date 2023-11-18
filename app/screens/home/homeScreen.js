@@ -77,7 +77,6 @@ const user = useSelector((state)=>state?.user?.userData)
             <View style={styles.cardContainer}>
               <OverviewComponent />
             </View>
-       <AppButton onPress={()=>navigation.navigate("Chat")} />
       </ScrollView>
     </SafeAreaView>
   );

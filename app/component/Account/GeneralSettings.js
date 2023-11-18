@@ -10,7 +10,7 @@ import AppText from "../AppText";
 import AppButton from "../AppButton";
 import { Colors } from "../../constant/styles";
 import SettingItem from "./SettingItem";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import { settingsItemArray } from "../../data/account";
 import { auth } from "../../../firebaseConfig";
 const { width } = Dimensions.get("screen");

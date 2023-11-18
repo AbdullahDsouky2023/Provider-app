@@ -12,12 +12,16 @@ import LocationModal from "../component/location/LocationModal";
 import { getLocationFromStorage } from "../../utils/location";
 import { auth } from "../../firebaseConfig";
 import {BASE_URL } from '@env'
+import useOrders from "../../utils/orders";
+import { setOrders } from "../store/features/ordersSlice";
+import useRegions from "../../utils/useRegions";
 const SplashScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   let user = useSelector((state) => state.user?.user?.phoneNumber);
   const [locationModalVisible, setLocationModalVisible] = useState(false);
   const [locationConfirmed, setLocationConfirmed] = useState(false);
-
+  const { data, isLoading, isError } = useRegions()
+ const { data:orders } = useOrders()
   useEffect(() => {
     // Check if the location is already confirmed
     AsyncStorage.getItem('userLocation').then((userLocation) => {
@@ -61,7 +65,16 @@ const SplashScreen = ({ navigation }) => {
     catch (error) {
     console.log(error);
 }}})
-        
+const fetchData =async()=>{
+  if (data) {
+     dispatch(setRegions(data));
+     dispatch(setOrders(orders));
+  } 
+  else if (isError) {
+    console.log(isError)
+  //   // Handle the error
+  }
+}
   useEffect(() => {
     async function checkUserAndNavigate() {
       try {
@@ -76,6 +89,7 @@ const SplashScreen = ({ navigation }) => {
           dispatch(setUserData(gottenuser));
           console.log("this function was called to app with user gooten from strapio ",gottenuser)
           dispatch(userRegisterSuccess(userData));
+          fetchData()
           navigation.push("App");
         } else {
           console.log("this function was called to auth ")
