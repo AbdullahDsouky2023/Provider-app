@@ -2,8 +2,6 @@ import {
   Alert,
   Dimensions,
   StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import React, { useState } from "react";
@@ -13,7 +11,6 @@ import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
 import useOrders, {
   acceptOrder,
-  cancleOrder,
   changeOrderStatus,
   finishOrder,
   requestPayment,
@@ -175,7 +172,7 @@ export default function OrderDetails({ navigation, route }) {
               }}
               style={{
                 height: 420,
-                width: width*0.85,
+                width: width * 0.85,
                 borderRadius: 10,
               }}
             />

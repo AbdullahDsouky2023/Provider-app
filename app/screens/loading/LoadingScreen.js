@@ -10,7 +10,7 @@ export default function LoadingScreen() {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
-        <AppHeader />
+        {/* <AppHeader /> */}
         <View style={{
             display:"flex",
             alignItems:'center',

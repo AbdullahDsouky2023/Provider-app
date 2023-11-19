@@ -1,16 +1,18 @@
 import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Sizes,Colors,Fonts } from "../../constant/styles";
+import { Sizes, Colors, Fonts } from "../../constant/styles";
 import AppText from "../AppText";
 const { width } = Dimensions.get("screen");
-export default function OrderOfferCard({item,onPress}) {
-    // console.log("item",item?.attributes?.service?.data?.attributes?.name)
+export default function OrderOfferCard({ item, onPress }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.orderCard}>
       <View style={styles.headerContainer}>
-        <AppText text={item?.attributes?.service?.data?.attributes?.name} style={styles.header} centered={false} />
-     
+        <AppText
+          text={item?.attributes?.service?.data?.attributes?.name}
+          style={styles.header}
+          centered={false}
+        />
       </View>
       <View style={styles.headerContainer}>
         <AppText text={":الموعد"} style={styles.header} centered={false} />
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     paddingVertical: 10,
     paddingHorizontal: 10,
-    marginBottom:10,
+    marginBottom: 10,
     shadowOffset: {
       width: 0,
       height: 1,

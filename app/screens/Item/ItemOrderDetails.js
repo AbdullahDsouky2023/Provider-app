@@ -46,18 +46,14 @@ const [isLoading,setIsLoading]=useState(false)
   const user = useSelector((state) => state?.user?.user);
   const userData = useSelector((state) => state?.user?.userData);
   const currentOrderData = useSelector((state) => state?.orders?.currentOrderData);
-  console.log(userData?.location);
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
-  
       // Wait for the image upload to complete
       await uploadImage(values.image);
-  
       // Create valid Date objects
       const date = new Date(values?.Date);
       const time = new Date(values?.Time);
-  
       // Format the date and time
       const formattedDate = format(date, "dd MMMM yyyy", {
         locale: arDZ,
@@ -76,21 +72,13 @@ const [isLoading,setIsLoading]=useState(false)
       };
   
       dispatch(setCurrentOrderProperties(formSubmitionData));
-  
-      console.log("***********************");
-      console.log("user order will be su", currentOrderData);
-      console.log("***********************");
-  
       const ITEM_PRICE = Number(item?.attributes?.Price);
       const data = await postOrder(currentOrderData);
   
       if (data) {
         dispatch(clearCurrentOrder());
-        console.log("current order DAta", currentOrderData);
-  
         if (ITEM_PRICE > 0) {
           navigation.navigate("Payment");
-          console.log("navigaion hap");
         } else if (ITEM_PRICE === 0) {
           navigation.dispatch(
             CommonActions.reset({

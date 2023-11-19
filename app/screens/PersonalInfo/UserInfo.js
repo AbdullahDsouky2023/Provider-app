@@ -37,10 +37,6 @@ const UserInfo = ({ navigation }) => {
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
-      console.log("this is the use data will be submite", {
-        email: values.emailAddress || userData?.email,
-        name: values.fullName || userData?.username,
-      });
       const res = await updateUserData(userData?.id, {
         email: values?.emailAddress || userData?.attributes?.email,
         name: values?.fullName || userData?.attributes?.name,
@@ -52,10 +48,10 @@ const UserInfo = ({ navigation }) => {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: HOME}],
-          }))
+            routes: [{ name: HOME }],
+          })
+        );
       } else {
-        console.log(res);
         Alert.alert("Something goes wrong");
       }
     } catch (err) {
@@ -71,13 +67,10 @@ const UserInfo = ({ navigation }) => {
       const userData = JSON.parse(userDataString);
       const validPhone = `${userData?.phoneNumber?.replace(/\s/g, "").trim()}`;
       const PhoneNumberValidated = convertPhoneTovalid(validPhone);
-      console.log(PhoneNumberValidated, " this is the use data in loca");
       if (userData?.phoneNumber) {
         const gottenuser = await getUserByPhoneNumber(PhoneNumberValidated);
         dispatch(setUserData(gottenuser));
-        console.log("this function was called  ", gottenuser);
       } else {
-        console.log("this function was called to auth ");
       }
     } catch (error) {
       console.log("error getting the user fo rthe fir", error);

@@ -12,7 +12,6 @@ export default function ServicesList() {
   const categories = useSelector((state) => state.categories.categories);
   const navigation = useNavigation();
   const handleServiceCardPress = (item) => {
-    console.log(item?.attributes?.name);
     navigation.navigate(OFFERS, { name: item?.attributes?.name });
   };
   return (

@@ -39,7 +39,6 @@ const SlectLocationOrderScreen = ({ navigation,route }) => {
   const [ manualLocations,setManualLocations] = useState([])
   useEffect(() => {
     loadManualLocations();
-    console.log("this load function was called")
     // Check if there are updated locations from the AddAddressScreen
     if (route.params?.updatedLocations) {
       setManualLocations(route?.params?.updatedLocations);
@@ -52,7 +51,6 @@ const SlectLocationOrderScreen = ({ navigation,route }) => {
 
       if (storedLocations !== null) {
         setManualLocations(JSON.parse(storedLocations));
-        console.log("manual location found ", JSON.parse(storedLocations));
       }
     } catch (error) {
       console.error("Error loading manual locations:", error);
@@ -67,16 +65,11 @@ const SlectLocationOrderScreen = ({ navigation,route }) => {
     } catch (error) {
         
     }
-    //    console.log(location)
   };
   useEffect(() => {
     getCurrentLocationFromStorage();
-    console.log('====================================');
-    console.log(selectedLocation ,"selectedLocation from the order scren page is ");
-    console.log('====================================');
   }, [selectedLocation]);
 const handleSubmitLocation = ()=>{
-  console.log("this is the location submiteed",selectedLocation)
   dispatch(setCurrentOrderProperties({"location":selectedLocation}))
   navigation.navigate(ORDER_SELECT_REGION,{item:route?.params?.item})
 }

@@ -36,7 +36,6 @@ const CurrentOffersScreen = ({ route, navigation }) => {
       (item) => item?.attributes?.status === "pending"
     );
     setselectedItemsData(pendingOrders);
-    console.log("regions", pendingOrders?.length);
     setRefreshing(false);
   };
   useEffect(() => {
@@ -44,7 +43,7 @@ const CurrentOffersScreen = ({ route, navigation }) => {
   }, [region]);
 
   useEffect(() => {
-   setRegion(regions?.data[0]?.attributes?.name);
+  if(regions) setRegion(regions?.data[0]?.attributes?.name);
   }, []);
 
   const getServices = async () => {

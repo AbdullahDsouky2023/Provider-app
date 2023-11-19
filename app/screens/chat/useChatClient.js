@@ -10,19 +10,15 @@ export const useChatClient = () => {
   const channel = useSelector((state) => state?.orders?.currentChatChannel);
   const [isInChatRoom, setIsInChatRoom] = useState(false);
 
-  const user =
-    chatUserId && chatUserName ? { id: chatUserId, name: chatUserName } : null;
+  const user = chatUserId && chatUserName ? { id: chatUserId, name: chatUserName } : null;
   useEffect(() => {
     const setupClient = async () => {
       try {
         
         if (channel) {
-          console.log("Connecting the user ...............")
           await chatClient.connectUser(user, chatUserToken);
-          const globalChannel = chatClient.channel("messaging", channel, {
-            name: channel,
-          });
-          await globalChannel.watch();
+          const globalChannel = chatClient.channel("messaging", channel);
+          await globalChannel.watch( );
           setClientIsReady(true);
         }
       } catch (error) {
@@ -41,7 +37,6 @@ export const useChatClient = () => {
   
   useEffect(() => {
     return () => {
-      console.log("disConnecting the user ...............");
       if (!isInChatRoom) {
         chatClient.disconnectUser();
       }
@@ -52,7 +47,6 @@ export const useChatClient = () => {
   
   // In your ChatRoom component
   useEffect(() => {
-    console.log("USER is in room");
     // Set the isInChatRoom state to true when the component mounts
     setIsInChatRoom(true);
   }, []);

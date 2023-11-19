@@ -23,13 +23,8 @@ import { Colors } from '../../constant/styles';
         </View>
       );
     };
-    // const getRegions = async()=>{
-    // }
-    // useEffect(()=>{
-    //     console.log(regions?.data[0]?.attributes?.name)
-    // },[])
 
-    console.log("drop dow",value)
+
 
     return (
       <Dropdown

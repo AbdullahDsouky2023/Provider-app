@@ -12,12 +12,9 @@ import {
 import ArrowBack from "../component/ArrowBack";
 import { Colors } from "../constant/styles";
 import AppText from "../component/AppText";
-import {  ScrollView} from 'react-native-virtualized-view'
+import { ScrollView } from "react-native-virtualized-view";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ITEM_ORDER_DETAILS,
-  
-} from "../navigation/routes";
+import { ITEM_ORDER_DETAILS } from "../navigation/routes";
 import SelectLocationItem from "../component/location/SelectLocationItem";
 import AppButton from "../component/AppButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -29,31 +26,26 @@ const SelectRegionScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedId, setSelectedId] = useState(0);
-  const {data:regions}= useRegions();
-    const getRegions = async() => {
-        try {
-            const data =     getRegionsFromLocalStorage();
-            // setRegions(data)
-                console.log("this region function was called",regions?.data[0]?.attributes?.name);
-              
-            
-        } catch (error) {
-            
-        }
-          }
-         
-  useEffect(()=>{
-    getRegions()
+  const { data: regions } = useRegions();
+  const getRegions = async () => {
+    try {
+      const data = getRegionsFromLocalStorage();
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getRegions();
   }, [regions]);
-  const handleSelecItem =(item)=>{
-    setSelectedId(item)
-    setSelectedRegion(item?.attributes?.name)
-  }
+  const handleSelecItem = (item) => {
+    setSelectedId(item);
+    setSelectedRegion(item?.attributes?.name);
+  };
 
   const handleSubmitRegion = () => {
-    const item = regions?.data.find((item)=>item?.attributes?.name === selectedRegion)
-    console.log("this is the region submiteed", item?.id);
-    dispatch(setCurrentOrderProperties({ region:  item?.id }));
+    const item = regions?.data.find(
+      (item) => item?.attributes?.name === selectedRegion
+    );
+    dispatch(setCurrentOrderProperties({ region: item?.id }));
     navigation.navigate(ITEM_ORDER_DETAILS, { item: route?.params?.item });
   };
   return (
@@ -72,7 +64,6 @@ const SelectRegionScreen = ({ navigation, route }) => {
                   fontSize: 19,
                 }}
               />
-              
             </View>
             <View>
               {/* region primary */}

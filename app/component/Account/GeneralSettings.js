@@ -5,15 +5,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
+import { FlatList } from "react-native";
 
 import AppText from "../AppText";
 import AppButton from "../AppButton";
 import { Colors } from "../../constant/styles";
 import SettingItem from "./SettingItem";
-import { FlatList } from "react-native";
 import { settingsItemArray } from "../../data/account";
 import { auth } from "../../../firebaseConfig";
 const { width } = Dimensions.get("screen");
+
 export default function GeneralSettings() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -22,8 +23,6 @@ export default function GeneralSettings() {
     try {
       await auth.signOut();
       await AsyncStorage.removeItem("userData");
-
-      // Inside your sign-out function:
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -53,7 +52,7 @@ export default function GeneralSettings() {
       </View>
       <AppButton
         title={'signOut'}
-        style={{ marginVertical: 20 }}
+        style={{ marginVertical: 20,marginTop:100 }}
         onPress={handleSignOut}
       />
     </ScrollView>
@@ -84,13 +83,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    // width: width * 1,
   },
   itemHeader: {
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    // justifyContent:'center',
     gap: 15,
   },
 });

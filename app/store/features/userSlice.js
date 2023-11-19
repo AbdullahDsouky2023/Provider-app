@@ -18,7 +18,6 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.loading = false;
       state.error = null;
-      console.log('ffffffffffff register is called');
     },
     userRegisterFailure: (state, action) => {
       state.loading = false;
@@ -29,7 +28,6 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.user=state.user
-      console.log('setting the user  is called');
     },
     setUserStreamData:(state, action) => {
       state.userData = state.userData;
@@ -44,7 +42,6 @@ const userSlice = createSlice({
       // This is an asynchronous side effect
       const userDate = await getUserInformation(auth.currentUser.phoneNumber);
       state.user = userDate;
-      console.log('ffffffffffff builder is called');
 
     });
   }

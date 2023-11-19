@@ -5,6 +5,7 @@ import { Colors, Fonts } from "../../constant/styles";
 import AppText from "../AppText";
 import { useSelector } from "react-redux";
 import { getUserCurrentOrders } from "../../../utils/user";
+import LoadingScreen from "../../screens/loading/LoadingScreen";
 const { width } = Dimensions.get("screen");
 export default function ProviderSectionCard({ image, name, onPress }) {
   const user = useSelector((state) => state?.user?.userData);
@@ -16,6 +17,7 @@ const [currentOrders,setCurrentData]=useState([])
       const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
       setCurrentData(orders)
     },[ordersRedux])
+    if(!currentOrders) return <LoadingScreen/>
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>

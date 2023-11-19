@@ -51,11 +51,6 @@ const RegisterScreen = ({ navigation,route}) => {
       const userLocation = await getLocationFromStorage()
       // const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "")
       setIsLoading(true);
-      console.log("this is the use data will be submite",{
-        email:values.emailAddress,
-        name:values.fullName,
-        phoneNumber:phoneNumber
-      });
       const res = await createUser({
         email:values.emailAddress,
         name:values.fullName,

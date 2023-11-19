@@ -40,7 +40,7 @@ const AddManualLocationScreen = ({ navigation,route }) => {
           : [];
 
         const updatedLocations = [...existingLocations, data.location];
-        console.log("the new location ", updatedLocations);
+        
         await AsyncStorage.setItem(
           "manualLocations",
           JSON.stringify(updatedLocations)

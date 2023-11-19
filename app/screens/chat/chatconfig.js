@@ -2,14 +2,15 @@ import { StreamChat } from "stream-chat";
 import { JWT_SECRET } from '@env';
 import JWT from 'expo-jwt';
 import { useSelector } from "react-redux";
-
-const chatClient = StreamChat.getInstance('8a4bf25khwrq');
-
+import { CHAT_API_KEY} from '@env'
+const chatClient = StreamChat.getInstance(CHAT_API_KEY);
 export const userChatConfigData = ()=>{
+    const user = useSelector((state)=>state?.user?.userData)
+    console.log("user is ",user?.id)
     const chatData = useSelector((state)=>state?.user?.userStreamData)
-     const chatApiKey = '8a4bf25khwrq';
+     const chatApiKey = CHAT_API_KEY ;
      const chatUserToken = chatData?.token
-     const chatUserId =  chatData?.userId
+     const chatUserId = chatData?.userId
      const chatUserName =  chatData?.userId
 
      return {
@@ -23,7 +24,7 @@ export const userChatConfigData = ()=>{
 }
 export const generateUserToken = async (user) => {
 try {
-    const userId = `${user?.attributes?.name?.replace(/\s+/g, '-')}-${user.id}`;
+    const userId = `provider-${user?.id}`
     const key = JWT_SECRET;
     
    const token =  JWT.encode({ ...user,user_id:userId}, key);

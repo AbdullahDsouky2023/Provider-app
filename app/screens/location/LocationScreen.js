@@ -38,7 +38,6 @@ const LocationScreen = ({ navigation, route }) => {
       setCurrentLocation(location);
       selectedLocation(location);
     } catch (error) {}
-    //    console.log(location)
   };
   useEffect(() => {
     getCurrentLocationFromStorage();
@@ -46,7 +45,6 @@ const LocationScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     loadManualLocations();
-    console.log("this load function was called")
     // Check if there are updated locations from the AddAddressScreen
     if (route.params?.updatedLocations) {
       setManualLocations(route?.params?.updatedLocations);
@@ -59,7 +57,6 @@ const LocationScreen = ({ navigation, route }) => {
 
       if (storedLocations !== null) {
         setManualLocations(JSON.parse(storedLocations));
-        console.log("manual location found ", JSON.parse(storedLocations));
       }
     } catch (error) {
       console.error("Error loading manual locations:", error);

@@ -16,7 +16,7 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
       selectTextOnFocus
         selectionColor={Colors.primaryColor}
         textAlign="right"
-        placeholderTextColor={Colors.blackColor}
+        placeholderTextColor={Colors.grayColor}
         style={{
           borderWidth: 1,
           width: "100%",
@@ -42,11 +42,9 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flexDirection: "row-reverse",
     padding: 15,
-    // marginVertical: 10,
     fontFamily: mainFont.light,
   },
   icon: {
-    // marginRight: 10,
   },
 });
 

@@ -13,7 +13,7 @@ export default function AppHeader({ subPage = false}) {
         width:40,
         height:40
       }} height={50} width={50} />
-      {subPage ? (
+      {subPage && (
         <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>
 
           <MaterialIcons
@@ -22,9 +22,8 @@ export default function AppHeader({ subPage = false}) {
             color={Colors.grayColor}
             />
             </TouchableWithoutFeedback>
-          ) : (
-          <Ionicons name="md-notifications-outline" size={27} color={Colors.blackColor} />
-      )}
+          ) 
+      }
     </View>
   );
 }

@@ -47,7 +47,6 @@ const SigninScreen = ({ navigation }) => {
         phoneNumberValidToFirebase,
         recaptchaVerifier.current
       );
-          console.log('this is the number from the sign page ',PhoneNumberValidated)
       if (result.verificationId) {
         navigation.navigate("Verification", {
            result,

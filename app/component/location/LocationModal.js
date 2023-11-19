@@ -1,8 +1,8 @@
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Location from 'expo-location';
-import { Dimensions, StyleSheet, Text, View } from "react-native";
 import Dialog from "react-native-dialog";
+import * as Location from 'expo-location';
 import AppText from '../AppText';
 import { Colors, Sizes ,Fonts} from '../../constant/styles';
 import AppButton from '../AppButton';
@@ -18,7 +18,6 @@ const { width } = Dimensions.get('screen')
         
         // Save the location to storage
         await AsyncStorage.setItem('userLocation', JSON.stringify(location?.coords));
-        console.log("llllll",location)
         // Close the modal and notify the parent component
         onConfirm();
       }

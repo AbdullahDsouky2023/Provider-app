@@ -12,11 +12,9 @@ export default function ChatRoom() {
   const currentChatChannel =
     chatClient?.activeChannels[`messaging:${currentChannelName}`];
     useEffect(() => {
-      console.log("USER is in room")
       // Set the isInChatRoom state to true when the component mounts
       setIsInChatRoom(true);
       return () => {
-        console.log("USER is out of the  room")
       //   // Set the isInChatRoom state to false when the component unmounts
         setIsInChatRoom(false);
       };

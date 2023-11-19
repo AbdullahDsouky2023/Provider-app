@@ -12,7 +12,6 @@ export default function OrderCreationSuccess({navigation}) {
   const handleReturn = ()=> {
     dispatch(setOrders(orders))
     navigation.navigate('App')
-    console.log("clicked")
   }
   
   
