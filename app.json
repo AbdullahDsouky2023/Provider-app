@@ -3,7 +3,6 @@
     "name": "RN HomeService Provider App",
     "slug": "rn-HomeService",
     "version": "1.0.0",
-    "writingDirection": "ltr",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon.png",
     "userInterfaceStyle": "light",
@@ -22,7 +21,8 @@
     },
     "android": {
       "package": "com.render.rnhomeserviceuser",
-      "versionCode": 3,
+      "versionCode": 1,
+      "googleServicesFile":"",
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/icon.png",
         "backgroundColor": "#FFFFFF"

@@ -6,12 +6,11 @@ import { CHAT_API_KEY} from '@env'
 const chatClient = StreamChat.getInstance(CHAT_API_KEY);
 export const userChatConfigData = ()=>{
     const user = useSelector((state)=>state?.user?.userData)
-    console.log("user is ",user?.id)
     const chatData = useSelector((state)=>state?.user?.userStreamData)
      const chatApiKey = CHAT_API_KEY ;
      const chatUserToken = chatData?.token
      const chatUserId = chatData?.userId
-     const chatUserName =  chatData?.userId
+     const chatUserName =  user?.attributes?.name
 
      return {
         chatApiKey,

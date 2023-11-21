@@ -33,11 +33,11 @@ const [currentOrders,setCurrentData]=useState([])
         >
           <AppText text={"الطلبات المكتمله   :"} style={styles.text} centered={false} />
         </View>
-        <View>
+        <View >
           <AppText text={completedOrdersNumber} style={styles.text} />
         </View>
       </View>
-        <View style={styles.card}>
+        {/* <View style={styles.card}>
         <View
           style={{
             display: "flex",
@@ -50,7 +50,7 @@ const [currentOrders,setCurrentData]=useState([])
         <View>
           <AppText text={currentOrders?.length} style={styles.text} />
         </View>
-      </View>
+      </View> */}
             </View>
     </TouchableWithoutFeedback>
   );
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.whiteColor,
     borderRadius: 10,
-    flex: 1,
+    // flex: 1,
     paddingTop: 19,
     flexDirection:"row",
     justifyContent: "space-between",
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
 marginBottom:10,
 marginTop:10,
     elevation: 10,
+    height:100,
     paddingHorizontal:20
   },
   text: {

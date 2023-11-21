@@ -186,7 +186,7 @@ export default function OrderDetails({ navigation, route }) {
 
         {item?.attributes?.status === "finished" ? (
           <AppButton
-            title={"Request Payment"}
+            title={"Confirm Request Payment"}
             style={{ backgroundColor: Colors.success }}
             onPress={() => handleRequestPayment(item.id)}
           />
