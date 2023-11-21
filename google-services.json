@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "812428003506",
+    "project_id": "nijk-9be19",
+    "storage_bucket": "nijk-9be19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812428003506:android:04ae2b6a1db26769cee1ab",
+        "android_client_info": {
+          "package_name": "com.NijkDevelopment.Nijk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABJJyEpy6H4cYUAtzbk-4wohLAgJsqraM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

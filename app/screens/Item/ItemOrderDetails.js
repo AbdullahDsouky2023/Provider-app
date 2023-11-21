@@ -34,6 +34,7 @@ import { clearCurrentOrder, setCurrentOrderProperties } from "../../store/featur
 import PriceTextComponent from "../../component/PriceTextComponent";
 import LoadingModal from "../../component/Loading";
 import axios from "axios";
+import { fetch } from 'react-native';
 
 const { width } = Dimensions.get("window");
 

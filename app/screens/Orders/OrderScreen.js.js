@@ -9,7 +9,6 @@ import CompletedOrderDetails from './CompletedOrderDetails'
 function OrderScreen() {
   const Stack = createStackNavigator()
   return (
-    <>
       <Stack.Navigator
     screenOptions={{
         headerShown: false,
@@ -32,7 +31,6 @@ function OrderScreen() {
                    
                 />
     </Stack.Navigator>
-    </>
   );
 }
 

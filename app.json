@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RN HomeService Provider App",
-    "slug": "rn-HomeService",
+    "name": "Nijk Provider App",
+    "slug": "rn-Nijk-Provider",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon.png",
@@ -15,14 +15,14 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.render.rnhomeserviceuser",
+      "bundleIdentifier": "com.NijkDevelopment.Nijk",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.render.rnhomeserviceuser",
+      "package": "com.NijkDevelopment.Nijk",
       "versionCode": 1,
-      "googleServicesFile":"",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/icon.png",
         "backgroundColor": "#FFFFFF"
@@ -31,17 +31,27 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "plugins":[
+    "plugins": [
       "@react-native-firebase/app",
       [
         "expo-build-properties",
         {
-
-          "ios":{
-            "useFrameworks":"static"
+          "ios": {
+            "useFrameworks": "static"
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a779df16-7bfb-4241-a842-abb196ed7e49"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a779df16-7bfb-4241-a842-abb196ed7e49"
+    }
   }
 }

@@ -1,0 +1,31 @@
+{
+  "cli": {
+    "version": ">= 5.9.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "preview2": {
+     "android":{
+      "buildType":"apk"
+     },
+     "env":{
+      "BASE_URL" : "http://192.168.1.6:1337",
+      "CHAT_SECRET" : "bpg8c83mzyhra54kun98ptvjnfvw8az9ddhpu88zgevebthn2xawtvf8kvvve4w",
+      "CHAT_API_KEY" : "8a4bf25khwrq",
+      "SECRET_PASSWORD" : "NIJK_DEVELOPMENT",
+      "JWT_SECRET" : "NIJK_DEVELOPMENT_*2020411/16"
+     },
+     "channel":"preview2"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}
