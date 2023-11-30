@@ -32,15 +32,7 @@ const SplashScreen = ({ navigation }) => {
   const { data, isLoading, isError } = useRegions();
   const { data: orders } = useOrders();
 
-  useEffect(() => {
-    AsyncStorage.getItem("userLocation").then((userLocation) => {
-      if (userLocation) {
-        setLocationConfirmed(true);
-      } else {
-        setLocationModalVisible(true);
-      }
-    });
-  }, []);
+  
 
   const handleLocationConfirm = () => {
     setLocationConfirmed(true);
@@ -130,7 +122,7 @@ const SplashScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
 
-      {locationConfirmed ? (
+      {/* {locationConfirmed ? ( */}
         <View style={{ flex: 1, justifyContent: "center" }}>
           <Logo />
           <CircleFade
@@ -139,12 +131,12 @@ const SplashScreen = ({ navigation }) => {
             style={{ alignSelf: "center" }}
           />
         </View>
-      ) : (
+      {/* ) : (
         <LocationModal
           visible={locationModalVisible}
           onConfirm={handleLocationConfirm}
         />
-      )}
+      )} */}
     </SafeAreaView>
   );
 };

@@ -15,11 +15,13 @@ const { width } = Dimensions.get('screen')
       if (status === 'granted') {
         // Fetch user's location
         const location = await Location.getLastKnownPositionAsync({});
-        
-        // Save the location to storage
-        await AsyncStorage.setItem('userLocation', JSON.stringify(location?.coords));
-        // Close the modal and notify the parent component
-        onConfirm();
+        if(location){
+
+          // Save the location to storage
+          await AsyncStorage.setItem('userLocation', JSON.stringify(location?.coords));
+          // Close the modal and notify the parent component
+          onConfirm();
+        }
       }
     } catch (error) {
       console.error('Error fetching location:', error);

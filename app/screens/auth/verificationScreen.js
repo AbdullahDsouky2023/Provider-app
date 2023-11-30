@@ -21,6 +21,10 @@ import { errorMessages } from "../../data/signin";
 import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
 import { auth, db } from "../../../firebaseConfig";
 import { getUserByPhoneNumber } from "../../../utils/user";
+import { setRegions } from "../../store/features/regionSlice";
+import { setOrders } from "../../store/features/ordersSlice";
+import useRegions from "../../../utils/useRegions";
+import useOrders from "../../../utils/orders";
 
 const { width } = Dimensions.get("screen");
 
@@ -32,10 +36,12 @@ const VerificationScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   const { result, handleSendVerificationCode, phoneNumber } = route.params;
-
+  const { data:regions, isError } = useRegions();
+  const { data: orders } = useOrders();
 
   const confirmVerificationCode = async () => {
     try {
+      setisLoading(true)
       const res = await result?.confirm(otpInput);
       
       
@@ -45,7 +51,9 @@ const VerificationScreen = ({ navigation, route }) => {
         await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
         const user = await getUserByPhoneNumber(phoneNumber)
       if (user) {
-        dispatch(setUserData(user[0]))
+        dispatch(setUserData(user));
+        dispatch(userRegisterSuccess(user));
+        console.log("********user",user)
         return navigation.navigate("App")
       } else if(!user) {
         return navigation.navigate("Register", { phoneNumber })
@@ -57,6 +65,7 @@ const VerificationScreen = ({ navigation, route }) => {
       Alert.alert(errorMessage);
     } finally {
       setOtpInput("");
+      setisLoading(false)
     }
   };
 

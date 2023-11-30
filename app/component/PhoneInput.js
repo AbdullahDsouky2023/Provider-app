@@ -3,8 +3,10 @@ import IntlPhoneInput from "react-native-intl-phone-input";
 import { StyleSheet } from "react-native";
 
 import { Sizes, Fonts, Colors } from "../constant/styles";
+import { useTranslation } from "react-i18next";
 
 export default function PhoneNumberTextField({ phoneNumber, updateState }) {
+  const { t} = useTranslation()
   return (
     <IntlPhoneInput
       onChangeText={({ phoneNumber }) => {
@@ -27,7 +29,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         textAlign: "left",  // Set text alignment to left
         direction: "ltr",  // Set text direction to left-to-right (ltr)
       }}
-      placeholder="رقم الهاتف"
+      // placeholder={t("phone")}
     />
   );
 }

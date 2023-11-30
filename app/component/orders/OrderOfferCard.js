@@ -17,7 +17,7 @@ export default function OrderOfferCard({ item, onPress }) {
       <View style={styles.headerContainer}>
         <AppText text={":الموعد"} style={styles.header} centered={false} />
         <AppText
-          text={`${item?.attributes?.date}/ ${item?.attributes?.time}`}
+          text={`${item?.attributes?.date}`}
           centered={false}
           style={styles.content}
         />

@@ -11,6 +11,7 @@ import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
 import useOrders, {
   acceptOrder,
+  cancleOrder,
   changeOrderStatus,
   finishOrder,
   requestPayment,
@@ -140,7 +141,7 @@ export default function OrderDetails({ navigation, route }) {
           <AppText centered={false} text={" الموعد"} style={styles.title} />
           <AppText
             centered={false}
-            text={`${item?.attributes?.date} - ${item?.attributes?.time}`}
+            text={`${item?.attributes?.date}`}
             style={styles.price}
           />
         </View>

@@ -84,7 +84,7 @@ const SigninScreen = ({ navigation }) => {
             <AppText
               centered={true}
               text={"Signin with Phone Number"}
-              style={{ marginBottom: 10,maxWidth :width*0.75 }}
+              style={{ marginBottom: width*0.09,maxWidth :width*0.75 }}
             />
           </View>
           <PhoneNumberTextField
@@ -101,6 +101,7 @@ const SigninScreen = ({ navigation }) => {
           <AppButton
             path={"Verification"}
             title={"Continue"}
+            style={{marginTop:20}}
             disabled={disabled}
             onPress={() => handleSendVerificationCode()}
           />

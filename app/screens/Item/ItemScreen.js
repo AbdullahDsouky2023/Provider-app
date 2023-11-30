@@ -109,7 +109,7 @@ export default function ItemScreen({ navigation, route }) {
           <AppText centered={false} text={" الموعد"} style={styles.title} />
           <AppText
             centered={false}
-            text={`${item?.attributes?.date} - ${item?.attributes?.time}`}
+            text={`${item?.attributes?.date}`}
             style={styles.price}
           />
         </View>
