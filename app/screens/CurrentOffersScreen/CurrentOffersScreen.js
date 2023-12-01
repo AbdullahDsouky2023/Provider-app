@@ -18,6 +18,8 @@ import { ScrollView } from "react-native-virtualized-view";
 import RegionDropDown from "../../component/Region/RegionDropDown";
 import OrderOfferCard from "../../component/orders/OrderOfferCard";
 import { ITEM_DETAILS } from "../../navigation/routes";
+import useNotifications from "../../../utils/notifications";
+import { ErrorScreen } from "../Error/ErrorScreen";
 
 const { width } = Dimensions.get("screen");
 
@@ -26,25 +28,33 @@ const CurrentOffersScreen = ({ route, navigation }) => {
   const regions = useSelector((state) => state?.regions?.regions);
   const orderRedux = useSelector((state) => state?.orders?.orders);
   const [region, setRegion] = useState(null);
-  const [selectedItemsData, setselectedItemsData] = useState();
+  const [selectedItemsData, setselectedItemsData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
+  const { token} = useNotifications()
   const fetchData = () => {
-    const orders = orderRedux?.data?.filter(
-      (item) => item?.attributes?.region?.data?.attributes?.name === region
-    );
-    const pendingOrders = orders?.filter(
-      (item) => item?.attributes?.status === "pending"
-    );
-    setselectedItemsData(pendingOrders);
-    setRefreshing(false);
+    if(orderRedux ){
+
+      const orders = orderRedux?.data?.filter(
+        (item) => item?.attributes?.region?.data?.attributes?.name === region
+        );
+        const pendingOrders = orders?.filter(
+          (item) => item?.attributes?.status === "pending"
+          );
+          setselectedItemsData(pendingOrders);
+          setRefreshing(false);
+        }
   };
+  useEffect(() => {
+    // if(regions?.length > 0 ){
+      const position = regions?.data[0]?.attributes?.name
+       if(position) setRegion(position);
+      console.log("ther is  regions",regions?.length)
+    // }
+  }, [regions]);
   useEffect(() => {
     fetchData();
   }, [region]);
 
-  useEffect(() => {
-  if(regions) setRegion(regions?.data[0]?.attributes?.name);
-  }, []);
 
   const getServices = async () => {
     if (data) {
@@ -58,11 +68,15 @@ const CurrentOffersScreen = ({ route, navigation }) => {
     fetchData();
   };
   return (
+    
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
+    {
+      !regions?.length > 0 ?
+      <>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
-      <RegionDropDown onChange={setRegion} />
-      <AppText text={region} centered={false} style={styles.RegionHeader} />
+        <RegionDropDown onChange={setRegion} /> 
+       <AppText text={region} centered={false} style={styles.RegionHeader} /> 
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -93,8 +107,11 @@ const CurrentOffersScreen = ({ route, navigation }) => {
             <AppText text={"لا يوجد طلبات في المنطقه"} />
           </View>
         )}
-      </ScrollView>
+      </ScrollView> 
+      </>
+      :<ErrorScreen hanleRetry={fetchData} />}
     </SafeAreaView>
+  
   );
 };
 

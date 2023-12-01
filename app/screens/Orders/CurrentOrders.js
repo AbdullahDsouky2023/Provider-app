@@ -61,6 +61,7 @@ const fetchData = ()=>{
       renderItem={({item})=>{
         return <CurrentOrderCard item={item} onPress={()=>{
           navigation.navigate(ORDERS_DETAILS, { item })
+          console.log("channel",item?.attributes?.chat_channel_id)
          dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
         }}/>
       }}

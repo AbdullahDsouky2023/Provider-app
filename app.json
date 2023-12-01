@@ -6,7 +6,10 @@
     "orientation": "portrait",
     "icon": "./app/assets/images/icon2.png",
     "userInterfaceStyle": "light",
-    "splash": {
+    "notifications":{
+      "icon": "./app/assets/images/icon2.png"
+      }, 
+        "splash": {
       "image": "./app/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#F26527"
@@ -20,7 +23,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.NijkDevelopment.Nijk",
+      "package": "com.render.rnhomeserviceuser",
       "googleServicesFile": "./google-services.json",
       "versionCode": 1,
       "adaptiveIcon": {
@@ -39,6 +42,12 @@
           "ios": {
             "useFrameworks": "static"
           }
+        }
+      ],[
+        "expo-notifications",
+        {
+          "icon": "./app/assets/images/icon2.png",
+          "color": "#FFFFFF"
         }
       ]
     ],

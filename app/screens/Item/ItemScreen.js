@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
@@ -26,30 +26,38 @@ import { ScrollView } from "react-native";
 import LoadingScreen from "../loading/LoadingScreen";
 import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
+import useNotifications from "../../../utils/notifications";
 
 const { width } = Dimensions.get("screen");
 export default function ItemScreen({ navigation, route }) {
   const { item } = route?.params;
   // const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  const user = useSelector((state) => state?.user?.userData);
+  const provider = useSelector((state) => state?.user?.userData);
   const orders = useSelector((state) => state?.orders?.orders);
   const { data, isLoading } = useOrders();
   const dispatch = useDispatch();
+  const { sendPushNotification} = useNotifications()
   const createUniqueName = (userId, providerId, orderId) => {
     return `user_${userId}_provider_${providerId}_order_${orderId}`;
   };
+
   const handleOrderAccept = async (id) => {
     try {
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
       const userId = selectedOrder[0]?.attributes?.user?.data?.id;
-      const channel_id = createUniqueName(userId, user?.id, id);
+      const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
+      const channel_id = createUniqueName(userId, provider?.id, id);
 
-      const res = await acceptOrder(id, user?.id, channel_id);
+      const res = await acceptOrder(id, provider?.id, channel_id);
       if (res) {
         //     //   // Update Redux store to remove the cancelled order
         dispatch(setOrders(data));
-        navigation.goBack();
+        // console.log(`the user token `,selectedOrder[0].attributes?.user)
+        // console.log(userNotificationToken,"tooo")
+ sendPushNotification(userNotificationToken,
+  `${selectedOrder[0].attributes?.service?.data?.attributes?.name}`,`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
+navigation.goBack();
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -68,7 +76,12 @@ export default function ItemScreen({ navigation, route }) {
       setModalVisible(false);
     }
   };
-
+  // useEffect(()=>{
+  //   sendPushNotification("ExponentPushToken[anqOdSDTKdUfVPPHb-agSg]",
+  //     "تم قبول طلبك ",`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
+  //      console.log(provider?.attributes?.expoPushNotificationToken)
+  // },[])
+//  console.log(provider?.attributes?.expoPushNotificationToken)
   // if(isLoading) return <LoadingScreen/>
   return (
     <ScrollView style={styles.scrollContainer}>

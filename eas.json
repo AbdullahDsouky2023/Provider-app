@@ -15,7 +15,7 @@
       "buildType":"apk"
      },
      "env":{
-      "BASE_URL" : "http://192.168.1.6:1337",
+      "BASE_URL" : "http://192.168.1.4:1337",
       "CHAT_SECRET" : "bpg8c83mzyhra54kun98ptvjnfvw8az9ddhpu88zgevebthn2xawtvf8kvvve4w",
       "CHAT_API_KEY" : "8a4bf25khwrq",
       "SECRET_PASSWORD" : "NIJK_DEVELOPMENT",

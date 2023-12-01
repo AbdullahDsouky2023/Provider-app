@@ -27,6 +27,7 @@ import LoadingScreen from "../loading/LoadingScreen";
 import { color } from "@rneui/base";
 import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
+import useNotifications from "../../../utils/notifications";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
@@ -36,11 +37,21 @@ export default function OrderDetails({ navigation, route }) {
 
   const { data } = useOrders();
   const dispatch = useDispatch();
+  const orders = useSelector((state) => state?.orders?.orders);
+  const provider = useSelector((state) => state?.user?.userData);
+  const { sendPushNotification} = useNotifications()
+
   const handleOrderCancle = async (id) => {
     try {
       const res = await cancleOrder(id);
+      const selectedOrder = orders?.data.filter((order) => order?.id === id);
+      const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
+
       if (res) {
         dispatch(setOrders(data));
+        console.log(`the user token `,selectedOrder[0].attributes?.user)
+        sendPushNotification(userNotificationToken,
+          `${selectedOrder[0].attributes?.service?.data?.attributes?.name}`,` قام ${provider?.attributes?.name} بالغاء الطلب`)
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -61,8 +72,12 @@ export default function OrderDetails({ navigation, route }) {
   const handleFinishOrder = async (id) => {
     try {
       const res = await changeOrderStatus(id, "finished");
+      const selectedOrder = orders?.data.filter((order) => order?.id === id);
+      const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
       if (res) {
         dispatch(setOrders(data));
+        sendPushNotification(userNotificationToken,
+         `${selectedOrder[0].attributes?.service?.data?.attributes?.name}`,` قام ${provider?.attributes?.name} بانهاء العمل علي الطلب`)
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
