@@ -9,10 +9,12 @@ import { Colors } from '../../constant/styles';
 
 
 
-  const RegionDropDown = ({onChange}) => {
+  const RegionDropDown = ({onChange,enableRefetch}) => {
     const [value, setValue] = useState("");
-    const {data:regions} =   useRegions()
-
+    const {data:regions,refetch} =   useRegions()
+    useEffect(()=>{
+       if(enableRefetch) refetch()
+    },[enableRefetch])
     const renderItem = item => {
       return (
         <View style={styles.item}>

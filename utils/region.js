@@ -25,12 +25,13 @@ export default function useRegions() {
     }
   };
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError ,refetch} = useQuery({
     queryKey: ["regions"],
     queryFn: fetchRegions,
   }); // Changed the query key to 'superheroes'
 
   return {
+    refetch,
     data,
     isLoading,
     isError,

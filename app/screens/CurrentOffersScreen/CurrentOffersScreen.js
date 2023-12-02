@@ -20,6 +20,7 @@ import OrderOfferCard from "../../component/orders/OrderOfferCard";
 import { ITEM_DETAILS } from "../../navigation/routes";
 import useNotifications from "../../../utils/notifications";
 import { ErrorScreen } from "../Error/ErrorScreen";
+import useRegions from "../../../utils/useRegions";
 
 const { width } = Dimensions.get("screen");
 
@@ -31,6 +32,8 @@ const CurrentOffersScreen = ({ route, navigation }) => {
   const [selectedItemsData, setselectedItemsData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { token} = useNotifications()
+  const [enableRefetch,setEnableRefetch]=useState(false)
+  // const { refetch} = useRegions()
   const fetchData = () => {
     if(orderRedux ){
 
@@ -42,6 +45,7 @@ const CurrentOffersScreen = ({ route, navigation }) => {
           );
           setselectedItemsData(pendingOrders);
           setRefreshing(false);
+          setEnableRefetch(false)
         }
   };
   useEffect(() => {
@@ -65,6 +69,7 @@ const CurrentOffersScreen = ({ route, navigation }) => {
   };
   const onRefresh = () => {
     setRefreshing(true);
+    setEnableRefetch(true);
     fetchData();
   };
   return (
@@ -75,7 +80,7 @@ const CurrentOffersScreen = ({ route, navigation }) => {
       <>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
-        <RegionDropDown onChange={setRegion} /> 
+        <RegionDropDown onChange={setRegion} enableRefetch={enableRefetch}/> 
        <AppText text={region} centered={false} style={styles.RegionHeader} /> 
       <ScrollView
         refreshControl={

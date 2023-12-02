@@ -27,8 +27,8 @@ import { setUserStreamData } from "../../store/features/userSlice";
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
   const dispatch = useDispatch();
-  const { data, isLoading, isError } = useRegions();
-  const { data: orders, isError: error } = useOrders();
+  const { data, isLoading, isError ,refetch:refetchRegions } = useRegions();
+  const { data: orders, isError: error ,refetch:refetchOrders} = useOrders();
 
   const [refreshing, setRefreshing] = useState(false);
   const fetchData = async () => {
@@ -38,6 +38,9 @@ const HomeScreen = ({ navigation }) => {
       setRefreshing(false);
       const chat = generateUserToken(user);
       dispatch(setUserStreamData(chat));
+
+      refetchOrders()
+      refetchRegions()
     } else if (isError) {
       console.log(isError);
       //   // Handle the error

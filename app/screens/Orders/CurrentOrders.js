@@ -21,7 +21,7 @@ export default function CurrentOrders({navigation}) {
   const ordersRedux = useSelector((state) => state?.orders?.orders);
   const [refreshing, setRefreshing] = useState(false);
 const [currentOrders,setCurrentData]=useState([])
-const { data ,isLoading}=useOrders()
+const { data ,isLoading,refetch}=useOrders()
 const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
@@ -29,7 +29,7 @@ const fetchData = ()=>{
   const currentOrders = orders?.filter((item)=>item?.attributes?.status !== "pending" && item?.attributes?.PaymentStatus !== "payed")
   setCurrentData(currentOrders)
   setRefreshing(false);
-
+  refetch()
 
 }
   useEffect(()=>{

@@ -43,9 +43,11 @@ export default function OrderDetails({ navigation, route }) {
 
   const handleOrderCancle = async (id) => {
     try {
-      const res = await cancleOrder(id);
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
+      console.log(id,selectedOrder[0]?.attributes)
       const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
+      if(selectedOrder[0]?.attributes?.PaymentStatus !== "Payed" && selectedOrder[0]?.attributes?.status !== "finished" ){
+        const res = await cancleOrder(id);
 
       if (res) {
         dispatch(setOrders(data));
@@ -61,7 +63,7 @@ export default function OrderDetails({ navigation, route }) {
         Alert.alert("تم بنجاح");
       } else {
         Alert.alert("حدثت مشكله حاول مرة اخري");
-      }
+      }}
     } catch (error) {
       console.log(error, "error deleting the order");
     } finally {
