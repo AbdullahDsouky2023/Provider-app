@@ -3,6 +3,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -16,9 +17,15 @@ import { useNavigation } from "@react-navigation/native";
 import { CHAT_ROOM, ORDERS_DETAILS } from "../../navigation/routes";
 import PriceTextComponent from "../PriceTextComponent";
 import AppButton from "../AppButton";
+import { Entypo } from '@expo/vector-icons'; 
+
+import { setcurrentChatChannel } from "../../store/features/ordersSlice";
 const { width } = Dimensions.get("screen");
+
+import { useDispatch} from  'react-redux'
 export default function CurrentOrderCard({ item ,onPress}) {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
   return (
     <TouchableWithoutFeedback
     style={styles.scrollContainer}
@@ -69,6 +76,42 @@ export default function CurrentOrderCard({ item ,onPress}) {
           />
         </View>
         {/*time */}
+        <View  style={{
+          display:'flex',
+          flexDirection:'row',
+          alignItems:'center',
+          justifyContent:'space-between'
+        }}>
+          <View style={styles.date}>
+
+          <Ionicons name="person-outline" size={24} color="black" />
+          <AppText
+            text={
+              item?.attributes?.user?.data?.attributes?.username ||
+              "في انتظار العامل "
+            }
+            centered={false}
+            style={styles.title}
+            />
+            </View>
+          <View >
+
+          {item?.attributes?.provider?.data?.attributes?.name &&
+         
+         <TouchableOpacity style={styles.chatContainer}
+         onPress={() => {
+
+           dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
+           
+           navigation.navigate("Chat")}
+          }
+           >
+      <Entypo name="chat" size={24} color="white" />
+      </TouchableOpacity >
+          
+        }
+        </View>
+        </View>
         {/*time */}
       </View>
     </TouchableWithoutFeedback>
@@ -143,4 +186,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "row",
   },
+  chatContainer:{paddingHorizontal:19,
+    backgroundColor:Colors.primaryColor,
+    width:60,
+  height:40,
+  borderRadius:20,
+  // marginHorizontal:width*0.65,
+  left:0,
+  display:"flex",
+  alignItems:'center',
+  justifyContent:'center',}
 });

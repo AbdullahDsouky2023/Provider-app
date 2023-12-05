@@ -122,7 +122,7 @@ const SplashScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
 
-      {/* {locationConfirmed ? ( */}
+      {locationConfirmed ? (
         <View style={{ flex: 1, justifyContent: "center" }}>
           <Logo />
           <CircleFade
@@ -131,12 +131,12 @@ const SplashScreen = ({ navigation }) => {
             style={{ alignSelf: "center" }}
           />
         </View>
-      {/* ) : (
+      ) : (
         <LocationModal
           visible={locationModalVisible}
           onConfirm={handleLocationConfirm}
         />
-      )} */}
+      )}
     </SafeAreaView>
   );
 };

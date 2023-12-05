@@ -58,8 +58,7 @@ export default function ItemScreen({ navigation, route }) {
         dispatch(setOrders(data));
         // console.log(`the user token `,selectedOrder[0].attributes?.user)
         // console.log(userNotificationToken,"tooo")
- sendPushNotification(userNotificationToken,
-  ``,`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
+ sendPushNotification(userNotificationToken,`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
 navigation.goBack();
         navigation.dispatch(
           CommonActions.reset({

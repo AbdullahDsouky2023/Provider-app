@@ -18,6 +18,7 @@ import useOrders, {
   finishOrder,
   requestPayment,
 } from "../../../utils/orders";
+
 import { Entypo } from '@expo/vector-icons'; 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -56,8 +57,7 @@ export default function OrderDetails({ navigation, route }) {
       if (res) {
         dispatch(setOrders(data));
         console.log(`the user token `,selectedOrder[0].attributes?.user)
-        sendPushNotification(userNotificationToken,
-          ``,` قام ${provider?.attributes?.name} بالغاء الطلب`)
+        sendPushNotification(userNotificationToken,` قام ${provider?.attributes?.name} بالغاء الطلب`)
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -82,8 +82,7 @@ export default function OrderDetails({ navigation, route }) {
       const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
       if (res) {
         dispatch(setOrders(data));
-        sendPushNotification(userNotificationToken,
-         ``,` قام ${provider?.attributes?.name} بانهاء العمل علي الطلب`)
+        sendPushNotification(userNotificationToken,` قام ${provider?.attributes?.name} بانهاء العمل علي الطلب`)
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -126,9 +125,6 @@ export default function OrderDetails({ navigation, route }) {
   return (
     <ScrollView style={styles.scrollContainer}>
       <AppHeader subPage={true} />
-      <TouchableOpacity style={styles.chatContainer}  onPress={() => navigation.navigate("Chat")}>
-      <Entypo name="chat" size={24} color="white" />
-      </TouchableOpacity          >
       <ScrollView style={styles.container}>
       <View style={styles.itemContainer}>
           <FlatList
