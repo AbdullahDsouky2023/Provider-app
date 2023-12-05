@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  Image,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -24,12 +25,19 @@ export default function CurrentOrderCard({ item ,onPress}) {
       onPress={onPress}
     >
       <View style={styles.orderCardContainer}>
+        <View style={styles.headerContainer}>
+
         {/* name */}
+        <Image
+        height={30}
+        width={30}
+        source={{uri:item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.image?.data[0]?.attributes?.url}}/>
         <AppText
-          text={item?.attributes?.service?.data?.attributes?.name}
+          text={item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name}
+          style={[styles.header,{color:Colors.primaryColor}]}
           centered={false}
-          style={styles.name}
-        />
+          />
+          </View>
         {/* category */}
         <View style={styles.date}>
           <Ionicons name="ios-location-outline" size={24} color="black" />
@@ -79,6 +87,15 @@ const styles = StyleSheet.create({
     width: width,
     paddingHorizontal: 20,
     paddingVertical: 10,
+  },
+  headerContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    // backgroundColor:'red',
+    paddingHorizontal: 11,
+    paddingVertical: 4,
+    gap: 10,
   },
   orderCardContainer: {
     paddingVertical: 10,

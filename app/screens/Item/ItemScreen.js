@@ -5,12 +5,15 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
+  FlatList
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
+import { ScrollView } from "react-native-virtualized-view";
+
 import useOrders, {
   acceptOrder,
   cancleOrder,
@@ -22,7 +25,7 @@ import LoadingModal from "../../component/Loading";
 import { HOME, MY_ORDERS, OFFERS, ORDERS } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
-import { ScrollView } from "react-native";
+
 import LoadingScreen from "../loading/LoadingScreen";
 import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
@@ -56,7 +59,7 @@ export default function ItemScreen({ navigation, route }) {
         // console.log(`the user token `,selectedOrder[0].attributes?.user)
         // console.log(userNotificationToken,"tooo")
  sendPushNotification(userNotificationToken,
-  `${selectedOrder[0].attributes?.service?.data?.attributes?.name}`,`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
+  ``,`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
 navigation.goBack();
         navigation.dispatch(
           CommonActions.reset({
@@ -87,6 +90,51 @@ navigation.goBack();
     <ScrollView style={styles.scrollContainer}>
       <AppHeader subPage={true} />
       <ScrollView style={styles.container}>
+      <View style={styles.itemContainer}>
+          <FlatList
+            data={item?.attributes?.services.data}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => item.id}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              direction: "rtl",
+              flexWrap: "wrap",
+              marginTop: 15,
+              gap: 15,
+              width: width,
+            }}
+            renderItem={({ item }) => {
+              return (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 15,
+                  }}
+                >
+                  <AppText
+                    centered={false}
+                    text={item.attributes?.name}
+                    style={[styles.name, { fontSize: 14, paddingRight: 10 }]}
+                  />
+                  <AppText
+                    text={`${item.attributes?.Price} جنيه`}
+                    style={{
+                      backgroundColor: Colors.primaryColor,
+                      fontSize: 14,
+                      padding: 6,
+                      borderRadius: 40,
+                      color: Colors.whiteColor,
+                    }}
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
         <View>
           <AppText
             centered={false}
@@ -97,8 +145,8 @@ navigation.goBack();
         <View style={styles.itemContainer}>
           <AppText centered={false} text={" السعر"} style={styles.title} />
           <PriceTextComponent
-            style={{ color: Colors.blackColor, fontSize: 14, marginTop: 4 }}
-            price={item?.attributes?.service?.data?.attributes?.name}
+            style={{ color: Colors.blackColor, fontSize: 16, marginTop: 4 }}
+            price={item?.attributes?.totalPrice}
           />
         </View>
         <View style={styles.itemContainer}>

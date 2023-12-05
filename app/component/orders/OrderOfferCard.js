@@ -1,18 +1,26 @@
-import { View, Text, Dimensions, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, Dimensions, TouchableOpacity, Image } from "react-native";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Sizes, Colors, Fonts } from "../../constant/styles";
 import AppText from "../AppText";
 const { width } = Dimensions.get("screen");
 export default function OrderOfferCard({ item, onPress }) {
+  useEffect(()=>{
+    console.log(item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.image?.data[0].attributes.url)
+  },[])
   return (
     <TouchableOpacity onPress={onPress} style={styles.orderCard}>
       <View style={styles.headerContainer}>
+      <Image 
+        height={35}
+        width={35}
+        source={{uri:item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.image?.data[0]?.attributes?.url}}/>
         <AppText
-          text={item?.attributes?.service?.data?.attributes?.name}
-          style={styles.header}
+          text={item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name}
+          style={[styles.header,{color:Colors.primaryColor}]}
           centered={false}
         />
+       
       </View>
       <View style={styles.headerContainer}>
         <AppText text={":الموعد"} style={styles.header} centered={false} />

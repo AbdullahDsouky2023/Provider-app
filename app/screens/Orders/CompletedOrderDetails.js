@@ -1,6 +1,7 @@
 import {
     Alert,
     Dimensions,
+    FlatList,
     StyleSheet,
     Text,
     TouchableWithoutFeedback,
@@ -18,7 +19,7 @@ import {
   import { HOME, OFFERS, ORDERS } from "../../navigation/routes";
   import PriceTextComponent from "../../component/PriceTextComponent";
   import { Image } from "react-native";
-  import { ScrollView } from "react-native";
+  import { ScrollView } from "react-native-virtualized-view";
   import LoadingScreen from "../loading/LoadingScreen";
   import { color } from "@rneui/base";
   import AppModal from "../../component/AppModal";
@@ -102,13 +103,51 @@ import {
       <ScrollView style={styles.scrollContainer}>
         <AppHeader subPage={true} />
         <ScrollView style={styles.container}>
-          <View>
-            <AppText
-              centered={false}
-              text={item?.attributes?.service?.data?.attributes?.name}
-              style={styles.name}
-            />
-          </View>
+        <View style={styles.itemContainer}>
+          <FlatList
+            data={item?.attributes?.services.data}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => item.id}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              direction: "rtl",
+              flexWrap: "wrap",
+              marginTop: 15,
+              gap: 15,
+              width: width,
+            }}
+            renderItem={({ item }) => {
+              return (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 15,
+                  }}
+                >
+                  <AppText
+                    centered={false}
+                    text={item.attributes?.name}
+                    style={[styles.name, { fontSize: 14, paddingRight: 10 }]}
+                  />
+                  <AppText
+                    text={`${item.attributes?.Price} جنيه`}
+                    style={{
+                      backgroundColor: Colors.primaryColor,
+                      fontSize: 14,
+                      padding: 6,
+                      borderRadius: 40,
+                      color: Colors.whiteColor,
+                    }}
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
           <View style={styles.itemContainer}>
             <AppText centered={false} text={" السعر"} style={styles.title} />
             <PriceTextComponent

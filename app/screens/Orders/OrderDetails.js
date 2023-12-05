@@ -1,7 +1,9 @@
 import {
   Alert,
   Dimensions,
+  FlatList,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useState } from "react";
@@ -16,13 +18,15 @@ import useOrders, {
   finishOrder,
   requestPayment,
 } from "../../../utils/orders";
+import { Entypo } from '@expo/vector-icons'; 
+
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
 import { CHAT_ROOM, HOME, OFFERS, ORDERS } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
-import { ScrollView } from "react-native";
+import { ScrollView } from "react-native-virtualized-view";
 import LoadingScreen from "../loading/LoadingScreen";
 import { color } from "@rneui/base";
 import AppModal from "../../component/AppModal";
@@ -53,7 +57,7 @@ export default function OrderDetails({ navigation, route }) {
         dispatch(setOrders(data));
         console.log(`the user token `,selectedOrder[0].attributes?.user)
         sendPushNotification(userNotificationToken,
-          `${selectedOrder[0].attributes?.service?.data?.attributes?.name}`,` قام ${provider?.attributes?.name} بالغاء الطلب`)
+          ``,` قام ${provider?.attributes?.name} بالغاء الطلب`)
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -79,7 +83,7 @@ export default function OrderDetails({ navigation, route }) {
       if (res) {
         dispatch(setOrders(data));
         sendPushNotification(userNotificationToken,
-         `${selectedOrder[0].attributes?.service?.data?.attributes?.name}`,` قام ${provider?.attributes?.name} بانهاء العمل علي الطلب`)
+         ``,` قام ${provider?.attributes?.name} بانهاء العمل علي الطلب`)
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -122,7 +126,55 @@ export default function OrderDetails({ navigation, route }) {
   return (
     <ScrollView style={styles.scrollContainer}>
       <AppHeader subPage={true} />
+      <TouchableOpacity style={styles.chatContainer}  onPress={() => navigation.navigate("Chat")}>
+      <Entypo name="chat" size={24} color="white" />
+      </TouchableOpacity          >
       <ScrollView style={styles.container}>
+      <View style={styles.itemContainer}>
+          <FlatList
+            data={item?.attributes?.services.data}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => item.id}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              direction: "rtl",
+              flexWrap: "wrap",
+              marginTop: 15,
+              gap: 15,
+              width: width,
+            }}
+            renderItem={({ item }) => {
+              return (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 15,
+                  }}
+                >
+                  <AppText
+                    centered={false}
+                    text={item.attributes?.name}
+                    style={[styles.name, { fontSize: 14, paddingRight: 10 }]}
+                  />
+                  <AppText
+                    text={`${item.attributes?.Price} جنيه`}
+                    style={{
+                      backgroundColor: Colors.primaryColor,
+                      fontSize: 14,
+                      padding: 6,
+                      borderRadius: 40,
+                      color: Colors.whiteColor,
+                    }}
+                  />
+                </View>
+              );
+            }}
+          />
+        </View>
         <View>
           <AppText
             centered={false}
@@ -133,8 +185,8 @@ export default function OrderDetails({ navigation, route }) {
         <View style={styles.itemContainer}>
           <AppText centered={false} text={" السعر"} style={styles.title} />
           <PriceTextComponent
-            style={{ color: Colors.blackColor, fontSize: 14, marginTop: 4 }}
-            price={item?.attributes?.service?.data?.attributes?.name}
+            style={{ color: Colors.blackColor, fontSize: 16, marginTop: 4 }}
+            price={item?.attributes?.totalPrice}
           />
         </View>
         <View style={styles.itemContainer}>
@@ -196,11 +248,7 @@ export default function OrderDetails({ navigation, route }) {
             />
           </View>
         )}
-        <AppButton
-          title={"Chat"}
-          style={{ backgroundColor: Colors.success }}
-          onPress={() => navigation.navigate("Chat")}
-        />
+       
 
         {item?.attributes?.status === "finished" ? (
           <AppButton
@@ -299,4 +347,13 @@ const styles = StyleSheet.create({
     fontSize: 21,
     color: Colors.primaryColor,
   },
+  chatContainer:{paddingHorizontal:19,backgroundColor:Colors.primaryColor,
+  width:60,
+height:40,
+borderRadius:20,
+marginHorizontal:width*0.8,
+left:0,
+display:"flex",
+alignItems:'center',
+justifyContent:'center',}
 });
