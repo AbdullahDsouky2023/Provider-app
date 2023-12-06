@@ -37,20 +37,7 @@ const [currentOrders,setCurrentData]=useState([])
           <AppText text={completedOrdersNumber} style={styles.text} />
         </View>
       </View>
-        {/* <View style={styles.card}>
-        <View
-          style={{
-            display: "flex",
-            direction: "row",
-            alignItems: "center",
-          }}
-        >
-          <AppText text={"الارباح : "} style={styles.text} centered={false} />
-        </View>
-        <View>
-          <AppText text={currentOrders?.length} style={styles.text} />
-        </View>
-      </View> */}
+        
             </View>
     </TouchableWithoutFeedback>
   );
@@ -58,23 +45,24 @@ const [currentOrders,setCurrentData]=useState([])
 const styles = StyleSheet.create({
   cardContainer :{
 
-    height: 200,
+    height:80,
     width: width * 0.85,
+    backgroundColor: Colors.blackColor,
   },
   card: {
     backgroundColor: Colors.whiteColor,
     borderRadius: 10,
     // flex: 1,
-    paddingTop: 19,
+    // paddingTop: 19,
     flexDirection:"row",
     justifyContent: "space-between",
-    // alignItems: "start",
+    alignItems: "center",
     gap: 4,
     height: "auto",
 marginBottom:10,
 marginTop:10,
     elevation: 10,
-    height:100,
+    height:60,
     paddingHorizontal:20
   },
   text: {

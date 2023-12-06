@@ -5,25 +5,28 @@ import ServiceCard from "./ServiceCard";
 import HeaderTextComponent from "./HeaderTextComponent";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { OFFERS } from "../../navigation/routes";
+import { BROWSE_ORDERS, OFFERS } from "../../navigation/routes";
+import useCategories from "../../../utils/categories";
 const  { width } = Dimensions.get('screen')
 
 export default function ServicesList() {
-  const categories = useSelector((state) => state.categories.categories);
+  // const categories = useSelector((state) => state?.categories?.categories);
   const navigation = useNavigation();
+  const {data:categories} = useCategories()
   const handleServiceCardPress = (item) => {
-    navigation.navigate(OFFERS, { name: item?.attributes?.name });
+    navigation.navigate(BROWSE_ORDERS, { name: item?.attributes?.name });
+
   };
   return (
-    <HeaderTextComponent name={"servicesLookingFor"} showAll={true}>
+    <HeaderTextComponent name={"Services"} showAll={true}>
       <FlatList
-        data={categories.data}
+        data={categories?.data}
         style={styles.listContainer}
         renderItem={({ item }) => {
           return (
             <ServiceCard
               onPress={() => handleServiceCardPress(item)}
-              name={item?.attributes.name}
+              name={item?.attributes?.name}
               image={item?.attributes?.image?.data[0]?.attributes.url}
             />
           );

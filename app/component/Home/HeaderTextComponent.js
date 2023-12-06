@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.blackColor,
     ...Fonts.blackColor14Medium,
+    fontSize:18
   },
   imageCard: {
     height: 40,

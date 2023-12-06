@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   chatContainer:{paddingHorizontal:19,
     backgroundColor:Colors.primaryColor,
-    width:60,
+    width:"auto",
   height:40,
   borderRadius:20,
   // marginHorizontal:width*0.65,

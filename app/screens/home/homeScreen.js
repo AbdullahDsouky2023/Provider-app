@@ -4,11 +4,12 @@ import {
   StatusBar,
   View,
   StyleSheet,
-  ScrollView,
   RefreshControl,
+  Dimensions,
+  Image,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-
+import {ScrollView} from 'react-native-virtualized-view'
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
 
@@ -23,7 +24,11 @@ import useRegions from "../../../utils/useRegions";
 import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
 import { generateUserToken, useChatConfig } from "../chat/chatconfig";
 import { setUserStreamData } from "../../store/features/userSlice";
-
+import ServicesList from "../../component/Home/ServicesList";
+import CurrentOrders from "../Orders/CurrentOrders";
+import CurrentOffersScreen from "../CurrentOffersScreen/CurrentOffersScreen";
+import AppText from "../../component/AppText";
+const { width } = Dimensions.get('screen')
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
   const dispatch = useDispatch();
@@ -66,13 +71,21 @@ const HomeScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
+
         <AppHeader />
+    
         <View style={styles.cardContainer}>
           <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
+          <Image source={require("../../assets/images/worker.png")} 
+           resizeMode='contain' style={{height:130,
+          width:120,flex:1.1}}/>
         </View>
-        <View style={styles.cardContainer}>
+        {/* <View style={styles.cardContainer}>
           <OverviewComponent />
-        </View>
+        </View> */}
+        <ServicesList/>
+        {/* <AppText text={"أحدث الطلبات"} centered={false} style={{paddingHorizontal:19,fontSize:19,color:Colors.blackColor}}/> */}
+        {/* <CurrentOffersScreen subPage={true}/> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -82,8 +95,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     height: 150,
     paddingHorizontal: 20,
-    marginVertical: 50,
+    marginVertical: 10,
+    display:'flex',
+    flexDirection:'row'
   },
+  FloatHeaderContainer:{
+  }
 });
 
 export default HomeScreen;

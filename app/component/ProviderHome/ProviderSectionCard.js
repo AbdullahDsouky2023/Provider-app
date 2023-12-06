@@ -40,7 +40,7 @@ const [currentOrders,setCurrentData]=useState([])
 }
 const styles = StyleSheet.create({
   card: {
-    height: 150,
+    height: 130,
     width: width * 0.45,
     backgroundColor: Colors.primaryColor,
     borderRadius: 10,

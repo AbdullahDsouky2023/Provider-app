@@ -8,7 +8,7 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { CHAT_ROOM, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN } from "./routes";
+import { BROWSE_ORDERS, CHAT_ROOM, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
 import OrderCreationSuccess from "../screens/OrderCreationSuccess";
@@ -17,6 +17,7 @@ import AddManualLocationScreen from "../screens/location/AddManualLocationScreen
 import PaymentScreen from "../screens/payment/paymentScreen";
 import SelectRegionScreen from "../screens/RegionScreen";
 import ChatNavigator from "./ChatNavigator";
+import OrdersScreen from "../screens/OrdersScreen";
 
 LogBox.ignoreAllLogs();
 
@@ -39,6 +40,12 @@ const RootNavigator = () => {
         <Stack.Screen
           name={ITEM_DETAILS}
           component={ItemScreen}
+          // initialParams={{ item }} // Pass the item object to ItemOrderDetails
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={BROWSE_ORDERS}
+          component={OrdersScreen}
           // initialParams={{ item }} // Pass the item object to ItemOrderDetails
           options={{ headerShown: false }}
         />

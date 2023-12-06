@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "Nijk-Provider",
-    "slug": "rn-Nijk",
+    "name": "Nijlak-Provider",
+    "slug": "rn-NijkProvider-",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon2.png",
     "userInterfaceStyle": "light",
-    "notifications":{
+    "notifications": {
       "icon": "./app/assets/images/icon2.png"
-      }, 
-        "splash": {
+    },
+    "splash": {
       "image": "./app/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#F26527"
@@ -18,7 +18,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.NijkDevelopment.Nijk",
+      "bundleIdentifier": "com.render.rnhomeserviceuser",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
@@ -43,7 +43,8 @@
             "useFrameworks": "static"
           }
         }
-      ],[
+      ],
+      [
         "expo-notifications",
         {
           "icon": "./app/assets/images/icon2.png",
@@ -59,7 +60,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ea07fb89-0fd4-4893-8f25-2e0affa9400f"
+        "projectId": "a640a493-f7b9-420b-8268-4ffa864838f5"
       }
     }
   }

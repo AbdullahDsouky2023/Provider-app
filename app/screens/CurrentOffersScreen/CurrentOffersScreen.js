@@ -21,14 +21,16 @@ import { ITEM_DETAILS } from "../../navigation/routes";
 import useNotifications from "../../../utils/notifications";
 import { ErrorScreen } from "../Error/ErrorScreen";
 import useRegions from "../../../utils/useRegions";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("screen");
 
-const CurrentOffersScreen = ({ route, navigation }) => {
+const CurrentOffersScreen = ({ route ,subPage}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation()
   const regions = useSelector((state) => state?.regions?.regions);
   const orderRedux = useSelector((state) => state?.orders?.orders);
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState("");
   const [selectedItemsData, setselectedItemsData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { token} = useNotifications()
@@ -49,7 +51,7 @@ const CurrentOffersScreen = ({ route, navigation }) => {
         }
   };
   useEffect(() => {
-    // if(regions?.length > 0 ){
+    // if(regions?.data[0]?.length > 0 ){
       const position = regions?.data[0]?.attributes?.name
        if(position) setRegion(position);
       console.log("ther is  regions",regions?.length)
@@ -79,9 +81,11 @@ const CurrentOffersScreen = ({ route, navigation }) => {
       !regions?.length > 0 ?
       <>
       <StatusBar backgroundColor={Colors.primaryColor} />
+     {!subPage && 
       <AppHeader />
-        <RegionDropDown onChange={setRegion} enableRefetch={enableRefetch}/> 
-       <AppText text={region} centered={false} style={styles.RegionHeader} /> 
+     }
+        {/* <RegionDropDown onChange={setRegion} enableRefetch={enableRefetch}/>  */}
+       {/* <AppText text={region} centered={false} style={styles.RegionHeader} />  */}
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
