@@ -23,6 +23,9 @@ import { setRegions } from "../../store/features/regionSlice";
 import useRegions from "../../../utils/useRegions";
 import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
 import { generateUserToken, useChatConfig } from "../chat/chatconfig";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Location from 'expo-location'
+
 import { setUserStreamData } from "../../store/features/userSlice";
 import ServicesList from "../../component/Home/ServicesList";
 import CurrentOrders from "../Orders/CurrentOrders";
@@ -59,7 +62,27 @@ const HomeScreen = ({ navigation }) => {
     setRefreshing(true);
     fetchData();
   };
-
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permission to access location was denied');
+        return;
+      }
+  
+      let location = await Location.getCurrentPositionAsync({});
+      const coordinate = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          }
+          // setLocationCorrdinate(coordinate)
+// Store the location in AsyncStorage
+try {
+  await AsyncStorage.setItem('userLocation', JSON.stringify(coordinate));
+ } catch (error) {
+  console.log(error);
+ }    })();
+  }, []);
   if (isLoading) return <LoadingScreen />;
   if (isError || error) return <ErrorScreen hanleRetry={fetchData} />;
   return (

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "197872272379",
-    "project_id": "home-service2",
-    "storage_bucket": "home-service2.appspot.com"
+    "project_number": "551273379044",
+    "project_id": "homeservices-864e3",
+    "storage_bucket": "homeservices-864e3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:197872272379:android:7703fad59486c56910415e",
+        "mobilesdk_app_id": "1:551273379044:android:5536ad08a23d79c855a8f1",
         "android_client_info": {
-          "package_name": "com.render.rnhomeserviceuser"
+          "package_name": "com.mrpharman.customer"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyClAaNCHjz1nA-HK9a_L969dFWtTDoPiAI"
+          "current_key": "AIzaSyBQVpPRcIw6kIzaDpNwazlcXgbkjEx1rXw"
         }
       ],
       "services": {

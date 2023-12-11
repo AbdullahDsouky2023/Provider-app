@@ -18,12 +18,12 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.render.rnhomeserviceuser",
+      "bundleIdentifier": "com.mrpharman.customer",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.render.rnhomeserviceuser",
+      "package": "com.mrpharman.customer",
       "googleServicesFile": "./google-services.json",
       "versionCode": 1,
       "adaptiveIcon": {
@@ -60,7 +60,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "a640a493-f7b9-420b-8268-4ffa864838f5"
+        "projectId": "7bd3f10e-6645-4d0d-97f5-11594ce3564b"
       }
     }
   }

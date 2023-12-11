@@ -22,8 +22,11 @@ import useNotifications from "../../../utils/notifications";
 import { ErrorScreen } from "../Error/ErrorScreen";
 import useRegions from "../../../utils/useRegions";
 import { useNavigation } from "@react-navigation/native";
-
-const { width } = Dimensions.get("screen");
+import * as Location from 'expo-location'
+const { width ,height} = Dimensions.get("screen");
+import * as geolib from 'geolib';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingScreen from "../loading/LoadingScreen";
 
 const CurrentOffersScreen = ({ route ,subPage}) => {
   const dispatch = useDispatch();
@@ -35,13 +38,41 @@ const CurrentOffersScreen = ({ route ,subPage}) => {
   const [refreshing, setRefreshing] = useState(false);
   const { token} = useNotifications()
   const [enableRefetch,setEnableRefetch]=useState(false)
-  // const { refetch} = useRegions()
-  const fetchData = () => {
-    if(orderRedux ){
+  const [locationCoordinate,setLocationCorrdinate]=useState(null) 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const value = await AsyncStorage.getItem('userLocation');
+      if (value !== null) {
+        // We have data!!
+        setLocationCorrdinate(JSON.parse(value));
+        console.log(JSON.parse(value)," this is the data that will be setting first mount")
+        setLoading(false);
+
+        fetchData(JSON.parse(value));
+
+      }
+    })();
+   }, [])
+  const fetchData = (coordinate) => {
+    console.log("refetching before",coordinate)
+    if(orderRedux  && coordinate){
+      // console.log("refetching after")
+
 
       const orders = orderRedux?.data?.filter(
-        (item) => item?.attributes?.region?.data?.attributes?.name === region
-        );
+        (item) => {
+         const orderCoordinate = {
+           latitude: item.attributes.googleMapLocation.coordinate.latitude,
+           longitude: item.attributes.googleMapLocation.coordinate.longitude,
+         };
+         const distance = geolib.getDistance( coordinate , orderCoordinate);
+         return distance <= 10000; // 10 kilometers
+        }
+       );
+       
+        
         const pendingOrders = orders?.filter(
           (item) => item?.attributes?.status === "pending"
           );
@@ -51,17 +82,29 @@ const CurrentOffersScreen = ({ route ,subPage}) => {
         }
   };
   useEffect(() => {
-    // if(regions?.data[0]?.length > 0 ){
-      const position = regions?.data[0]?.attributes?.name
-       if(position) setRegion(position);
-      console.log("ther is  regions",regions?.length)
-    // }
-  }, [regions]);
-  useEffect(() => {
-    fetchData();
-  }, [region]);
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permission to access location was denied');
+        return;
+      }
+  
+      let location = await Location.getCurrentPositionAsync({});
+      const coordinate = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          }
+          setLocationCorrdinate(coordinate)
+// Store the location in AsyncStorage
+try {
+  await AsyncStorage.setItem('userLocation', JSON.stringify(coordinate));
+ } catch (error) {
+  console.log(error);
+ }    })();
+  }, []);
 
-
+;
+   
   const getServices = async () => {
     if (data) {
       dispatch(setServices(data));
@@ -72,13 +115,16 @@ const CurrentOffersScreen = ({ route ,subPage}) => {
   const onRefresh = () => {
     setRefreshing(true);
     setEnableRefetch(true);
-    fetchData();
+    fetchData(locationCoordinate);
   };
+  if(loading){
+    return <LoadingScreen/>
+  }
   return (
     
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
     {
-      !regions?.length > 0 ?
+      !orderRedux?.length > 0 ?
       <>
       <StatusBar backgroundColor={Colors.primaryColor} />
      {!subPage && 
@@ -183,7 +229,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: "100%",
+    height: height*0.5,
     width: width,
     backgroundColor: Colors.whiteColor,
   },

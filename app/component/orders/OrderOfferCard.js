@@ -5,9 +5,6 @@ import { Sizes, Colors, Fonts } from "../../constant/styles";
 import AppText from "../AppText";
 const { width } = Dimensions.get("screen");
 export default function OrderOfferCard({ item, onPress }) {
-  useEffect(()=>{
-    console.log(item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.image?.data[0].attributes.url)
-  },[])
   return (
     <TouchableOpacity onPress={onPress} style={styles.orderCard}>
       <View style={styles.headerContainer}>

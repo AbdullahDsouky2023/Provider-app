@@ -87,8 +87,7 @@ export default function CurrentOrderCard({ item ,onPress}) {
           <Ionicons name="person-outline" size={24} color="black" />
           <AppText
             text={
-              item?.attributes?.user?.data?.attributes?.username ||
-              "في انتظار العامل "
+              item?.attributes?.user?.data?.attributes?.username 
             }
             centered={false}
             style={styles.title}
@@ -103,7 +102,8 @@ export default function CurrentOrderCard({ item ,onPress}) {
 
            dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
            
-           navigation.navigate("Chat")}
+           navigation.navigate("Chat")
+          }
           }
            >
       <Entypo name="chat" size={24} color="white" />
