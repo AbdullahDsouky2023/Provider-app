@@ -6,6 +6,7 @@ import {
     Image,
     Button,
     TouchableOpacity,
+    RefreshControl,
   } from "react-native";
   import React, { useEffect, useState } from "react";
   import { ScrollView } from "react-native-virtualized-view";
@@ -21,27 +22,70 @@ import {
 import useCategories from "../../utils/categories";
 import useOrders from "../../utils/orders";
 import OrderOfferCard from "../component/orders/OrderOfferCard";
+import * as geolib from 'geolib';
   const { width, height } = Dimensions.get("screen");
-  
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+
   export default function OrdersScreen({ route ,navigation}) {
     const category = route.params?.name;
-    const { data:categories, isLoading, isError } = useCategories();
+    const { data:categories, isLoading:loading, isError } = useCategories();
     // const { data:orders} = useOrders();
     const [services, setServices] = useState([]);
     const dispatch = useDispatch();
-    const orders = useSelector(state=>state.orders.orders)
+    const reduxOrders = useSelector(state=>state.orders.orders)
     const [slectedCategory, setSelectedCategory] = useState([]);
+    const [locationCoordinate,setLocationCorrdinate]=useState(null) 
+    const [isLoading,setIsLoading]=useState(false)
+
     const [categoryOrders,setCategoryOrders]=useState([])
     useEffect(() => {
-      const pendingorder = orders.data.filter((order)=>order?.attributes?.status === "pending")
-      const categoryOrders = pendingorder.filter((order)=>order?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name === category )
-      setCategoryOrders(categoryOrders)
-    }, [orders]);
-    
-    if (isLoading) return <LoadingScreen />;
+      (async () => {
+        const value = await AsyncStorage.getItem('userLocation');
+        console.log("this is value",value)
+        if (value !== null) {
+          // We have data!!
+          setLocationCorrdinate(JSON.parse(value));
+          console.log(JSON.parse(value)," this is the data that will be setting first mount")
+          setIsLoading(false);
+  
+          fetchData(JSON.parse(value));
+  
+        }
+      })();
+     }, [])
+    const fetchData =(coordinate)=>{
+      console.log('etch',coordinate)
+      if(reduxOrders  && coordinate){  
+        const orders = reduxOrders?.data?.filter(
+          (item) => {
+           const orderCoordinate = {
+             latitude: item?.attributes?.googleMapLocation?.coordinate?.latitude,
+             longitude: item?.attributes?.googleMapLocation?.coordinate?.longitude,
+           };
+           const distance = geolib.getDistance( coordinate , orderCoordinate);
+           return distance <= 10000; // 10 kilometers
+          }
+         );
+         
+          
+          const pendingOrders = orders?.filter(
+            (item) => item?.attributes?.status === "pending"
+            );
+            const categoryOrders = pendingOrders.filter((order)=>order?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name === category )
+            setCategoryOrders(categoryOrders)
+          }
+    }
+    useEffect(() => {
+      fetchData(locationCoordinate)
+    }, [reduxOrders]);
+    const onRefresh = () => {
+      fetchData(locationCoordinate);
+    };
+    if ( isLoading || loading) return <LoadingScreen />;
     return (
       <>
         <ScrollView
+       
           style={{
             height: height * 0.78,
           }}

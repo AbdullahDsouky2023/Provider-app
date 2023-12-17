@@ -48,6 +48,7 @@ export default function OrderDetails({ navigation, route }) {
 
   const handleOrderCancle = async (id) => {
     try {
+      setIsLoading(true)
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
       console.log(id,selectedOrder[0]?.attributes)
       const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
@@ -71,7 +72,7 @@ export default function OrderDetails({ navigation, route }) {
     } catch (error) {
       console.log(error, "error deleting the order");
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
       setModalVisible(false);
     }
   };
@@ -101,6 +102,8 @@ export default function OrderDetails({ navigation, route }) {
   };
   const handleRequestPayment = async (id) => {
     try {
+      setIsLoading(true)
+
       const res = await requestPayment(id);
       if (res) {
         dispatch(setOrders(data));
@@ -118,6 +121,8 @@ export default function OrderDetails({ navigation, route }) {
       console.log(error, "error finsihed the order");
     } finally {
       setModalVisible(false);
+      setIsLoading(false)
+
     }
   };
 

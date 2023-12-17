@@ -34,7 +34,7 @@ import useNotifications from "../../../utils/notifications";
 const { width } = Dimensions.get("screen");
 export default function ItemScreen({ navigation, route }) {
   const { item } = route?.params;
-  // const [isLoading, setIsLoading] = useState(false);
+  const [ModalisLoading, setModalIsLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const provider = useSelector((state) => state?.user?.userData);
   const orders = useSelector((state) => state?.orders?.orders);
@@ -47,6 +47,7 @@ export default function ItemScreen({ navigation, route }) {
 
   const handleOrderAccept = async (id) => {
     try {
+      setModalIsLoading(true)
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
       const userId = selectedOrder[0]?.attributes?.user?.data?.id;
       const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
@@ -57,8 +58,8 @@ export default function ItemScreen({ navigation, route }) {
         //     //   // Update Redux store to remove the cancelled order
         dispatch(setOrders(data));
         // console.log(`the user token `,selectedOrder[0].attributes?.user)
-        // console.log(userNotificationToken,"tooo")
- sendPushNotification(userNotificationToken,`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
+        // console.log(userNotificationToken,"too o")
+ sendPushNotification(userNotificationToken,"قبول طلب",`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
 navigation.goBack();
         navigation.dispatch(
           CommonActions.reset({
@@ -75,7 +76,9 @@ navigation.goBack();
     } catch (error) {
       console.log(error, "error deleting the order");
     } finally {
+      setModalIsLoading(false)
       setModalVisible(false);
+
     }
   };
   // useEffect(()=>{
@@ -218,7 +221,7 @@ navigation.goBack();
         setModalVisible={setModalVisible}
         onPress={() => handleOrderAccept(item.id)}
       />
-      <LoadingModal visible={isLoading} />
+      <LoadingModal visible={ModalisLoading} />
     </ScrollView>
   );
 }

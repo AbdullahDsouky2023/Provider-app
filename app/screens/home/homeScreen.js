@@ -35,29 +35,26 @@ const { width } = Dimensions.get('screen')
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
   const dispatch = useDispatch();
-  const { data, isLoading, isError ,refetch:refetchRegions } = useRegions();
-  const { data: orders, isError: error ,refetch:refetchOrders} = useOrders();
-
+  // const { data, isLoading, isError ,refetch:refetchRegions } = useRegions();
+  const { data: orders, isError: error ,refetch:refetchOrders,isLoading} = useOrders();
+  const [location,setLocation]=useState(null)
   const [refreshing, setRefreshing] = useState(false);
   const fetchData = async () => {
-    if (data) {
-      dispatch(setRegions(data));
+    if (orders) {
+      // dispatch(setRegions(data));
       dispatch(setOrders(orders));
       setRefreshing(false);
       const chat = generateUserToken(user);
       dispatch(setUserStreamData(chat));
 
       refetchOrders()
-      refetchRegions()
-    } else if (isError) {
-      console.log(isError);
-      //   // Handle the error
-    }
+      // refetchRegions()
+    } 
   };
 
   useEffect(() => {
     fetchData();
-  }, [data]);
+  }, [orders]);
   const onRefresh = () => {
     setRefreshing(true);
     fetchData();
@@ -75,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
           }
-          // setLocationCorrdinate(coordinate)
+          setLocation(JSON.stringify(coordinate))
 // Store the location in AsyncStorage
 try {
   await AsyncStorage.setItem('userLocation', JSON.stringify(coordinate));
@@ -84,7 +81,7 @@ try {
  }    })();
   }, []);
   if (isLoading) return <LoadingScreen />;
-  if (isError || error) return <ErrorScreen hanleRetry={fetchData} />;
+  if (error) return <ErrorScreen hanleRetry={fetchData} />;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -107,7 +104,7 @@ try {
           <OverviewComponent />
         </View> */}
         <ServicesList/>
-        {/* <AppText text={"أحدث الطلبات"} centered={false} style={{paddingHorizontal:19,fontSize:19,color:Colors.blackColor}}/> */}
+        <AppText text={location} centered={false} style={{paddingHorizontal:19,fontSize:19,color:Colors.blackColor}}/>
         {/* <CurrentOffersScreen subPage={true}/> */}
       </ScrollView>
     </SafeAreaView>
