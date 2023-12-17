@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { useDispatch } from "react-redux";
+import { CommonActions } from "@react-navigation/native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../../constant/styles";
@@ -54,9 +55,17 @@ const VerificationScreen = ({ navigation, route }) => {
         dispatch(setUserData(user));
         dispatch(userRegisterSuccess(user));
         console.log("********user",user)
-        return navigation.navigate("App")
+        return CommonActions.reset({
+          index: 0,
+          routes: [{ name:"App" }],
+        })
       } else if(!user) {
-        return navigation.navigate("Register", { phoneNumber })
+        return  navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name:"Register" ,
+          params:{phoneNumber:phoneNumber}}],
+          }))
       }
     } catch (error) {
       const errorMessage =

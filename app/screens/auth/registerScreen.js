@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
+import { CommonActions } from "@react-navigation/native";
 
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
@@ -61,7 +62,11 @@ const RegisterScreen = ({ navigation,route}) => {
         dispatch(userRegisterSuccess(auth?.currentUser));
         setItem("userData", auth?.currentUser);
         setUserData(res)
-        navigation.navigate("App");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name:"App" }],
+          }))
       }else {
         Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
         console.log("the is the message befoe email and name is used befoer res",res)
