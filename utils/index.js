@@ -1,7 +1,9 @@
 import axios from "axios";
-import {BASE_URL} from "@env"
+import {    EXPO_PUBLIC_BASE_URL} from "@env"
 const api = axios.create({
-  baseURL: BASE_URL, // Set your base URL
+  baseURL:     EXPO_PUBLIC_BASE_URL, // Set your base URL
 });
 
 export default  api
+
+
