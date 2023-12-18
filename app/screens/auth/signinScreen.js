@@ -22,6 +22,7 @@ import { auth, firebaseConfig } from "../../../firebaseConfig";
 import { errorMessages } from "../../data/signin";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location'
+import {EXPO_PUBLIC_BASE_URL} from '@env'
 const { width } = Dimensions.get('screen')
 const SigninScreen = ({ navigation }) => {
   const [disabled, setDisabled] = useState(true);
@@ -105,7 +106,7 @@ try {
           <View style={{ flex: 1, alignItems: "center" }}>
             <AppText
               centered={true}
-              text={"Signin with Phone Number"}
+              text={"Signin with Phone Number"+EXPO_PUBLIC_BASE_URL}
               style={{ marginBottom: width*0.09,maxWidth :width*0.75 }}
             />
           </View>

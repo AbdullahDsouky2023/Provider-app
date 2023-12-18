@@ -55,10 +55,11 @@ const VerificationScreen = ({ navigation, route }) => {
         dispatch(setUserData(user));
         dispatch(userRegisterSuccess(user));
         console.log("********user",user)
-        return CommonActions.reset({
-          index: 0,
-          routes: [{ name:"App" }],
-        })
+        return navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name:"App" }]
+          }))
       } else if(!user) {
         return  navigation.dispatch(
           CommonActions.reset({
