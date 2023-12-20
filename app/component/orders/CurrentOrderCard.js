@@ -26,6 +26,7 @@ import { useDispatch} from  'react-redux'
 export default function CurrentOrderCard({ item ,onPress}) {
   const navigation = useNavigation();
   const dispatch = useDispatch()
+  console.log("fff",    item?.attributes?.user?.data?.attributes?.username )
   return (
     <TouchableWithoutFeedback
     style={styles.scrollContainer}
@@ -70,7 +71,13 @@ export default function CurrentOrderCard({ item ,onPress}) {
             style={styles.status}
           />
            <AppText
-            text={`${item?.attributes?.status === "assigned"?"تم التعيين":"تم الانتهاء من العمل "}`}
+            text={
+              `${item?.attributes?.status === "assigned"?
+              "طلب جديد":item?.attributes?.status =="accepted"?
+              "تم القبول":item?.attributes?.status =="working" ?
+               "جاري العمل":item?.attributes?.status =="finished" ?
+                " تم الانتهاء":item?.attributes?.status =="payed"?
+                "تم السداد": null }`}
             centered={false}
             style={styles.title}
           />

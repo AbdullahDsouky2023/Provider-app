@@ -74,7 +74,7 @@ const CurrentOffersScreen = ({ route ,subPage}) => {
        
         
         const pendingOrders = orders?.filter(
-          (item) => item?.attributes?.status === "pending"
+          (item) => item?.attributes?.status === "pending" && item?.attributes?.services?.data?.length >0
           );
           setselectedItemsData(pendingOrders);
           setRefreshing(false);

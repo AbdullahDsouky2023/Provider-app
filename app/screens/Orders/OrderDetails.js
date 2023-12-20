@@ -19,7 +19,7 @@ import useOrders, {
   requestPayment,
 } from "../../../utils/orders";
 
-import { Entypo } from '@expo/vector-icons'; 
+import { Entypo } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
@@ -44,31 +44,40 @@ export default function OrderDetails({ navigation, route }) {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state?.orders?.orders);
   const provider = useSelector((state) => state?.user?.userData);
-  const { sendPushNotification} = useNotifications()
+  const { sendPushNotification } = useNotifications();
 
   const handleOrderCancle = async (id) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
-      console.log(id,selectedOrder[0]?.attributes)
-      const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
-      if(selectedOrder[0]?.attributes?.PaymentStatus !== "Payed" && selectedOrder[0]?.attributes?.status !== "finished" ){
+      console.log(id, selectedOrder[0]?.attributes);
+      const userNotificationToken =
+        selectedOrder[0]?.attributes?.user?.data?.attributes
+          ?.expoPushNotificationToken;
+      if (
+        selectedOrder[0]?.attributes?.PaymentStatus !== "Payed" &&
+        selectedOrder[0]?.attributes?.status !== "finished"
+      ) {
         const res = await cancleOrder(id);
 
-      if (res) {
-        dispatch(setOrders(data));
-        console.log(`the user token `,selectedOrder[0].attributes?.user)
-        sendPushNotification(userNotificationToken,` قام ${provider?.attributes?.name} بالغاء الطلب`)
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: HOME }],
-          })
-        );
-        Alert.alert("تم بنجاح");
-      } else {
-        Alert.alert("حدثت مشكله حاول مرة اخري");
-      }}
+        if (res) {
+          dispatch(setOrders(data));
+          console.log(`the user token `, selectedOrder[0].attributes?.user);
+          sendPushNotification(
+            userNotificationToken,
+            ` قام ${provider?.attributes?.name} بالغاء الطلب`
+          );
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: HOME }],
+            })
+          );
+          Alert.alert("تم بنجاح");
+        } else {
+          Alert.alert("حدثت مشكله حاول مرة اخري");
+        }
+      }
     } catch (error) {
       console.log(error, "error deleting the order");
     } finally {
@@ -80,10 +89,73 @@ export default function OrderDetails({ navigation, route }) {
     try {
       const res = await changeOrderStatus(id, "finished");
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
-      const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
+      const userNotificationToken =
+        selectedOrder[0]?.attributes?.user?.data?.attributes
+          ?.expoPushNotificationToken;
       if (res) {
         dispatch(setOrders(data));
-        sendPushNotification(userNotificationToken,` قام ${provider?.attributes?.name} بانهاء العمل علي الطلب`)
+        sendPushNotification(
+          userNotificationToken,
+          ` قام ${provider?.attributes?.name} بانهاء العمل علي الطلب`
+        );
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: HOME }],
+          })
+        );
+        Alert.alert("تم بنجاح");
+      } else {
+        Alert.alert("حدثت مشكله حاول مرة اخري");
+      }
+    } catch (error) {
+      console.log(error, "error finsihed the order");
+    } finally {
+      setModalVisible(false);
+    }
+  };
+  const handleOrderAccept = async (id) => {
+    try {
+      const res = await changeOrderStatus(id, "accepted");
+      const selectedOrder = orders?.data.filter((order) => order?.id === id);
+      const userNotificationToken =
+        selectedOrder[0]?.attributes?.user?.data?.attributes
+          ?.expoPushNotificationToken;
+      if (res) {
+        dispatch(setOrders(data));
+        sendPushNotification(
+          userNotificationToken,
+          ` قام ${provider?.attributes?.name} بقبول العمل علي الطلب`
+        );
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: HOME }],
+          })
+        );
+        Alert.alert("تم بنجاح");
+      } else {
+        Alert.alert("حدثت مشكله حاول مرة اخري");
+      }
+    } catch (error) {
+      console.log(error, "error finsihed the order");
+    } finally {
+      setModalVisible(false);
+    }
+  };
+  const handleStartWorking = async (id) => {
+    try {
+      const res = await changeOrderStatus(id, "working");
+      const selectedOrder = orders?.data.filter((order) => order?.id === id);
+      const userNotificationToken =
+        selectedOrder[0]?.attributes?.user?.data?.attributes
+          ?.expoPushNotificationToken;
+      if (res) {
+        dispatch(setOrders(data));
+        sendPushNotification(
+          userNotificationToken,
+          ` قام ${provider?.attributes?.name} بقبول العمل علي الطلب`
+        );
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -102,7 +174,7 @@ export default function OrderDetails({ navigation, route }) {
   };
   const handleRequestPayment = async (id) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
       const res = await requestPayment(id);
       if (res) {
@@ -121,8 +193,7 @@ export default function OrderDetails({ navigation, route }) {
       console.log(error, "error finsihed the order");
     } finally {
       setModalVisible(false);
-      setIsLoading(false)
-
+      setIsLoading(false);
     }
   };
 
@@ -131,7 +202,7 @@ export default function OrderDetails({ navigation, route }) {
     <ScrollView style={styles.scrollContainer}>
       <AppHeader subPage={true} />
       <ScrollView style={styles.container}>
-      <View style={styles.itemContainer}>
+        <View style={styles.itemContainer}>
           <FlatList
             data={item?.attributes?.services.data}
             showsHorizontalScrollIndicator={false}
@@ -249,29 +320,49 @@ export default function OrderDetails({ navigation, route }) {
             />
           </View>
         )}
-       
 
         {item?.attributes?.status === "finished" ? (
           <AppButton
-            title={"Confirm Request Payment"}
+            title={"Request Payment"}
             style={{ backgroundColor: Colors.success }}
             onPress={() => handleRequestPayment(item.id)}
           />
-        ) : (
+        ) : item?.attributes?.status === "accepted" ? (
           <View>
+            <AppButton
+              title={"Start Work"}
+              style={{ backgroundColor: Colors.success }}
+              onPress={() => handleStartWorking(item.id)}
+            />
+          </View>
+        ) : item?.attributes?.status === "working" ? 
+          (
+            <View>
             <AppButton
               title={"finish work"}
               style={{ backgroundColor: Colors.success }}
               onPress={() => handleFinishOrder(item.id)}
             />
 
-            <AppButton
-              title={"reject work"}
-              style={{ backgroundColor: Colors.error }}
-              onPress={() => setModalVisible(true)}
-            />
+           
           </View>
-        )}
+          ) :item?.attributes?.status === "assigned" ?(
+          <View>
+            <AppButton
+              title={"Accept Order"}
+              style={{ backgroundColor: Colors.success }}
+              onPress={() => handleOrderAccept(item.id)}
+            />
+            <AppButton
+              title={"Reject Order"}
+              style={{ backgroundColor: Colors.redColor }}
+              onPress={() => handleOrderCancle(item.id)}
+            />
+
+           
+          </View>)
+          :null
+        }
       </ScrollView>
       <LoadingModal visible={isLoading} />
       <AppModal
@@ -348,13 +439,16 @@ const styles = StyleSheet.create({
     fontSize: 21,
     color: Colors.primaryColor,
   },
-  chatContainer:{paddingHorizontal:19,backgroundColor:Colors.primaryColor,
-  width:60,
-height:40,
-borderRadius:20,
-marginHorizontal:width*0.8,
-left:0,
-display:"flex",
-alignItems:'center',
-justifyContent:'center',}
+  chatContainer: {
+    paddingHorizontal: 19,
+    backgroundColor: Colors.primaryColor,
+    width: 60,
+    height: 40,
+    borderRadius: 20,
+    marginHorizontal: width * 0.8,
+    left: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

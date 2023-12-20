@@ -104,7 +104,7 @@ try {
           <OverviewComponent />
         </View> */}
         <ServicesList/>
-        <AppText text={location} centered={false} style={{paddingHorizontal:19,fontSize:19,color:Colors.blackColor}}/>
+        {/* <AppText text={location} centered={false} style={{paddingHorizontal:19,fontSize:19,color:Colors.blackColor}}/> */}
         {/* <CurrentOffersScreen subPage={true}/> */}
       </ScrollView>
     </SafeAreaView>
