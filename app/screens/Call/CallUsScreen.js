@@ -6,21 +6,17 @@ import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import { useTranslation } from "react-i18next";
 import AppHeader from "../../component/AppHeader";
+import ArrowBack from "../../component/ArrowBack";
+import GeneralSettings from "../../component/Account/GeneralSettings";
+import SocialAccountSettings from "../account/SocialAccountSettings";
 const { width } = Dimensions.get("screen");
 export default function CallUsScreen() {
   const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <AppHeader subPage={true} />
+      <ArrowBack subPage={true} />
 
-      <AppText
-        text={"أتصل بنا "}
-        style={{ color: Colors.blackColor }}
-        centered={false}
-      />
-      <View style={styles.imageContainer}>
-        <Image source={require("../../assets/images/account/call.png")} />
-      </View>
+      <SocialAccountSettings/>
     </View>
   );
 }

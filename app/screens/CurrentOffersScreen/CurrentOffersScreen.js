@@ -22,89 +22,69 @@ import useNotifications from "../../../utils/notifications";
 import { ErrorScreen } from "../Error/ErrorScreen";
 import useRegions from "../../../utils/useRegions";
 import { useNavigation } from "@react-navigation/native";
-import * as Location from 'expo-location'
-const { width ,height} = Dimensions.get("screen");
-import * as geolib from 'geolib';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Location from "expo-location";
+const { width, height } = Dimensions.get("screen");
+import * as geolib from "geolib";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "../loading/LoadingScreen";
 
-const CurrentOffersScreen = ({ route ,subPage}) => {
+const CurrentOffersScreen = ({ route, subPage }) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const regions = useSelector((state) => state?.regions?.regions);
   const orderRedux = useSelector((state) => state?.orders?.orders);
   const [region, setRegion] = useState("");
   const [selectedItemsData, setselectedItemsData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const { token} = useNotifications()
-  const [enableRefetch,setEnableRefetch]=useState(false)
-  const [locationCoordinate,setLocationCorrdinate]=useState(null) 
+  const { token } = useNotifications();
+  const [enableRefetch, setEnableRefetch] = useState(false);
+  const [locationCoordinate, setLocationCorrdinate] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      const value = await AsyncStorage.getItem('userLocation');
-      if (value !== null) {
-        // We have data!!
-        setLocationCorrdinate(JSON.parse(value));
-        console.log(JSON.parse(value)," this is the data that will be setting first mount")
-        setLoading(false);
-
-        fetchData(JSON.parse(value));
-
-      }
-    })();
-   }, [])
   const fetchData = (coordinate) => {
-    console.log("refetching before",coordinate)
-    if(orderRedux  && coordinate){
+    console.log("refetching before", coordinate);
+    if (orderRedux && coordinate) {
       // console.log("refetching after")
 
+      const orders = orderRedux?.data?.filter((item) => {
+        const orderCoordinate = {
+          latitude: item.attributes.googleMapLocation.coordinate.latitude,
+          longitude: item.attributes.googleMapLocation.coordinate.longitude,
+        };
+        // console.log("the is the coodainte revi",coordinate,orderCoordinate)
+        const distance = geolib.getDistance(coordinate, orderCoordinate);
+        return distance <= 10000; // 10 kilometers
+      });
 
-      const orders = orderRedux?.data?.filter(
-        (item) => {
-         const orderCoordinate = {
-           latitude: item.attributes.googleMapLocation.coordinate.latitude,
-           longitude: item.attributes.googleMapLocation.coordinate.longitude,
-         };
-         const distance = geolib.getDistance( coordinate , orderCoordinate);
-         return distance <= 10000; // 10 kilometers
-        }
-       );
-       
-        
-        const pendingOrders = orders?.filter(
-          (item) => item?.attributes?.status === "pending" && item?.attributes?.services?.data?.length >0
-          );
-          setselectedItemsData(pendingOrders);
-          setRefreshing(false);
-          setEnableRefetch(false)
-        }
+      const pendingOrders = orders?.filter(
+        (item) =>
+          item?.attributes?.status === "pending" &&
+          item?.attributes?.services?.data?.length > 0
+      );
+      console.log(pendingOrders,"pend")
+      setselectedItemsData(pendingOrders);
+      setRefreshing(false);
+      setEnableRefetch(false);
+      setLoading(false)
+    }
   };
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.error('Permission to access location was denied');
-        return;
-      }
-  
-      let location = await Location.getCurrentPositionAsync({});
-      const coordinate = {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }
-          setLocationCorrdinate(coordinate)
-// Store the location in AsyncStorage
-try {
-  await AsyncStorage.setItem('userLocation', JSON.stringify(coordinate));
- } catch (error) {
-  console.log(error);
- }    })();
-  }, []);
+      try {
+        const CurrentLocation = await AsyncStorage.getItem("userLocation");
+        if (CurrentLocation){
 
-;
+          setLocationCorrdinate(JSON.parse(CurrentLocation).coordinate);
+          fetchData(JSON.parse(CurrentLocation).coordinate);
+
+          }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
    
+
   const getServices = async () => {
     if (data) {
       dispatch(setServices(data));
@@ -117,56 +97,51 @@ try {
     setEnableRefetch(true);
     fetchData(locationCoordinate);
   };
-  if(loading){
-    return <LoadingScreen/>
+  if (loading) {
+    return <LoadingScreen />;
   }
   return (
-    
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
-    {
-      !orderRedux?.length > 0 ?
-      <>
-      <StatusBar backgroundColor={Colors.primaryColor} />
-     {!subPage && 
-      <AppHeader />
-     }
-        {/* <RegionDropDown onChange={setRegion} enableRefetch={enableRefetch}/>  */}
-       {/* <AppText text={region} centered={false} style={styles.RegionHeader} />  */}
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        {selectedItemsData?.length > 0 ? (
-          <View style={styles.container}>
-            <View style={styles.listContainer}>
-              <View style={{ paddingHorizontal: 10 }}>
-                <FlatList
-                  data={selectedItemsData}
-                  renderItem={({ item }) => {
-                    return (
-                      <OrderOfferCard
-                        onPress={() =>
-                          navigation.navigate(ITEM_DETAILS, { item })
-                        }
-                        item={item}
-                      />
-                    );
-                  }}
-                />
+      {!orderRedux?.length > 0 ? (
+        <>
+          <StatusBar backgroundColor={Colors.primaryColor} />
+          {!subPage && <AppHeader />}
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
+            {selectedItemsData?.length > 0 ? (
+              <View style={styles.container}>
+                <View style={styles.listContainer}>
+                  <View style={{ paddingHorizontal: 10 }}>
+                    <FlatList
+                      data={selectedItemsData}
+                      renderItem={({ item }) => {
+                        return (
+                          <OrderOfferCard
+                            onPress={() =>
+                              navigation.navigate(ITEM_DETAILS, { item })
+                            }
+                            item={item}
+                          />
+                        );
+                      }}
+                    />
+                  </View>
+                </View>
               </View>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.noItemContainer}>
-            <AppText text={"لا يوجد طلبات في المنطقه"} />
-          </View>
-        )}
-      </ScrollView> 
-      </>
-      :<ErrorScreen hanleRetry={fetchData} />}
+            ) : (
+              <View style={styles.noItemContainer}>
+                <AppText text={"لا يوجد طلبات في المنطقه"} />
+              </View>
+            )}
+          </ScrollView>
+        </>
+      ) : (
+        <ErrorScreen hanleRetry={fetchData} />
+      )}
     </SafeAreaView>
-  
   );
 };
 
@@ -229,7 +204,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: height*0.5,
+    height: height * 0.5,
     width: width,
     backgroundColor: Colors.whiteColor,
   },

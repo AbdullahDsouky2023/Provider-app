@@ -7,16 +7,18 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { BROWSE_ORDERS, OFFERS } from "../../navigation/routes";
 import useCategories from "../../../utils/categories";
+import LoadingScreen from "../../screens/loading/LoadingScreen";
 const  { width } = Dimensions.get('screen')
 
 export default function ServicesList() {
   // const categories = useSelector((state) => state?.categories?.categories);
   const navigation = useNavigation();
-  const {data:categories} = useCategories()
+  const {data:categories,isLoading} = useCategories()
   const handleServiceCardPress = (item) => {
     navigation.navigate(BROWSE_ORDERS, { name: item?.attributes?.name });
 
   };
+  if(isLoading) return <LoadingScreen/>
   return (
     <HeaderTextComponent name={"Services"} showAll={true}>
       <FlatList

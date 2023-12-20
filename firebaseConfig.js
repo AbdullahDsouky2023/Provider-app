@@ -12,14 +12,14 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 //     appId: "1:886597742556:web:869a9f71557314fd722919"
 //   };
 //Chrome
-export const firebaseConfig = {
-  apiKey: "AIzaSyCfFPu1VIgGhgRgzvcfbAzipgd4_MYfkAs",
-  authDomain: "home-service2.firebaseapp.com",
-  projectId: "home-service2",
-  storageBucket: "home-service2.appspot.com",
-  messagingSenderId: "197872272379",
-  appId: "1:197872272379:web:ef909bbd7ebfe41110415e"
-};
+// export const firebaseConfig = {
+//   apiKey: "AIzaSyCfFPu1VIgGhgRgzvcfbAzipgd4_MYfkAs",
+//   authDomain: "home-service2.firebaseapp.com",
+//   projectId: "home-service2",
+//   storageBucket: "home-service2.appspot.com",
+//   messagingSenderId: "197872272379",
+//   appId: "1:197872272379:web:ef909bbd7ebfe41110415e"
+// };
 // // second account chrome
 // export const firebaseConfig = {
 //   apiKey: "AIzaSyBmuyhQV1uVVliQwffXfsgE7L5iLOLsEzw",
@@ -39,14 +39,14 @@ export const firebaseConfig = {
 //   appId: "1:45934948539:web:95294fb0d4c574b3e8f99e"
 // };
 
-// export const firebaseConfig = {
-//   apiKey: "AIzaSyCSC--mzzrgZCTKQ7FK0t_UJyoccZyyp_g",
-//   authDomain: "homeservices4-2746c.firebaseapp.com",
-//   projectId: "homeservices4-2746c",
-//   storageBucket: "homeservices4-2746c.appspot.com",
-//   messagingSenderId: "334834559529",
-//   appId: "1:334834559529:web:c60a68127fafe99f63ca38"
-// };
+export const firebaseConfig = {
+  apiKey: "AIzaSyCSC--mzzrgZCTKQ7FK0t_UJyoccZyyp_g",
+  authDomain: "homeservices4-2746c.firebaseapp.com",
+  projectId: "homeservices4-2746c",
+  storageBucket: "homeservices4-2746c.appspot.com",
+  messagingSenderId: "334834559529",
+  appId: "1:334834559529:web:c60a68127fafe99f63ca38"
+};
 
 //nab1
 // export const firebaseConfig = {

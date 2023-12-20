@@ -76,6 +76,23 @@
     "Your Data":"بيانات الحساب",
     "Confirm Request Payment":"تأكيد استلام الدفع",
     "phone":"رقم الهاتف",
-    "Start Work":"بدء العمل"
+    "Start Work":"بدء العمل",
+    "Recharge Wallet": "شحن المحفظه",
+  "Account Details": "بيانات الحساب",
+  "Permission Required": "الوصول مطلوب",
+  "This app requires access to your location.": "يحتاج التطبيق للوصول لموقعك",
+  "Go to Settings": "الذهاب الي الاعدادات",
+  "Allow":"السماح",
+  "Change Number":"تغيير الرقم",
+  "district":"الحي",
+  "There is no notifications yet":"لا يوجد اي اشعارات ",
+  "Sign Out":"تسجيل الخروج",
+  "Contact Us": "تواصل معنا",
+  "Share App": "شارك التطبيق",
+  "Tickets":"التذاكر",
+  "Terms and Conditions": "الشروط والاحكام",
+
+  "You have denied location access permanently. Please go to Settings and enable location access for this app.":
+  "لقد رفضت الوصول إلى الموقع بشكل دائم. يرجى الذهاب إلى الإعدادات وتمكين وصول الموقع لهذا التطبيق."
 
 }

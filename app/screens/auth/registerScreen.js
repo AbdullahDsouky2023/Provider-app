@@ -50,6 +50,7 @@ const RegisterScreen = ({ navigation,route}) => {
   const handleFormSubmit = async (values) => {
     try {
       const userLocation = await getLocationFromStorage()
+      
       // const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "")
       setIsLoading(true);
       const res = await createUser({

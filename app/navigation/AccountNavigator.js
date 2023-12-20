@@ -10,6 +10,7 @@ import UserInfo from '../screens/PersonalInfo/UserInfo';
 import LocationScreen from '../screens/location/LocationScreen';
 import AddManualLocationScreen from '../screens/location/AddManualLocationScreen';
 import { MANUAL_LOCATION_ADD } from './routes';
+import ConditionsScreen from '../screens/terms/ConditionScreen';
 
 export default function AccountNavigator() {
     const Stack = createStackNavigator()
@@ -24,8 +25,10 @@ export default function AccountNavigator() {
        <Stack.Screen name="Account" component={AccountScreen} options={{ ...TransitionPresets.DefaultTransition }} />
         <Stack.Screen name="wallet" component={WalletScreen} />
         <Stack.Screen name="share" component={ShareScreen} />
-        <Stack.Screen name="call-end" component={CallUsScreen} />
+        <Stack.Screen name="social-instagram" component={CallUsScreen} />
         <Stack.Screen name="user" component={UserInfo} />
+        <Stack.Screen name="doc" component={ConditionsScreen} />
+
         <Stack.Screen name="location-pin" component={LocationScreen} />
         <Stack.Screen name={MANUAL_LOCATION_ADD} component={AddManualLocationScreen} />
     </Stack.Navigator>

@@ -31,6 +31,7 @@ import ServicesList from "../../component/Home/ServicesList";
 import CurrentOrders from "../Orders/CurrentOrders";
 import CurrentOffersScreen from "../CurrentOffersScreen/CurrentOffersScreen";
 import AppText from "../../component/AppText";
+import UseLocation from "../../../utils/useLocation";
 const { width } = Dimensions.get('screen')
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
@@ -39,6 +40,7 @@ const HomeScreen = ({ navigation }) => {
   const { data: orders, isError: error ,refetch:refetchOrders,isLoading} = useOrders();
   const [location,setLocation]=useState(null)
   const [refreshing, setRefreshing] = useState(false);
+  const {}=UseLocation()
   const fetchData = async () => {
     if (orders) {
       // dispatch(setRegions(data));
@@ -59,27 +61,7 @@ const HomeScreen = ({ navigation }) => {
     setRefreshing(true);
     fetchData();
   };
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.error('Permission to access location was denied');
-        return;
-      }
-  
-      let location = await Location.getCurrentPositionAsync({});
-      const coordinate = {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }
-          setLocation(JSON.stringify(coordinate))
-// Store the location in AsyncStorage
-try {
-  await AsyncStorage.setItem('userLocation', JSON.stringify(coordinate));
- } catch (error) {
-  console.log(error);
- }    })();
-  }, []);
+
   if (isLoading) return <LoadingScreen />;
   if (error) return <ErrorScreen hanleRetry={fetchData} />;
   return (

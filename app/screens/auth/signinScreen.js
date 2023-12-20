@@ -23,32 +23,15 @@ import { errorMessages } from "../../data/signin";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location'
 import {EXPO_PUBLIC_BASE_URL} from '@env'
+import UseLocation from "../../../utils/useLocation";
 const { width } = Dimensions.get('screen')
 const SigninScreen = ({ navigation }) => {
   const [disabled, setDisabled] = useState(true);
   const [state, setState] = useState({ phoneNumber: null });
   const recaptchaVerifier = useRef(null);
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.error('Permission to access location was denied');
-        return;
-      }
-  
-      let location = await Location.getCurrentPositionAsync({});
-      const coordinate = {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          }
-          // setLocationCorrdinate(coordinate)
-// Store the location in AsyncStorage
-try {
-  await AsyncStorage.setItem('userLocation', JSON.stringify(coordinate));
- } catch (error) {
-  console.log(error);
- }    })();
-  }, []);
+
+  const { }= UseLocation()
+
   const updateState = (data) => {
     setState((state) => ({ ...state, ...data }));
     if (data.phoneNumber.length === 12) setDisabled(false);

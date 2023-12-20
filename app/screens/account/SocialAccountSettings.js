@@ -1,21 +1,19 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
-import { ScrollView} from "react-native-virtualized-view";
+import { View, Text, StyleSheet, Dimensions, FlatList } from "react-native";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
-import { FlatList } from "react-native";
+import { ScrollView } from "react-native-virtualized-view";
 
-import AppText from "../AppText";
-import AppButton from "../AppButton";
+import AppText from "../../component/AppText";
+import AppButton from "../../component/AppButton";
 import { Colors } from "../../constant/styles";
-import SettingItem from "./SettingItem";
-import { settingsItemArray } from "../../data/account";
+import SettingItem from "../../component/Account/SocialItemSetting";
+import { SocailLinks } from "../../data/SocailLinks";
 import { auth } from "../../../firebaseConfig";
 const { width } = Dimensions.get("screen");
-
-export default function GeneralSettings() {
+export default function SocialAccountSettings() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -23,6 +21,8 @@ export default function GeneralSettings() {
     try {
       await auth.signOut();
       await AsyncStorage.removeItem("userData");
+
+      // Inside your sign-out function:
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -36,16 +36,22 @@ export default function GeneralSettings() {
 
   return (
     <ScrollView style={styles.container}>
-      <AppText text="GeneralSettings" centered={false} style={styles.header} />
-      <View>
+      <AppText text="Contact Us" centered={false} style={styles.header} />
+      <View
+      >
         <FlatList
-          data={settingsItemArray}
+          data={SocailLinks}
           style={{
             display: "flex",
             gap: 20,
+            width:width*1,
+            paddingHorizontal:width*0.1,
+            // paddingVertical:8,
             flexWrap:'wrap',
+            alignItems:"center",
+            justifyContent:'center',
             // backgroundColor:'red',
-            flexDirection:'row'
+            flexDirection:'column'
           }}
           renderItem={({ item }) => {
             return <SettingItem item={item} />;
@@ -53,11 +59,7 @@ export default function GeneralSettings() {
           keyExtractor={(item, index) => item.name + index}
         />
       </View>
-      {/* <AppButton
-        title={'signOut'}
-        style={{ marginVertical: 20,marginTop:100 }}
-        onPress={handleSignOut}
-      /> */}
+      
     </ScrollView>
   );
 }
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
   header: {
     color: Colors.primaryColor,
     fontSize: 18,
-    marginBottom:10
+    marginBottom:25
   },
   textHeader: {
     color: Colors.blackColor,
@@ -87,11 +89,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    // width: width * 1,
   },
   itemHeader: {
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
+    // justifyContent:'center',
     gap: 15,
   },
 });

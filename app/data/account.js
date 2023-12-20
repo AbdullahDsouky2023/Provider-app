@@ -1,18 +1,27 @@
-export const settingsItemArray = [
-  {
-    name: "الملف الشخصي",
-    icon: "user",
-    desc: "",
-  },
 
+export const settingsItemArray = [ 
   {
-    name: "المحفظه",
-    icon: "wallet",
-    desc: "تفاصيل محفظتك الخاصه",
-  },
-  {
-    name: "شير و أكسب",
-    icon: "share",
-    desc: "شير وأكسب 50 جنيه داخل محفظتك ",
-  },
-];
+ name:"Account Details",
+ icon:"user",
+ desc:""
+},
+ {
+ name:"Share App",
+ icon:"share",
+ desc:"شير وأكسب 50 جنيه داخل محفظتك "
+},
+ {
+ name:"Contact Us",
+ icon:"social-instagram",
+},
+ {
+ name:"Terms and Conditions",
+ icon:"doc",
+},
+ {
+ name:"Sign Out",
+ icon:"logout",
+},
+
+]
+

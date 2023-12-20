@@ -41,14 +41,14 @@ import * as geolib from 'geolib';
     useEffect(() => {
       (async () => {
         const value = await AsyncStorage.getItem('userLocation');
-        console.log("this is value",value)
+        console.log("this is value",JSON.parse(value).coordinate)
         if (value !== null) {
           // We have data!!
-          setLocationCorrdinate(JSON.parse(value));
+          setLocationCorrdinate(JSON.parse(value).coordinate);
           console.log(JSON.parse(value)," this is the data that will be setting first mount")
           setIsLoading(false);
   
-          fetchData(JSON.parse(value));
+          fetchData(JSON.parse(value).coordinate);
   
         }
       })();
