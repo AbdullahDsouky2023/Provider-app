@@ -94,7 +94,7 @@ export default function CurrentOrderCard({ item ,onPress}) {
           <Ionicons name="person-outline" size={24} color="black" />
           <AppText
             text={
-              item?.attributes?.user?.data?.attributes?.username 
+              item?.attributes?.user?.data?.attributes?.username || "العميل"
             }
             centered={false}
             style={styles.title}
