@@ -55,8 +55,8 @@ export const requestPayment = async (id) => {
   try {
     const data = await api.put(`/api/orders/${id}`, {
       data: {
-        PaymentStatus: "payment required",
-        status: "finished",
+        status: "payment_required",
+        provider_payment_status:"payment_required"
       },
     });
     if (data?.data?.data?.id) return true;

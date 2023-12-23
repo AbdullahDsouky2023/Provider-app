@@ -14,7 +14,7 @@ export default function AppModal({onPress,setModalVisible,isModalVisible,message
   return (
     <View style={styles.container}>
       <Modal isVisible={isModalVisible}>
-        <View style={{ flex: 1,marginTop:"50%" }} >
+        <View style={{ flex: 1,marginTop:"50%" ,gap:20}} >
           <AppText text={message}/>
 
           <AppButton title="Comfirm" onPress={onPress} />

@@ -77,7 +77,7 @@ export default function CurrentOrderCard({ item ,onPress}) {
               "تم القبول":item?.attributes?.status =="working" ?
                "جاري العمل":item?.attributes?.status =="finished" ?
                 " تم الانتهاء":item?.attributes?.status =="payed"?
-                "تم السداد": null }`}
+                "تم السداد":item?.attributes?.provider_payment_status =="payment_required" ?"في انتظار السداد":item?.attributes?.provider_payment_status ==="payed"?'تم السداد':"تم الانتهاء"}`}
             centered={false}
             style={styles.title}
           />

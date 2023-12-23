@@ -5,7 +5,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
-  FlatList
+  FlatList,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import AppButton from "../../component/AppButton";
@@ -31,7 +31,7 @@ import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
 import useNotifications from "../../../utils/notifications";
 
-const { width } = Dimensions.get("screen");
+const { width ,height} = Dimensions.get("screen");
 export default function ItemScreen({ navigation, route }) {
   const { item } = route?.params;
   const [ModalisLoading, setModalIsLoading] = useState(false);
@@ -40,27 +40,29 @@ export default function ItemScreen({ navigation, route }) {
   const orders = useSelector((state) => state?.orders?.orders);
   const { data, isLoading } = useOrders();
   const dispatch = useDispatch();
-  const { sendPushNotification} = useNotifications()
+  const { sendPushNotification } = useNotifications();
   const createUniqueName = (userId, providerId, orderId) => {
     return `user_${userId}_provider_${providerId}_order_${orderId}`;
   };
 
   const handleOrderAccept = async (id) => {
     try {
-      setModalIsLoading(true)
+      setModalIsLoading(true);
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
       const userId = selectedOrder[0]?.attributes?.user?.data?.id;
-      const userNotificationToken = selectedOrder[0]?.attributes?.user?.data?.attributes?.expoPushNotificationToken;
+      const userNotificationToken =
+        selectedOrder[0]?.attributes?.user?.data?.attributes
+          ?.expoPushNotificationToken;
       const channel_id = createUniqueName(userId, provider?.id, id);
-
       const res = await acceptOrder(id, provider?.id, channel_id);
       if (res) {
-        //     //   // Update Redux store to remove the cancelled order
         dispatch(setOrders(data));
-        // console.log(`the user token `,selectedOrder[0].attributes?.user)
-        // console.log(userNotificationToken,"too o")
- sendPushNotification(userNotificationToken,"قبول طلب",`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
-navigation.goBack();
+        sendPushNotification(
+          userNotificationToken,
+          "قبول طلب",
+          `تم قبول طلبك بواسطه ${provider?.attributes?.name}`
+        );
+        navigation.goBack();
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -76,152 +78,155 @@ navigation.goBack();
     } catch (error) {
       console.log(error, "error deleting the order");
     } finally {
-      setModalIsLoading(false)
+      setModalIsLoading(false);
       setModalVisible(false);
-
     }
   };
-  // useEffect(()=>{
-  //   sendPushNotification("ExponentPushToken[anqOdSDTKdUfVPPHb-agSg]",
-  //     "تم قبول طلبك ",`تم قبول طلبك بواسطه ${provider?.attributes?.name}`)
-  //      console.log(provider?.attributes?.expoPushNotificationToken)
-  // },[])
-//  console.log(provider?.attributes?.expoPushNotificationToken)
-  // if(isLoading) return <LoadingScreen/>
+
   return (
     <ScrollView style={styles.scrollContainer}>
-      <AppHeader subPage={true} />
-      <ScrollView style={styles.container}>
-      <View style={styles.itemContainer}>
-          <FlatList
-            data={item?.attributes?.services.data}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => item.id}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              direction: "rtl",
-              flexWrap: "wrap",
-              marginTop: 15,
-              gap: 15,
-              width: width,
-            }}
-            renderItem={({ item }) => {
-              return (
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 15,
+      {ModalisLoading ? (
+        <View  style={styles.container2}>
+          <LoadingScreen  />
+        </View>
+      ) : (
+        <>
+          <AppHeader subPage={true} />
+          <ScrollView style={styles.container}>
+            <View style={styles.itemContainer}>
+              <FlatList
+                data={item?.attributes?.services.data}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item, index) => item.id}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  direction: "rtl",
+                  flexWrap: "wrap",
+                  marginTop: 15,
+                  gap: 15,
+                  width: width,
+                }}
+                renderItem={({ item }) => {
+                  return (
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 15,
+                      }}
+                    >
+                      <AppText
+                        centered={false}
+                        text={item.attributes?.name}
+                        style={[
+                          styles.name,
+                          { fontSize: 14, paddingRight: 10 },
+                        ]}
+                      />
+                      <AppText
+                        text={`${item.attributes?.Price} جنيه`}
+                        style={{
+                          backgroundColor: Colors.primaryColor,
+                          fontSize: 14,
+                          padding: 6,
+                          borderRadius: 40,
+                          color: Colors.whiteColor,
+                        }}
+                      />
+                    </View>
+                  );
+                }}
+              />
+            </View>
+            <View>
+              <AppText
+                centered={false}
+                text={item?.attributes?.service?.data?.attributes?.name}
+                style={styles.name}
+              />
+            </View>
+            <View style={styles.itemContainer}>
+              <AppText centered={false} text={" السعر"} style={styles.title} />
+              <PriceTextComponent
+                style={{ color: Colors.blackColor, fontSize: 16, marginTop: 4 }}
+                price={item?.attributes?.totalPrice}
+              />
+            </View>
+            <View style={styles.itemContainer}>
+              <AppText
+                centered={false}
+                text={" العنوان"}
+                style={styles.title}
+              />
+              <AppText
+                centered={false}
+                text={item?.attributes?.location}
+                style={styles.price}
+              />
+            </View>
+            <View style={styles.itemContainer}>
+              <AppText centered={false} text={" الموعد"} style={styles.title} />
+              <AppText
+                centered={false}
+                text={`${item?.attributes?.date}`}
+                style={styles.price}
+              />
+            </View>
+            {item?.attributes?.description && (
+              <View style={styles.descriptionContainer}>
+                <AppText
+                  centered={false}
+                  text={" ملاحظات"}
+                  style={styles.title}
+                />
+                <AppText
+                  centered={false}
+                  text={
+                    item?.attributes?.description
+                      ? item?.attributes?.description
+                      : "لا يوجد"
+                  }
+                  style={styles.price}
+                />
+              </View>
+            )}
+            {item?.attributes?.images?.data && (
+              <View style={styles.descriptionContainer}>
+                <AppText
+                  centered={false}
+                  text={" صور للطلب"}
+                  style={styles.title}
+                />
+                <Image
+                  source={{
+                    uri: item?.attributes?.images?.data[0]?.attributes?.url,
                   }}
-                >
-                  <AppText
-                    centered={false}
-                    text={item.attributes?.name}
-                    style={[styles.name, { fontSize: 14, paddingRight: 10 }]}
-                  />
-                  <AppText
-                    text={`${item.attributes?.Price} جنيه`}
-                    style={{
-                      backgroundColor: Colors.primaryColor,
-                      fontSize: 14,
-                      padding: 6,
-                      borderRadius: 40,
-                      color: Colors.whiteColor,
-                    }}
-                  />
-                </View>
-              );
-            }}
-          />
-        </View>
-        <View>
-          <AppText
-            centered={false}
-            text={item?.attributes?.service?.data?.attributes?.name}
-            style={styles.name}
-          />
-        </View>
-        <View style={styles.itemContainer}>
-          <AppText centered={false} text={" السعر"} style={styles.title} />
-          <PriceTextComponent
-            style={{ color: Colors.blackColor, fontSize: 16, marginTop: 4 }}
-            price={item?.attributes?.totalPrice}
-          />
-        </View>
-        <View style={styles.itemContainer}>
-          <AppText centered={false} text={" العنوان"} style={styles.title} />
-          <AppText
-            centered={false}
-            text={item?.attributes?.location}
-            style={styles.price}
-          />
-        </View>
-        {/* <View style={styles.itemContainer}>
-          <AppText centered={false} text={" المنطقه"} style={styles.title} />
-          <AppText
-            centered={false}
-            text={item?.attributes?.region?.data?.attributes?.name}
-            style={styles.price}
-          />
-        </View> */}
+                  style={{
+                    height: 120,
+                    width: 200,
+                    borderRadius: 10,
+                  }}
+                />
+              </View>
+            )}
 
-        <View style={styles.itemContainer}>
-          <AppText centered={false} text={" الموعد"} style={styles.title} />
-          <AppText
-            centered={false}
-            text={`${item?.attributes?.date}`}
-            style={styles.price}
+            <AppButton
+              title={"accept offer"}
+              onPress={() => setModalVisible(true)}
+            />
+          </ScrollView>
+          <AppModal
+            isModalVisible={isModalVisible}
+            message={"تأكيد قبول الطلب"}
+            setModalVisible={setModalVisible}
+            
+            onPress={() => handleOrderAccept(item.id)}
           />
-        </View>
-        {item?.attributes?.description && (
-          <View style={styles.descriptionContainer}>
-            <AppText centered={false} text={" ملاحظات"} style={styles.title} />
-            <AppText
-              centered={false}
-              text={
-                item?.attributes?.description
-                  ? item?.attributes?.description
-                  : "لا يوجد"
-              }
-              style={styles.price}
-            />
-          </View>
-        )}
-        {item?.attributes?.images?.data && (
-          <View style={styles.descriptionContainer}>
-            <AppText
-              centered={false}
-              text={" صور للطلب"}
-              style={styles.title}
-            />
-            <Image
-              source={{
-                uri: item?.attributes?.images?.data[0]?.attributes?.url,
-              }}
-              style={{
-                height: 120,
-                width: 200,
-                borderRadius: 10,
-              }}
-            />
-          </View>
-        )}
-
-        <AppButton
-          title={"accept offer"}
-          onPress={() => setModalVisible(true)}
-        />
-      </ScrollView>
-      <AppModal
-        isModalVisible={isModalVisible}
-        message={"تأكيد قبول الطلب"}
-        setModalVisible={setModalVisible}
-        onPress={() => handleOrderAccept(item.id)}
-      />
-      <LoadingModal visible={ModalisLoading} />
+        </>
+      )}
     </ScrollView>
   );
 }
@@ -233,6 +238,13 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
     paddingHorizontal: 18,
+  },
+  container2: {
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    display:'flex',
+    alignItems:'center',
+    height:height
   },
   name: {
     fontSize: 17,

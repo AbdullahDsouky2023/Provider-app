@@ -56,7 +56,7 @@ export default function OrderDetails({ navigation, route }) {
           ?.expoPushNotificationToken;
       if (
         selectedOrder[0]?.attributes?.PaymentStatus !== "Payed" &&
-        selectedOrder[0]?.attributes?.status !== "finished"
+        selectedOrder[0]?.attributes?.status !== "finish_work"
       ) {
         const res = await cancleOrder(id);
 
@@ -87,7 +87,7 @@ export default function OrderDetails({ navigation, route }) {
   };
   const handleFinishOrder = async (id) => {
     try {
-      const res = await changeOrderStatus(id, "finished");
+      const res = await changeOrderStatus(id, "finish_work");
       const selectedOrder = orders?.data.filter((order) => order?.id === id);
       const userNotificationToken =
         selectedOrder[0]?.attributes?.user?.data?.attributes
@@ -321,7 +321,7 @@ export default function OrderDetails({ navigation, route }) {
           </View>
         )}
 
-        {item?.attributes?.status === "finished" ? (
+        {item?.attributes?.status === "finish_work" ? (
           <AppButton
             title={"Request Payment"}
             style={{ backgroundColor: Colors.success }}
@@ -364,7 +364,9 @@ export default function OrderDetails({ navigation, route }) {
           :null
         }
       </ScrollView>
-      <LoadingModal visible={isLoading} />
+     {
+      isLoading && <LoadingScreen/>
+     }
       <AppModal
         isModalVisible={isModalVisible}
         message={"تأكيد رفض الطلب"}
