@@ -15,6 +15,7 @@ const [currentOrders,setCurrentData]=useState([])
   useEffect(()=>{
       const userId = user?.id;
       const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+      console.log(orders?.length,userId)
       setCurrentData(orders)
     },[ordersRedux])
     if(!currentOrders) return <LoadingScreen/>

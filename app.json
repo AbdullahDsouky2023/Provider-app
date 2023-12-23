@@ -26,6 +26,15 @@
       "package": "com.mrpharman.customer",
       "googleServicesFile": "./google-services.json",
       "versionCode": 1,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "FOREGROUND_SERVICE",
+        "ACCESS_BACKGROUND_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/icon2.png",
         "backgroundColor": "#FFFFFF"
@@ -49,6 +58,12 @@
         {
           "icon": "./app/assets/images/icon2.png",
           "color": "#FFFFFF"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow App to use your location"
         }
       ]
     ],
