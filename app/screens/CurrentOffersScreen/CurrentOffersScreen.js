@@ -80,6 +80,8 @@ const CurrentOffersScreen = ({ route, subPage }) => {
           }
       } catch (error) {
         console.log(error);
+      }finally {
+        setLoading(false)
       }
     })();
   }, []);
@@ -95,6 +97,7 @@ const CurrentOffersScreen = ({ route, subPage }) => {
   const onRefresh = () => {
     setRefreshing(true);
     setEnableRefetch(true);
+    setLoading(true)
     fetchData(locationCoordinate);
   };
   if (loading) {
