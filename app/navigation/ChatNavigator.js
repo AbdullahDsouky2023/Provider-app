@@ -24,8 +24,7 @@ export default function ChatNavigator() {
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
-              ...TransitionPresets.SlideFromRightIOS,
-            }}
+                 }}
           >
             <Stack.Screen
               name={CHAT_ROOM}

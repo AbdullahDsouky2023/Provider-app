@@ -12,8 +12,7 @@ export default function AuthNavigator() {
     <Stack.Navigator
     screenOptions={{
         headerShown: false,
-        ...TransitionPresets.SlideFromRightIOS,
-      }}
+    }}
       initialRouteName='SignIn'
     >
        <Stack.Screen name="SignIn"  component={SigninScreen} options={{ ...TransitionPresets.DefaultTransition }} />

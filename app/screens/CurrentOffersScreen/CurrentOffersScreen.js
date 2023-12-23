@@ -63,10 +63,10 @@ const CurrentOffersScreen = ({ route, subPage }) => {
       );
       console.log(pendingOrders,"pend")
       setselectedItemsData(pendingOrders);
-      setRefreshing(false);
-      setEnableRefetch(false);
-      setLoading(false)
     }
+    setRefreshing(false);
+    setEnableRefetch(false);
+    setLoading(false)
   };
   useEffect(() => {
     (async () => {

@@ -12,7 +12,6 @@ export default function HomeNavigator() {
     <Stack.Navigator
     screenOptions={{
         headerShown: false,
-        ...TransitionPresets.SlideFromRightIOS,
       }}
     >
         <Stack.Screen

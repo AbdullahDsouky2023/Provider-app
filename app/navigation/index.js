@@ -29,8 +29,7 @@ const RootNavigator = () => {
         screenOptions={{
           headerShown: false,
 
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
+       }}
       >
         <Stack.Screen name="Loading" component={LoadingScreen} />
         <Stack.Screen name="Splash" component={SplashScreen} />

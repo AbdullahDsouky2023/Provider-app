@@ -17,8 +17,7 @@ const OrderNavigator = ({route}) => {
         screenOptions={{
           headerShown: false,
 
-          ...TransitionPresets.SlideFromRightIOS,
-          
+         
         }}
         
       >
