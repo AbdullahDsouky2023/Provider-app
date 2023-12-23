@@ -135,12 +135,12 @@ export default function UseLocation() {
         // if (street || name) {
         //   address += street || name;
         // }
-        if (streetNumber) {
-          address += ` ${streetNumber}`;
-        }
-        if (city || subregion) {
-          address += `, ${city || subregion}`;
-        }
+        // if (streetNumber) {
+        //   address += ` ${streetNumber}`;
+        // }
+        // if (city || subregion) {
+        //   address += `, ${city || subregion}`;
+        // }
         if (region) {
           address += `, ${region}`;
         }

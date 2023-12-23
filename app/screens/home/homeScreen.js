@@ -40,7 +40,7 @@ const HomeScreen = ({ navigation }) => {
   const { data: orders, isError: error ,refetch:refetchOrders,isLoading} = useOrders();
   const [location,setLocation]=useState(null)
   const [refreshing, setRefreshing] = useState(false);
-  const {}=UseLocation()
+  const {location:currentLocation}=UseLocation()
   const fetchData = async () => {
     if (orders) {
       // dispatch(setRegions(data));
@@ -73,8 +73,11 @@ const HomeScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
+        <View style={{flex:1,flexDirection:'row',alignItems:'center',width:width,justifyContent:'space-between ',gap:90}}>
 
         <AppHeader />
+          <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/>
+        </View>
     
         <View style={styles.cardContainer}>
           <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
@@ -86,7 +89,6 @@ const HomeScreen = ({ navigation }) => {
           <OverviewComponent />
         </View> */}
         <ServicesList/>
-        {/* <AppText text={location} centered={false} style={{paddingHorizontal:19,fontSize:19,color:Colors.blackColor}}/> */}
         {/* <CurrentOffersScreen subPage={true}/> */}
       </ScrollView>
     </SafeAreaView>
