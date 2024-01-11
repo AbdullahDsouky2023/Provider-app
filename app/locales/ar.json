@@ -84,6 +84,9 @@
   "Go to Settings": "الذهاب الي الاعدادات",
   "Allow":"السماح",
   "Change Number":"تغيير الرقم",
+  "I agree to the Terms and Conditions":"  أوافق على الشروط والأحكام و سياسة الخصوصية",
+  "Privacy":"سیاسة الخصوصیة",
+
   "district":"الحي",
   "There is no notifications yet":"لا يوجد اي اشعارات ",
   "Sign Out":"تسجيل الخروج",
@@ -91,6 +94,8 @@
   "Share App": "شارك التطبيق",
   "Tickets":"التذاكر",
   "Terms and Conditions": "الشروط والاحكام",
+  "OTP Code Was Sent To":"تم ارسال رمز التحقق الي",
+  "Resend":"إعاده ارسال",
 
   "You have denied location access permanently. Please go to Settings and enable location access for this app.":
   "لقد رفضت الوصول إلى الموقع بشكل دائم. يرجى الذهاب إلى الإعدادات وتمكين وصول الموقع لهذا التطبيق."

@@ -3,40 +3,40 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Sizes ,Colors,Fonts,} from "../constant/styles";
 import { StyleSheet } from "react-native";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVerificationCode}) {
     const navigation = useNavigation()
+    const ref = useRef()
 
     return (
       <OTPTextView
-      
+      ref={ref}
         containerStyle={{
           marginTop: Sizes.fixPadding * 2.0,
           marginHorizontal: Sizes.fixPadding * 2.0,
           flexDirection:'row-reverse',
+          justifyContent:'center',
+          alignItems:'center'
         }}
         
         handleTextChange={(text) => {
           setOtpInput(text)
           if (otpInput.length == 6) {
             setisLoading(true);
-            setTimeout(() => {
+            setTimeout(async() => {
               setisLoading(false);
-              confirmVerificationCode(otpInput)
+             await  confirmVerificationCode(otpInput)
+
             }, 2000);
           }
         }}
-        
         inputCount={6}
         keyboardType="numeric"
         tintColor={Colors.primaryColor}
-        // ref={(ref) => {
-        //   otpInputRef = ref;
-        // }}
+
         offTintColor={Colors.bgColor}
         textInputStyle={styles.textFieldStyle }
-        // value={otpInput}
       />
     );
   }

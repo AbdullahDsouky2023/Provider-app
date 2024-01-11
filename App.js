@@ -1,22 +1,30 @@
 import "react-native-gesture-handler";
 
 import RootNavigator from "./app/navigation";
-import { I18nManager, LogBox } from "react-native";
+import { Dimensions, I18nManager, LogBox } from "react-native";
 import { Provider } from "react-redux";
 import store from "./app/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AppState } from 'react-native';
+import AnimatedSplash from "react-native-animated-splash-screen";
+
 import * as Updates from 'expo-updates';
-import { Platform } from "react-native";
+const {height , width}= Dimensions.get('screen')
+import { Colors } from "./app/constant/styles";
  export const client = new QueryClient();
 const App = () => {
+  const [loading, setLoading] = useState(false);
+
   useEffect(()=>{
     reload()
     I18nManager.forceRTL(true);
     I18nManager.allowRTL(true);
-
+    setTimeout(() => {
+      setLoading(true);
+      console.log("f");
+    }, 500);
     
   },[])
 
@@ -42,7 +50,16 @@ const App = () => {
     <GestureHandlerRootView style={{flex:1}}>
       <Provider store={store}>
         <QueryClientProvider client={client}>
-          <RootNavigator />
+        <AnimatedSplash
+            // translucent={true}
+            isLoaded={loading}
+            logoImage={require("./app/assets/images/splash.png")}
+            backgroundColor={Colors.primaryColor}
+            logoHeight={height}
+            logoWidth={width}
+          >
+            <RootNavigator />
+          </AnimatedSplash>
         </QueryClientProvider>
       </Provider>
     </GestureHandlerRootView>

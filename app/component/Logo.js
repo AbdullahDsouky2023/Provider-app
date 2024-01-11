@@ -1,8 +1,8 @@
 import React from 'react'
-import { Image } from 'react-native'
+import { Dimensions, Image } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { Sizes } from '../constant/styles'
-
+const { width , height } = Dimensions.get('screen')
 export default function Logo() {
     return (
         <Image
@@ -14,10 +14,11 @@ export default function Logo() {
 }
 const styles = StyleSheet.create({
     appLogoStyle: {
-        width: 60,
-        height: 60,
+        width: width*1,
+        height: height * 0.13,
         alignSelf: 'center',
-        marginBottom: Sizes.fixPadding * 4,
-        marginTop: Sizes.fixPadding * 8
+        padding: Sizes.fixPadding * 4,
+        // marginBottom: Sizes.fixPadding * 4,
+        // marginTop: Sizes.fixPadding * 8
     },
 })

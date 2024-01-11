@@ -22,8 +22,8 @@ import { errorMessages } from "../../data/signin";
 import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
 import { auth, db } from "../../../firebaseConfig";
 import { getUserByPhoneNumber } from "../../../utils/user";
-import { setRegions } from "../../store/features/regionSlice";
-import { setOrders } from "../../store/features/ordersSlice";
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
 import useRegions from "../../../utils/useRegions";
 import useOrders from "../../../utils/orders";
 
@@ -73,12 +73,14 @@ const VerificationScreen = ({ navigation, route }) => {
         errorMessages[error.message] ||
         "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى";
       Alert.alert(errorMessage);
+      setOtpInput("")
     } finally {
       setOtpInput("");
       setisLoading(false)
     }
   };
-
+  
+  console.log("the current otp value is ",otpInput)
 const convertPhoneTovalid=(phone)=>{
   const phoneNumberWithoutPlus = phone?.replace("+", "");
   const phoneNumber = Number(phoneNumberWithoutPlus);
@@ -99,6 +101,7 @@ const convertPhoneTovalid=(phone)=>{
     }
   }, [resendDisabled, secondsRemaining]);
 
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -115,12 +118,19 @@ const convertPhoneTovalid=(phone)=>{
               }}
               centered={false}
             />
+          <View style={{display:'flex',flexDirection:'row',width:width,gap:8,paddingHorizontal:10,alignItems:'flex-start'}}>
             <AppText
-              text={"enterOTPCode"}
-              centered={false}
-              style={{ fontSize: 17,maxWidth :width*0.75  }}
+              text={`OTP Code Was Sent To`}
+              // centered={false}
+              style={{ fontSize:RFPercentage(2.1), }}
             />
-          </View>
+            <AppText
+              text={`+${phoneNumber}`}
+              // centered={false}
+              style={{ fontSize:RFPercentage(2),color:Colors.primaryColor,marginTop:4 }}
+              />
+              </View>
+              </View>
           <OtpFields
             setisLoading={setisLoading}
             setOtpInput={setOtpInput}
@@ -129,29 +139,31 @@ const convertPhoneTovalid=(phone)=>{
               confirmVerificationCode(otpInput)
             }
           />
-          <AppButton
+           <AppButton
             title={"Continue"}
             path={"Register"}
-            // disabled={otpInput.length === 6 }
+            style={{marginTop:otpInput.length !== 6?30:30}}
+            disabled={otpInput.length !== 6 }
             onPress={confirmVerificationCode}
           />
-          <View style={styles.sendMessasesContainer}>
+           <View style={styles.sendMessasesContainer}>
             <AppText
               text={"didntReceiveOTP"}
               style={{
                 fontSize: 18,
-                marginTop: "12%",
+                paddingTop: resendDisabled ? 44 : 11,
                 paddingRight: 20,
               }}
               centered={false}
             />
             <AppButton
               title={
-                resendDisabled ? ` ارسال(${secondsRemaining}s)` : "ارسال SMS"
+                resendDisabled ? ` 00 :${secondsRemaining} ` : "Resend"
               }
+              textStyle={{fontSize:14}}
               disabled={resendDisabled}
               onPress={() => {
-                setResendDisabled(true);
+              setResendDisabled(true);
                 setSecondsRemaining(30);
                 handleSendVerificationCode();
               }}
@@ -175,7 +187,7 @@ const styles = StyleSheet.create({
   sendMessasesContainer: {
     flex: 1,
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 40,
     // marginRight: 25,
     justifyContent: "space-between",
     flexDirection: "row",
