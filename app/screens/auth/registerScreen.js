@@ -30,6 +30,8 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import { getLocationFromStorage } from "../../../utils/location";
 import AppButton from "../../component/AppButton";
+import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
+import { CHOOSE_CATEGORIES } from "../../navigation/routes";
 const { width,height} = Dimensions.get('screen')
 const RegisterScreen = ({ navigation,route}) => {
   const [error, setError] = useState();
@@ -60,7 +62,7 @@ const RegisterScreen = ({ navigation,route}) => {
 
   const handleFormSubmit = async (values) => {
     try {
-      const userLocation = await getLocationFromStorage()
+      // const userLocation = await getLocationFromStorage()
       
       // const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "")
       setIsLoading(true);
@@ -69,21 +71,22 @@ const RegisterScreen = ({ navigation,route}) => {
       //   name:values.fullName,
       //   // phoneNumber:phoneNumber
       // })
+      dispatch(setCurrentRegisterProperties({...values}))
       console.log("values",values)
-
-      if(res){
-        dispatch(userRegisterSuccess(auth?.currentUser));
-        setItem("userData", auth?.currentUser);
-        setUserData(res)
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name:"App" }],
-          }))
-      }else {
-        Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
-        console.log("the is the message befoe email and name is used befoer res",res)
-      }
+      navigation.navigate(CHOOSE_CATEGORIES)
+      // if(res){
+      //   dispatch(userRegisterSuccess(auth?.currentUser));
+      //   setItem("userData", auth?.currentUser);
+      //   setUserData(res)
+      //   navigation.dispatch(
+      //     CommonActions.reset({
+      //       index: 0,
+      //       routes: [{ name:"App" }],
+      //     }))
+      // }else {
+      //   Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
+      //   console.log("the is the message befoe email and name is used befoer res",res)
+      // }
 
     
     } catch (err) {
@@ -100,13 +103,13 @@ const RegisterScreen = ({ navigation,route}) => {
     <View style={{ flex: 1 }}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.logoCotnainer}>
-          {/* <Logo /> */}
+          <Logo />
         </View>
         <View style={{ flex: 1, alignItems: "center" }}>
-          {/* <AppText
-            text={"Register New Account"}
+          <AppText
+            text={"Register As Provider"}
             style={{ color: Colors.primaryColor, marginBottom: 10 }}
-          /> */}
+          />
           <AppForm
             enableReinitialize={true}
             initialValues={{
@@ -140,25 +143,8 @@ const RegisterScreen = ({ navigation,route}) => {
               name="LastName"
               // placeholdesr="fullName"
             />
-            <SubmitButton title="Register" style={{paddingHorizontal:60,marginTop:40}} />
-            {/* <View style={styles.termsContainer}>
-              <FontAwesome
-                name="edit"
-                size={24}
-                color={Colors.primaryColor}
-              />
-              <AppText
-                text={
-                  "By Creating an account you accept our Terms and Condition"
-                }
-                style={{
-                  color: Colors.blackColor,
-                  fontSize: 11,
-                  width: width,
-                }}
-                // centered={false}
-              />
-            </View> */}
+            <SubmitButton title="Confirm" style={{paddingHorizontal:60,marginTop:40}} />
+           
           </AppForm>
         </View>
       </ScrollView>

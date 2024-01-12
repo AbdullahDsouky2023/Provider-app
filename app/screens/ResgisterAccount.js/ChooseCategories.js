@@ -14,19 +14,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../constant/styles";
 import ArrowBack from "../../component/ArrowBack";
 import AppText from "../../component/AppText";
-import { MaterialIcons } from "@expo/vector-icons";
+import { useDispatch} from 'react-redux'
 import { RadioButton, Checkbox } from "react-native-paper";
 import { Searchbar } from "react-native-paper";
 
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import useCategories from "../../../utils/categories";
 import AppButton from "../../component/AppButton";
+import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
+import { CHOOSE_DCOUMENT } from "../../navigation/routes";
 const { height, width } = Dimensions.get("screen");
 export default function ChooseCategories({navigation,}) {
   const [gender, setGender] = useState("");
   const { data: categories } = useCategories();
   const [query, setQuery] = useState("");
-
+  const dispatch = useDispatch()
   const [checked, setChecked] = useState({});
   const onChangeSearch = (query) => {
     // Update the state
@@ -61,13 +63,18 @@ export default function ChooseCategories({navigation,}) {
     return selectedIds;
   };
 const handlePressConfirm=()=>{
-navigation.navigate("Register")
+  dispatch(setCurrentRegisterProperties({
+    categoriesSelected:getSelectedIds()
+  }))
+navigation.navigate(CHOOSE_DCOUMENT)
+console.log("checked",getSelectedIds())
 }
 return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <ArrowBack />
       <View style={styles.container}>
+        
         <View showsVerticalScrollIndicator={false} style={styles.container2}>
           <AppText
             text={"What services do you intend to provide?"}

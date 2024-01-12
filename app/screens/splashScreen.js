@@ -87,11 +87,14 @@ const SplashScreen = ({ navigation }) => {
         const PhoneNumberValidated = convertPhoneTovalid(validPhone);
         if (userData?.phoneNumber) {
           const gottenuser = await getUserByPhoneNumber(PhoneNumberValidated);
-          dispatch(setUserData(gottenuser));
-        
-          dispatch(userRegisterSuccess(userData));
-          fetchData();
-          navigation.push("App");
+          if (gottenuser) {
+            dispatch(setUserData(gottenuser));
+            dispatch(userRegisterSuccess(userData));
+            navigation.push("App");
+            fetchData();
+          } else {
+            navigation.push("Auth");
+          }
         } else {
           // navigation.push("App");
           navigation.push("Auth");

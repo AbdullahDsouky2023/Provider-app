@@ -21,7 +21,7 @@ import ErrorMessage from "../../component/Form/ErrorMessage";
 import FormField from "../../component/Form/FormField";
 import SubmitButton from "../../component/Form/FormSubmitButton";
 import { auth } from "../../../firebaseConfig";
-import { EXPO_PUBLIC_SECRET_PASSWORD } from "@env";
+import { EXPO_PUBLIC_SECRET_PASSWORD,EXPO_PUBLIC_BASE_URL } from "@env";
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
@@ -38,6 +38,8 @@ import ArrowBack from "../../component/ArrowBack";
 import CitiesDropDownComponent from "./CitiesDropDownComponent";
 import FormImagePicker from "../../component/Form/FormImagePicker";
 import { min } from "date-fns";
+import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
+import { ADDITION_INFO, ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 const { width, height } = Dimensions.get("screen");
 const ChooseDocumentScreen = ({ navigation, route }) => {
   const [error, setError] = useState();
@@ -46,7 +48,8 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [city, setCity] = useState(null);
-
+  const currentRegisterData = useSelector((state) => state?.register.currentRegisterDate);
+   console.log(currentRegisterData)
   // const { phoneNumber } = route?.params
   const validationSchema = yup.object().shape({
     PersonalCard: yup
@@ -78,32 +81,81 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
       //   name:values.fullName,
       //   // phoneNumber:phoneNumber
       // })
-      console.log("values", values);
-
-      if (res) {
-        dispatch(userRegisterSuccess(auth?.currentUser));
-        setItem("userData", auth?.currentUser);
-        setUserData(res);
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: "App" }],
-          })
-        );
-      } else {
-        Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ");
-        console.log(
-          "the is the message befoe email and name is used befoer res",
-          res
-        );
-      }
+      console.log("values", values.CommercialRecord[0],"");
+     await  uploadImage(values.CommercialRecord,values,"CommercialRecord")
+     await  uploadImage(values.PersonalCard,values,"PersonalCard")
+     await  uploadImage(values.PersonalImage,values,"PersonalImage")
+     await  uploadImage(values.JobLicence,values,"JobLicence")
+     navigation.navigate(ADDITION_INFO)
+// dispatch(setCurrentRegisterProperties(values))
+// navigation.dispatch(
+//       CommonActions.reset({
+//         index: 0,
+//         routes: [{ name: ORDER_SUCCESS_SCREEN}],
+//       })
+//     );
+      // if (res) {
+      //   dispatch(userRegisterSuccess(auth?.currentUser));
+      //   setItem("userData", auth?.currentUser);
+      //   setUserData(res);
+      //   navigation.dispatch(
+      //     CommonActions.reset({
+      //       index: 0,
+      //       routes: [{ name: "App" }],
+      //     })
+      //   );
+      // } else {
+      //   Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ");
+      //   console.log(
+      //     "the is the message befoe email and name is used befoer res",
+      //     res
+      //   );
+      // }
     } catch (err) {
       console.log("error creating the resi", err.message);
     } finally {
       setIsLoading(false);
     }
   };
+  const uploadImage = async (image, values,ImageName) => {
+    try {
+      const imageIds = [];
+      console.log("the items is ",image)
+      console.log("the images array ",image)
+    for (const imageUri of image) {
+      const formData = new FormData();
+      formData.append("files", {
+        name: `Nijk_IMAGE_ORDER`,
+        type: "image/jpeg",
+        uri: Platform.OS === "ios" ? imageUri.replace("file://", "") : imageUri,
+      });
 
+      try {
+        const response = await fetch(`${EXPO_PUBLIC_BASE_URL}/api/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Image upload failed with status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        const imageId = responseData[0]?.id;
+        imageIds.push(imageId);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        // Handle error gracefully
+      }
+    }
+    console.log("the image ids are ",imageIds)
+    dispatch(setCurrentRegisterProperties({ [ImageName]: imageIds }));
+
+    // ... continue with form submission ...
+  } catch (error) {
+    // ... error handling ...
+  }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -118,11 +170,11 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
           }}
           onPress={() => navigation.pop()}
         />
-        <ProgressBar
+        {/* <ProgressBar
           progress={0.75}
           color={Colors.primaryColor}
           style={{ backgroundColor: "white", height: 8 }}
-        />
+        /> */}
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.logoCotnainer}>{/* <Logo /> */}</View>
           <View style={{ flex: 1, alignItems: "center" }}>
