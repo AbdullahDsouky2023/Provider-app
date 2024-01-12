@@ -44,7 +44,7 @@ const CitiesDropDownComponent = ({value,setValue}) => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        //   placeholder={!isFocus ? 'Select item' : t('Choose City')}
+          placeholder={!isFocus ? t('Choose City'): t('Choose City')}
         searchPlaceholder={t("Search")}
         value={value}
         onFocus={() => setIsFocus(true)}

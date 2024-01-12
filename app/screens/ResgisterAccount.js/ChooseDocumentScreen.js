@@ -52,18 +52,18 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
    console.log(currentRegisterData)
   // const { phoneNumber } = route?.params
   const validationSchema = yup.object().shape({
-    PersonalCard: yup
+    Personal_image: yup
       .array().min(1,(t("This Field is Required!"))).required(t("This Field is Required!")),
-    PersonalImage: yup
+    Personal_card: yup
       .array()
       .min(1,(t("This Field is Required!")))
       .required(t("This Field is Required!")),
-    CommercialRecord: yup
+    Commercial_record: yup
       .array()
       .min(1,(t("This Field is Required!")))
       .required(t("This Field is Required!")),
       // Optionally, you can also specify the sh,ape of the array items
-    JobLicence: yup
+    professional_licence: yup
       .array()
       .min(1,(t("This Field is Required!")))
       .required(t("This Field is Required!"))
@@ -81,11 +81,11 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
       //   name:values.fullName,
       //   // phoneNumber:phoneNumber
       // })
-      console.log("values", values.CommercialRecord[0],"");
-     await  uploadImage(values.CommercialRecord,values,"CommercialRecord")
-     await  uploadImage(values.PersonalCard,values,"PersonalCard")
-     await  uploadImage(values.PersonalImage,values,"PersonalImage")
-     await  uploadImage(values.JobLicence,values,"JobLicence")
+      console.log("values", values.Commercial_record[0],"");
+     await  uploadImage(values.Commercial_record,values,"Commercial_record")
+     await  uploadImage(values.Personal_card,values,"Personal_card")
+     await  uploadImage(values.Personal_image,values,"Personal_image")
+     await  uploadImage(values.professional_licence,values,"professional_licence")
      navigation.navigate(ADDITION_INFO)
 // dispatch(setCurrentRegisterProperties(values))
 // navigation.dispatch(
@@ -185,25 +185,25 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
             <AppForm
               enableReinitialize={true}
               initialValues={{
-                PersonalImage:[],
-                PersonalCard:[],
-                CommercialRecord:[],
-                JobLicence:[]
+                Personal_image:[],
+                Personal_card:[],
+                Commercial_record:[],
+                professional_licence:[]
                 
               }}
               onSubmit={handleFormSubmit}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
-              <HeaderComponent header={"PersonalImage"} />
-              <FormImagePicker name="PersonalImage" width={width} />
-
               <HeaderComponent header={"PersonalCard"} />
-              <FormImagePicker name="PersonalCard" width={width} />
+              <FormImagePicker name="Personal_card" width={width} />
+
+              <HeaderComponent header={"PersonalImage"} />
+              <FormImagePicker name="Personal_image" width={width} />
               <HeaderComponent header={"CommercialRecord"} />
-              <FormImagePicker name="CommercialRecord" width={width} />
+              <FormImagePicker name="Commercial_record" width={width} />
               <HeaderComponent header={"JobLicence"} />
-              <FormImagePicker name="JobLicence" width={width} />
+              <FormImagePicker name="professional_licence" width={width} />
 
              
                 <SubmitButton

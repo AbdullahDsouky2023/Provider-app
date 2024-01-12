@@ -38,40 +38,38 @@ import { getLocationFromStorage } from "../../../utils/location";
 import AppButton from "../../component/AppButton";
 import ArrowBack from "../../component/ArrowBack";
 import CitiesDropDownComponent from "./CitiesDropDownComponent";
+import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
+import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 const { width, height } = Dimensions.get("screen");
 const AdditionInfoScreen = ({ navigation, route }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const registerData = useSelector((state) => state.register.currentRegisterDate);
   const [city, setCity] = useState(null);
 
   // const { phoneNumber } = route?.params
   const validationSchema = yup.object().shape({
-    PhoneNumber: yup.string().required(t("This Field is Required!")),
-
-    Id: yup.string().required(t("This Field is Required!")),
-    LastName: yup
-      .string()
-      .required(t("This Field is Required!"))
-      .min(3, "Full Name is too short")
-      .max(50, "Full Name is too long"),
+    Additional_phone: yup.string().required(t("This Field is Required!")),
+    IdNumber: yup.string().required(t("This Field is Required!")),
   });
 
   const handleFormSubmit = async (values) => {
     try {
-      console.log("submiting")
-      const userLocation = await getLocationFromStorage();
-      // const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "")
+      console.log("submiting");
+      // const validPhone = auth?.currentUser?.Additional_phone?.replace("+", "")
       setIsLoading(true);
       // const res = await createUser({
       //   email:values.emailAddress,
       //   name:values.fullName,
-      //   // phoneNumber:phoneNumber
+      //   // Additional_phone:Additional_phone
       // })
-      console.log("values", values);
-
+      const  name = `${registerData.FirstName} ${registerData.MiddleName} ${registerData.LastName}`;
+      registerData.name = name
+      console.log("values", [registerData,...values,name]);
+      dispatch(setCurrentRegisterProperties({...values}))
+      // navigation.navigate(ORDER_SUCCESS_SCREEN)
       // if(res){
       //   dispatch(userRegisterSuccess(auth?.currentUser));
       //   setItem("userData", auth?.currentUser);
@@ -106,11 +104,11 @@ const AdditionInfoScreen = ({ navigation, route }) => {
           }}
           onPress={() => navigation.pop()}
         />
-        <ProgressBar
+        {/* <ProgressBar
           progress={0.9}
           color={Colors.primaryColor}
           style={{ backgroundColor: "white", height: 8 }}
-        />
+        /> */}
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.logoCotnainer}>{/* <Logo /> */}</View>
           <View style={{ flex: 1, alignItems: "center" }}>
@@ -121,8 +119,8 @@ const AdditionInfoScreen = ({ navigation, route }) => {
             <AppForm
               enableReinitialize={true}
               initialValues={{
-                PhoneNumber: "",
-                Id: "",
+                Additional_phone: auth?.currentUser?.phoneNumber,
+                IdNumber: "",
               }}
               onSubmit={handleFormSubmit}
               validationSchema={validationSchema}
@@ -132,7 +130,7 @@ const AdditionInfoScreen = ({ navigation, route }) => {
               <FormField
                 autoCorrect={false}
                 icon="account"
-                name="PhoneNumber"
+                name="Additional_phone"
                 //   value="201144254129"
               />
 
@@ -140,31 +138,37 @@ const AdditionInfoScreen = ({ navigation, route }) => {
               <FormField
                 autoCorrect={false}
                 icon="account"
-                name="Id"
+                name="IdNumber"
                 // placeholdesr="fullName"
               />
               <HeaderComponent header={"Choose City"} />
               <CitiesDropDownComponent value={city} setValue={setCity} />
-          <View style={styles.termsContainer}>
-            <FontAwesome name="edit" size={24} color={Colors.primaryColor} />
-            <AppText
-              text={"By Creating an account you accept our Terms and Condition"}
-              style={{
-                color: Colors.blackColor,
-                fontSize: RFPercentage(1.5),
-                minWidth: width*0.9,
-                // backgroundColor:'red',
-                marginLeft: 10,
-              }}
-              // centered={false}
-            />
-          </View>
+              <View style={styles.termsContainer}>
+                <FontAwesome
+                  name="edit"
+                  size={24}
+                  color={Colors.primaryColor}
+                />
+                <AppText
+                  text={
+                    "By Creating an account you accept our Terms and Condition"
+                  }
+                  style={{
+                    color: Colors.blackColor,
+                    fontSize: RFPercentage(1.5),
+                    minWidth: width * 0.9,
+                    // backgroundColor:'red',
+                    marginLeft: 10,
+                  }}
+                  // centered={false}
+                />
+              </View>
               {city && (
                 <SubmitButton
-                  title="Register"
-                  style={{ paddingHorizontal: 60, marginTop: 40 }}
+                title="Register"
+                style={{ paddingHorizontal: 60, marginTop: 40 }}
                 />
-              )}
+                )}
             </AppForm>
           </View>
         </ScrollView>
@@ -196,7 +200,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 16,
     // paddingVertical: 0,
+    // marginTop:-20,
     margin: 0,
+    marginBottom: -12,
     gap: 4,
   },
   header: {

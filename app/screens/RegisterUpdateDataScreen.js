@@ -11,7 +11,7 @@ import { Colors } from "../constant/styles";
 import * as Linking from "expo-linking";
 import { TouchableOpacity } from "react-native";
 
-export default function OrderCreationSuccess({ navigation }) {
+export default function RegisterUpdateDataScreen({ navigation }) {
   const dispatch = useDispatch();
   const { data: orders } = useOrders();
   const handleReturn = () => {
@@ -38,7 +38,7 @@ export default function OrderCreationSuccess({ navigation }) {
     >
       <LottieView
         autoPlay
-        // loop={false}
+        loop={false}
         // ref={animation}
         style={{
           width: 200,

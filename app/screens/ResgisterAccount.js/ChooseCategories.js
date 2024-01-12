@@ -63,9 +63,11 @@ export default function ChooseCategories({navigation,}) {
     return selectedIds;
   };
 const handlePressConfirm=()=>{
+  const  objects = getSelectedIds().map(id => ({id: id}));
   dispatch(setCurrentRegisterProperties({
-    categoriesSelected:getSelectedIds()
-  }))
+    categories:{
+      connect: objects,
+  }}))
 navigation.navigate(CHOOSE_DCOUMENT)
 console.log("checked",getSelectedIds())
 }

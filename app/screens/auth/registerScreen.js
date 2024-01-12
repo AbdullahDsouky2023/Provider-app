@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     paddingHorizontal: 16,
+    marginBottom:-13,
     // paddingVertical: 0,
     margin: 0,
     gap: 4,
