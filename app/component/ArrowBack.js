@@ -9,11 +9,11 @@ export default function ArrowBack() {
     return (
         <MaterialIcons
             name="arrow-back"
-            size={24}
+            size={27}
             color="black"
             style={{
                 marginHorizontal: Sizes.fixPadding * 2.0,
-                marginTop: Sizes.fixPadding * 2.0,
+                marginVertical: Sizes.fixPadding * 2.0,
             }}
             onPress={() => navigation.pop()}
         />

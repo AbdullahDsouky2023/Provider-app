@@ -15,82 +15,65 @@ import { Colors } from "../../constant/styles";
 import ModalComponent from "../Modal";
 import AppModal from "../AppModal";
 import AppText from "../AppText";
+import * as DocumentPicker from 'expo-document-picker';
 
 const { width, height } = Dimensions.get("screen");
 
-const FormImagePicker = ({ name, width, ...otherProps }) => {
+const FormDocumentPicker = ({ name, width, ...otherProps }) => {
   const { setFieldTouched, setFieldValue, errors, touched, values } =
     useFormikContext();
   const [image, setImage] = useState([]);
 
-  const pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        // allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-        base64: true,
-      
-        // allowsMultipleSelection: true, // Enable multiple selection
-      });
 
-      if (!result.canceled) {
-        if (image && Array.isArray(image)) {
-          if (result?.assets[0]?.uri) {
-            setImage([...image, result?.assets[0]?.uri]);
-            console.log("the iamge uri", result?.assets[0]?.uri)
-            setFieldValue(name, [...values[name], result?.assets[0]?.uri]);
-          }
-        } else {
-          // console.log(image && Array.isArray(image));
+  const pickMultipleDocuments = async () => {
+    try {
+      // Launch the document picker and get an array of document information
+      let results = await DocumentPicker.getMultipleDocumentsAsync({
+        // You can specify the document types you want to allow
+        type: 'application/pdf',
+        // You can also specify multiple document types as an array
+        // type: ['application/pdf', 'text/plain']
+      });
+  
+      // Check if the user picked any documents
+      if (results.length > 0) {
+        // Loop through the results array and get the document information
+        for (let result of results) {
+          // Get the document URI, name, size, and type
+          let { uri, name, size, type } = result;
+          // Do something with the document information
+          console.log(uri, name, size, type);
         }
-        // else {
-        //     // Handle the case where values.images is not an array
-        // }
       }
     } catch (error) {
-      console.log("error selecting image", error?.message);
+      console.log('error picking multiple documents', error);
     }
   };
-
-  const pickImageFromCamera = async () => {
-    // Request camera permissions explicitly
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      alert("Please grant camera permissions to take a photo.");
-      return;
-    }
-
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-      base64: true,
-    });
-
-    if (!result.canceled) {
-      if (image && Array.isArray(image)) {
-        if (result?.assets[0]?.uri) {
-          setImage([...image, result?.assets[0]?.uri]);
-
-          setFieldValue(name, [...values?.images, result?.assets[0]?.uri]);
-        }
-      } else {
-        // console.log(image && Array.isArray(image));
-      }
-      // else {
-      //     // Handle the case where values.images is not an array
-      // }
+  const uploadDocument = async (uri, name, type) => {
+    try {
+      // Create a new FormData object
+      let formData = new FormData();
+      // Append the document information
+      formData.append('file', {
+        uri,
+        name,
+        type
+      });
+      // Send the request to your server
+      let response = await fetch(YOUR_SERVER_URL, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      });
+      // Handle the response
+      console.log(response);
+    } catch (error) {
+      console.log('error uploading document', error);
     }
   };
-  const handleImageDelete = (index) => {
-    const newImages = [...image];
-    newImages.splice(index, 1);
-    setImage(newImages);
-    setFieldValue(name, newImages); // Update Formik value correctly
-  };
+  
 
   return (
     <View style={styles.container}>
@@ -112,19 +95,14 @@ const FormImagePicker = ({ name, width, ...otherProps }) => {
         )}
       </View>
       <View>
-{
-  
-    image?.length  ===0 &&
 
       
       <ModalComponent>
         <TouchableOpacity onPress={pickImage}>
           <View style={styles.popupContainer}>
-            
             <View style={styles.imagePicker}>
               <Ionicons name="image" size={24} color="white" />
             </View>
-            
 
             <View>
               <AppText text={"Choose Image"} />
@@ -143,14 +121,13 @@ const FormImagePicker = ({ name, width, ...otherProps }) => {
           </View>
         </TouchableOpacity>
       </ModalComponent>
-      }
       </View>
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </View>
   );
 };
 
-export default FormImagePicker;
+export default FormDocumentPicker;
 
 const styles = StyleSheet.create({
   container: {

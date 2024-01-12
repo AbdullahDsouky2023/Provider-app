@@ -7,12 +7,13 @@ import {
   ScrollView,
   Alert,
   Dimensions,
+  FlatList,
 } from "react-native";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { CommonActions } from "@react-navigation/native";
-
-import { Colors } from "../../constant/styles";
+import {ProgressBar} from 'react-native-paper'
+import { Colors, Sizes } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import Logo from "../../component/Logo";
 import AppForm from "../../component/Form/Form";
@@ -26,31 +27,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
 import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
 import { createUser } from "../../../utils/user";
-import { FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { getLocationFromStorage } from "../../../utils/location";
 import AppButton from "../../component/AppButton";
+import ArrowBack from "../../component/ArrowBack";
+import CitiesDropDownComponent from "./CitiesDropDownComponent";
 const { width,height} = Dimensions.get('screen')
-const RegisterScreen = ({ navigation,route}) => {
+const AdditionInfoScreen = ({ navigation,route}) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const memoizedUser = useMemo(() => user, [user]);
+  const [city, setCity] = useState(null);
 
   // const { phoneNumber } = route?.params
   const validationSchema = yup.object().shape({
-    FirstName: yup
+    PhoneNumber: yup
       .string()
-      .required(t("This Field is Required!"))
-      .min(3, "Full Name is too short")
-      .max(50, "Full Name is too long"),
-    MiddleName: yup
+      .required(t("This Field is Required!")),
+
+    Id: yup
       .string()
-      .required(t("This Field is Required!"))
-      .min(3, "Full Name is too short")
-      .max(50, "Full Name is too long"),
+      .required(t("This Field is Required!")),
     LastName: yup
       .string()
       .required(t("This Field is Required!"))
@@ -98,8 +98,19 @@ const RegisterScreen = ({ navigation,route}) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
     <StatusBar backgroundColor={Colors.primaryColor} />
     <View style={{ flex: 1 }}>
+    <MaterialIcons
+            name="arrow-back"
+            size={27}
+            color="black"
+            style={{
+                marginHorizontal: Sizes.fixPadding * 2.0,
+                marginTop: Sizes.fixPadding * 2.0,
+            }}
+            onPress={() => navigation.pop()}
+        />
+        <ProgressBar progress={0.5} color={Colors.primaryColor}  style={{backgroundColor:"white",height:8}}/>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.logoCotnainer}>
+        <View style={styles.logoCotnainer} >
           {/* <Logo /> */}
         </View>
         <View style={{ flex: 1, alignItems: "center" }}>
@@ -110,55 +121,35 @@ const RegisterScreen = ({ navigation,route}) => {
           <AppForm
             enableReinitialize={true}
             initialValues={{
-             FirstName:"",
-             LastName:"",
-             MiddleName:""
+             PhoneNumber:"",
+             Id:"",
             }}
             onSubmit={handleFormSubmit}
             validationSchema={validationSchema}
           >
             <ErrorMessage error={error} visible={error} />
-            <HeaderComponent header={"First Name"} />
+            <HeaderComponent header={"Phone Number"} />
             <FormField
               autoCorrect={false}
               icon="account"
-              name="FirstName"
-              // placeholdesr="fullName"
+              name="PhoneNumber"
+            //   value="201144254129"
             />
             
-             <HeaderComponent header={"Middle Name"} />
+             <HeaderComponent header={"Identification Number"} />
             <FormField
               autoCorrect={false}
               icon="account"
-              name="MiddleName"
+              name="Id"
               // placeholdesr="fullName"
             />
-             <HeaderComponent header={"Last Name"} />
-            <FormField
-              autoCorrect={false}
-              icon="account"
-              name="LastName"
-              // placeholdesr="fullName"
-            />
+             <HeaderComponent header={"Choose City"} />
+            <CitiesDropDownComponent value={city} setValue={setCity} />
+            {
+city &&
             <SubmitButton title="Register" style={{paddingHorizontal:60,marginTop:40}} />
-            {/* <View style={styles.termsContainer}>
-              <FontAwesome
-                name="edit"
-                size={24}
-                color={Colors.primaryColor}
-              />
-              <AppText
-                text={
-                  "By Creating an account you accept our Terms and Condition"
-                }
-                style={{
-                  color: Colors.blackColor,
-                  fontSize: 11,
-                  width: width,
-                }}
-                // centered={false}
-              />
-            </View> */}
+            }
+           
           </AppForm>
         </View>
       </ScrollView>
@@ -202,7 +193,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default AdditionInfoScreen;
 
 const HeaderComponent = ({ header }) => (
   <View style={styles.headerContainer}>

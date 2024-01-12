@@ -1,10 +1,10 @@
 import React from "react";
-import { View, TextInput, StyleSheet, I18nManager } from "react-native";
+import { View, StyleSheet, I18nManager } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Colors, Fonts, mainFont } from "../../constant/styles";
 import AppText from "../AppText";
 import { useTranslation } from "react-i18next";
-
+import { TextInput} from 'react-native-paper'
 I18nManager.allowRTL(true);
 
 function FormTextInput({ icon, width = "100%", ...otherProps }) {
@@ -16,14 +16,17 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
       selectTextOnFocus
         selectionColor={Colors.primaryColor}
         textAlign="right"
+        activeUnderlineColor={Colors.primaryColor}
         placeholderTextColor={Colors.grayColor}
         style={{
-          borderWidth: 1,
           width: "100%",
-          padding: 10,
+          padding: 0,
+          fontFamily:mainFont.bold,
+          backgroundColor:Colors.grayColor,
+          // height:70,
+          borderBottomWidth:0,
           borderRadius: 10,
           fontFamily: mainFont.light,
-          borderColor: Colors.blackColor,
           writingDirection: "rtl",
           fontSize: 15,
         }}
