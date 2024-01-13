@@ -31,7 +31,7 @@ import {
   setUserData,
   userRegisterSuccess,
 } from "../../store/features/userSlice";
-import { createUser } from "../../../utils/user";
+import { createUser, updateUserData } from "../../../utils/user";
 import { MaterialIcons, FontAwesome } from "@expo/vector-icons";
 
 import { getLocationFromStorage } from "../../../utils/location";
@@ -47,6 +47,7 @@ const AdditionInfoScreen = ({ navigation, route }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const registerData = useSelector((state) => state.register.currentRegisterDate);
+  const user = useSelector((state) => state.user.userData);
   const [city, setCity] = useState(null);
 
   // const { phoneNumber } = route?.params
@@ -57,32 +58,32 @@ const AdditionInfoScreen = ({ navigation, route }) => {
 
   const handleFormSubmit = async (values) => {
     try {
-      console.log("submiting");
+      console.log("submiting",route?.params?.status,user?.id );
+      let res;
       // const validPhone = auth?.currentUser?.Additional_phone?.replace("+", "")
       setIsLoading(true);
-      // const res = await createUser({
-      //   email:values.emailAddress,
-      //   name:values.fullName,
-      //   // Additional_phone:Additional_phone
-      // })
       const  name = `${registerData.FirstName} ${registerData.MiddleName} ${registerData.LastName}`;
-      registerData.name = name
-      console.log("values", [registerData,...values,name]);
+      if(route?.params?.status === "rejected"){
+        res = await updateUserData(user?.id,{...registerData,...values,city,Provider_status:"pending"})
+      }else {
+
+       res = await createUser({...registerData,...values,name,phoneNumber:auth?.currentUser?.phoneNumber,city})
+      }// registerData.name = name
+      console.log("values",{...registerData,...values,name,phoneNumber:auth?.currentUser?.phoneNumber} );
       dispatch(setCurrentRegisterProperties({...values}))
-      // navigation.navigate(ORDER_SUCCESS_SCREEN)
-      // if(res){
-      //   dispatch(userRegisterSuccess(auth?.currentUser));
-      //   setItem("userData", auth?.currentUser);
-      //   setUserData(res)
-      //   navigation.dispatch(
-      //     CommonActions.reset({
-      //       index: 0,
-      //       routes: [{ name:"App" }],
-      //     }))
-      // }else {
-      //   Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
-      //   console.log("the is the message befoe email and name is used befoer res",res)
-      // }
+      if(res){
+        dispatch(userRegisterSuccess(auth?.currentUser));
+        setItem("userData", auth?.currentUser);
+        setUserData(res)
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name:ORDER_SUCCESS_SCREEN }],
+          }))
+      }else {
+        Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
+        console.log("the is the message befoe email and name is used befoer res",res)
+      }
     } catch (err) {
       console.log("error creating the resi", err.message);
     } finally {

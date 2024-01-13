@@ -51,7 +51,7 @@ export default function OrderCreationSuccess({ navigation }) {
         <AppText
           style={styles.text}
           text={
-            "تم استلام الطلب وسيتم دراسته والرد خالل 24 ساعة ولمتابعة الطلب يمكنك التواصل معنا على الواتساب رقم "
+            "تم استلام الطلب وسيتم دراسته والرد خلال 24 ساعة ولمتابعة الطلب يمكنك التواصل معنا على الواتساب رقم "
           }
           onPress={() => handleReturn()}
         />

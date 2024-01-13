@@ -11,6 +11,7 @@ import { CircleFade } from "react-native-animated-spinkit";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
+import { CommonActions } from "@react-navigation/native";
 
 import Logo from "../component/Logo";
 import { setUserData, userRegisterSuccess } from "../store/features/userSlice";
@@ -23,6 +24,7 @@ import useOrders from "../../utils/orders";
 import { setOrders } from "../store/features/ordersSlice";
 import useRegions from "../../utils/useRegions";
 import { setRegions } from "../store/features/regionSlice";
+import { ORDER_SUCCESS_SCREEN, REGISTER_ERROR_DOCS } from "../navigation/routes";
 
 const SplashScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -90,8 +92,24 @@ const SplashScreen = ({ navigation }) => {
           if (gottenuser) {
             dispatch(setUserData(gottenuser));
             dispatch(userRegisterSuccess(userData));
-            navigation.push("App");
             fetchData();
+            console.log("the current user data ",gottenuser?.attributes?.Provider_status )
+            if(gottenuser?.attributes?.Provider_status === "pending"){
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name:ORDER_SUCCESS_SCREEN }],
+                }))
+            }else  if(gottenuser?.attributes?.Provider_status === "rejected"){
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name:REGISTER_ERROR_DOCS }],
+                }))
+            }else {
+
+              navigation.push("App");
+            }
           } else {
             navigation.push("Auth");
           }

@@ -8,7 +8,7 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { BROWSE_ORDERS, CHAT_ROOM, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN } from "./routes";
+import { ADDITION_INFO, BROWSE_ORDERS, CHAT_ROOM, CHOOSE_CATEGORIES, CHOOSE_DCOUMENT, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN, REGISTER_ERROR_DOCS } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
 import OrderCreationSuccess from "../screens/OrderCreationSuccess";
@@ -18,6 +18,10 @@ import PaymentScreen from "../screens/payment/paymentScreen";
 import SelectRegionScreen from "../screens/RegionScreen";
 import ChatNavigator from "./ChatNavigator";
 import OrdersScreen from "../screens/OrdersScreen";
+import RegisterErrorDocument from "../screens/registerStatus/RegisterErrorDocument";
+import ChooseDocumentScreen from "../screens/ResgisterAccount.js/ChooseDocumentScreen";
+import AdditionInfoScreen from "../screens/ResgisterAccount.js/AdditionalIInfo";
+import ChooseCategories from "../screens/ResgisterAccount.js/ChooseCategories";
 
 LogBox.ignoreAllLogs();
 
@@ -59,6 +63,11 @@ const RootNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name={REGISTER_ERROR_DOCS}
+          component={RegisterErrorDocument}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name={ORDER_SELECT_LOCATION}
           component={SlectLocationOrderScreen}
           options={{ headerShown: false }}
@@ -67,7 +76,9 @@ const RootNavigator = () => {
           name={ORDER_SELECT_REGION}
           component={SelectRegionScreen}
           options={{ headerShown: false }}
-        />
+        /> <Stack.Screen name={CHOOSE_CATEGORIES} component={ChooseCategories}   />
+        <Stack.Screen name={ADDITION_INFO} component={AdditionInfoScreen}   />
+        <Stack.Screen name={CHOOSE_DCOUMENT} component={ChooseDocumentScreen}   />
 
              <Stack.Screen name={MANUAL_LOCATION_ADD} component={AddManualLocationScreen} />
              <Stack.Screen name={"Payment"} component={PaymentScreen} />

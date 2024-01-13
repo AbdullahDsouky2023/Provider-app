@@ -86,7 +86,7 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
      await  uploadImage(values.Personal_card,values,"Personal_card")
      await  uploadImage(values.Personal_image,values,"Personal_image")
      await  uploadImage(values.professional_licence,values,"professional_licence")
-     navigation.navigate(ADDITION_INFO)
+     navigation.navigate(ADDITION_INFO, {status:route?.params?.status})
 // dispatch(setCurrentRegisterProperties(values))
 // navigation.dispatch(
 //       CommonActions.reset({

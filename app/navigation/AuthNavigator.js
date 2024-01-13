@@ -17,14 +17,12 @@ export default function AuthNavigator() {
     screenOptions={{
         headerShown: false,
     }}
-      initialRouteName={"Register"}
+      initialRouteName={"SignIn"}
     >
        <Stack.Screen name="SignIn"  component={SigninScreen} options={{ ...TransitionPresets.DefaultTransition }} />
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name={CHOOSE_CATEGORIES} component={ChooseCategories}   />
-        <Stack.Screen name={ADDITION_INFO} component={AdditionInfoScreen}   />
-        <Stack.Screen name={CHOOSE_DCOUMENT} component={ChooseDocumentScreen}   />
+       
 
     </Stack.Navigator>
   )

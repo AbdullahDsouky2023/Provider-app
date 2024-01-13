@@ -15,6 +15,7 @@ export const ORDER_SELECT_REGION= "select-region-screen"
 export const MY_ORDERS = ('طلباتي')
 
 
+export const REGISTER_ERROR_DOCS='RegisterErrorDocument'
 export const ADDITION_INFO='AdditionInfoScreen'
 export const CHOOSE_CATEGORIES = "ChooseCategories"
 export const CHOOSE_DCOUMENT = "ChooseDocumentScreen"
