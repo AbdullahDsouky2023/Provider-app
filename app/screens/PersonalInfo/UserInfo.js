@@ -1,5 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { SafeAreaView, StatusBar, View, ScrollView, Alert } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  View,
+  ScrollView,
+  Alert,
+  Dimensions,
+  StyleSheet,
+  Image,
+} from "react-native";
 import * as yup from "yup";
 
 import ArrowBack from "../../component/ArrowBack";
@@ -19,13 +28,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from "@react-navigation/native";
 import { HOME } from "../../navigation/routes";
 import { useTranslation } from "react-i18next";
+const { width } = Dimensions.get("screen");
+
 const UserInfo = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state) => state?.user?.userData);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
@@ -34,7 +45,6 @@ const UserInfo = ({ navigation }) => {
     emailAddress: yup.string().email("الايميل المدخل غير صالح"),
     location: yup.string(),
   });
-
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
@@ -96,7 +106,7 @@ const UserInfo = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1, alignItems: "center" }}>
             <AppText
-              text={"Your Data"}
+              text={"Personal information"}
               style={{ color: Colors.primaryColor, marginBottom: 10 }}
             />
             <AppForm
@@ -106,30 +116,47 @@ const UserInfo = ({ navigation }) => {
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
+              <View style={styles.ImageContainer}>
+                <Image
+                  source={{ uri: userData?.attributes?.Personal_image?.data[0]?.attributes?.url }}
+                  style={styles.image}
+                />
+              </View>
               <FormField
                 autoCorrect={false}
                 name="fullName"
                 icon={"user"}
+                style={styles.inputStyle}
+                editable={false}
+                placeholderTextColor={Colors.blackColor}
+
                 placeholder={userData?.attributes?.name}
               />
-              {/* <FormField
+              <FormField
                 autoCorrect={false}
                 name="fullName"
                 icon={"user"}
-                disabled
-                placeholder={userData?.attributes?.phoneNumber}
-              /> */}
+                placeholderTextColor={Colors.blackColor}
 
-              <FormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="email-address"
-                name="emailAddress"
-                textContentType="emailAddress"
-                placeholder={userData?.attributes?.email}
+                style={styles.inputStyle}
+                editable={false}
+                placeholder={userData?.attributes?.city}
               />
+              <FormField
+                autoCorrect={false}
+                name="fullName"
+                icon={"user"}
+                placeholderTextColor={Colors.blackColor}
 
-              <SubmitButton title="Save" />
+                style={styles.inputStyle}
+                editable={false}
+                placeholder={userData?.attributes?.phoneNumber}
+              />
+             
+
+              
+
+              {/* <SubmitButton title="Save" /> */}
             </AppForm>
           </View>
         </ScrollView>
@@ -140,3 +167,30 @@ const UserInfo = ({ navigation }) => {
 };
 
 export default UserInfo;
+
+const styles = StyleSheet.create({
+  inputStyle: {
+    borderWidth: 1,
+    width: width * 0.9,
+    backgroundColor: Colors.whiteColor,
+    borderRadius: 10,
+  },
+  ImageContainer: {
+    paddingHorizontal: width * 0.4,
+    // backgroundColor:'red',
+    paddingTop: width * 0.05,
+    paddingBottom: width * 0.03,
+    // marginTop:50,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    height: width * 0.3,
+    // borderWidth:4,
+    // borderColor:Colors.blueColor,
+    width: width * 0.3,
+    margin: "auto",
+    borderRadius: width * 0.3 * 0.5,
+  },
+});

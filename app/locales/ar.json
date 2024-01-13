@@ -114,6 +114,9 @@
   "PersonalCard": "البطاقه الشخصية",
   "Home": "الرئيسية",
   "Offers": "العروض",
+  "Whatsapp":"واتساب",
+  "Email":"الايميل",
+  "Call":"اتصال",
   "CommercialRecord": "السجل التجاري",
   "Register As Provider": "التسجيل كمقدم خدمة",
   "JobLicence": "الرخصة المهنية",
@@ -134,6 +137,6 @@
    "Accepted":"تم القبول",
   "Working":"جاري العمل",
   "Payed":"تم السداد",
-  "Finished":" تم الانتهاء",
+  "Finished":" تم الانتهاء"
 
 }

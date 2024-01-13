@@ -317,6 +317,7 @@ export default function OrderDetails({ navigation, route }) {
                 height: 420,
                 width: width * 0.85,
                 borderRadius: 10,
+                resizeMode:'contain'
               }}
             />
           </View>

@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   item: {
-    backgroundColor: Colors.piege,
+    backgroundColor: Colors.grayColor,
     height: "auto",
     borderRadius: 10,
     paddingHorizontal: 20,
