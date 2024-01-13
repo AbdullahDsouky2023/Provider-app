@@ -10,10 +10,12 @@ import { StyleSheet } from "react-native";
 import { Colors } from "../constant/styles";
 import * as Linking from "expo-linking";
 import { TouchableOpacity } from "react-native";
+import useNotifications from "../../utils/notifications";
 
 export default function OrderCreationSuccess({ navigation }) {
   const dispatch = useDispatch();
   const { data: orders } = useOrders();
+  const { token} = useNotifications()
   const handleReturn = () => {
     dispatch(setOrders(orders));
     navigation.navigate("App");

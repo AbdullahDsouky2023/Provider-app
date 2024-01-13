@@ -18,13 +18,14 @@ import { setUserData } from "../../store/features/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from "@react-navigation/native";
 import { HOME } from "../../navigation/routes";
+import { useTranslation } from "react-i18next";
 const UserInfo = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state) => state?.user?.userData);
-
+  const { t } = useTranslation()
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
@@ -48,7 +49,7 @@ const UserInfo = ({ navigation }) => {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: HOME }],
+            routes: [{ name: t(HOME) }],
           })
         );
       } else {

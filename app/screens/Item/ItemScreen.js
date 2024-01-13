@@ -30,6 +30,7 @@ import LoadingScreen from "../loading/LoadingScreen";
 import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
 import useNotifications from "../../../utils/notifications";
+import { useTranslation } from "react-i18next";
 
 const { width ,height} = Dimensions.get("screen");
 export default function ItemScreen({ navigation, route }) {
@@ -40,6 +41,7 @@ export default function ItemScreen({ navigation, route }) {
   const orders = useSelector((state) => state?.orders?.orders);
   const { data, isLoading } = useOrders();
   const dispatch = useDispatch();
+  const { t } =useTranslation()
   const { sendPushNotification } = useNotifications();
   const createUniqueName = (userId, providerId, orderId) => {
     return `user_${userId}_provider_${providerId}_order_${orderId}`;
@@ -66,7 +68,7 @@ export default function ItemScreen({ navigation, route }) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: HOME }],
+            routes: [{ name: t(HOME) }],
           })
         );
 

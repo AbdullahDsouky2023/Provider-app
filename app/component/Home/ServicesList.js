@@ -14,15 +14,22 @@ export default function ServicesList() {
   // const categories = useSelector((state) => state?.categories?.categories);
   const navigation = useNavigation();
   const {data:categories,isLoading} = useCategories()
+  const user = useSelector((state)=>state?.user?.userData?.attributes?.categories?.data)
+  const selectedCategries = user.map((category)=>{
+    return categories?.data?.filter((item)=>item?.id == category?.id)[0]
+  })
+  console.log("the usre current state is :",)
   const handleServiceCardPress = (item) => {
     navigation.navigate(BROWSE_ORDERS, { name: item?.attributes?.name });
 
   };
+
+  
   if(isLoading) return <LoadingScreen/>
   return (
-    <HeaderTextComponent name={"Services"} showAll={true}>
+    <HeaderTextComponent name={"Services"} showAll={false}>
       <FlatList
-        data={categories?.data}
+        data={selectedCategries}
         style={styles.listContainer}
         renderItem={({ item }) => {
           return (

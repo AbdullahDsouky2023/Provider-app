@@ -5,9 +5,11 @@ import CurrentOrdersTabNavigator from "../../navigation/CurrentOrdersTabNavigato
 import { COMPLETE_ORDERS_DETAILS, ORDERS_DETAILS } from "../../navigation/routes";
 import OrderDetails from "./OrderDetails";
 import CompletedOrderDetails from './CompletedOrderDetails'
+import { useTranslation } from "react-i18next";
 
 function OrderScreen() {
   const Stack = createStackNavigator()
+  const { t } = useTranslation()
   return (
       <Stack.Navigator
     screenOptions={{
@@ -20,12 +22,12 @@ function OrderScreen() {
                    
                 />
         <Stack.Screen
-                    name={ORDERS_DETAILS}
+                    name={t(ORDERS_DETAILS)}
                     component={OrderDetails}
                    
                 />
         <Stack.Screen
-                    name={COMPLETE_ORDERS_DETAILS}
+                    name={t(COMPLETE_ORDERS_DETAILS)}
                     component={CompletedOrderDetails}
                    
                 />

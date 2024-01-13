@@ -27,9 +27,9 @@ export default function CurrentOrdersTabNavigator() {
       },
     }}
     >
-    <Tab.Screen name={ORDERS} component={CurrentOrders} />
+    <Tab.Screen name={t(ORDERS)} component={CurrentOrders} />
     <Tab.Screen name=
-    { PREVIOUS_ORDERS} component={CompletedOrdersScreen} />
+    { t(PREVIOUS_ORDERS)} component={CompletedOrdersScreen} />
     </Tab.Navigator>
     
   )

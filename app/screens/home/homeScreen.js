@@ -7,9 +7,10 @@ import {
   RefreshControl,
   Dimensions,
   Image,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import {ScrollView} from 'react-native-virtualized-view'
+import { ScrollView } from "react-native-virtualized-view";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
 
@@ -18,13 +19,13 @@ import LoadingScreen from "../loading/LoadingScreen";
 import { ErrorScreen } from "../Error/ErrorScreen";
 import useOrders from "../../../utils/orders";
 import ProviderSectionCard from "../../component/ProviderHome/ProviderSectionCard";
-import { MY_ORDERS } from "../../navigation/routes";
+import { CURRENCY, MY_ORDERS } from "../../navigation/routes";
 import { setRegions } from "../../store/features/regionSlice";
 import useRegions from "../../../utils/useRegions";
 import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
 import { generateUserToken, useChatConfig } from "../chat/chatconfig";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Location from 'expo-location'
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Location from "expo-location";
 
 import { setUserStreamData } from "../../store/features/userSlice";
 import ServicesList from "../../component/Home/ServicesList";
@@ -32,15 +33,20 @@ import CurrentOrders from "../Orders/CurrentOrders";
 import CurrentOffersScreen from "../CurrentOffersScreen/CurrentOffersScreen";
 import AppText from "../../component/AppText";
 import UseLocation from "../../../utils/useLocation";
-const { width } = Dimensions.get('screen')
+const { width } = Dimensions.get("screen");
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
   const dispatch = useDispatch();
   // const { data, isLoading, isError ,refetch:refetchRegions } = useRegions();
-  const { data: orders, isError: error ,refetch:refetchOrders,isLoading} = useOrders();
-  const [location,setLocation]=useState(null)
+  const {
+    data: orders,
+    isError: error,
+    refetch: refetchOrders,
+    isLoading,
+  } = useOrders();
+  const [location, setLocation] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-  const {location:currentLocation}=UseLocation()
+  const { location: currentLocation } = UseLocation();
   const fetchData = async () => {
     if (orders) {
       // dispatch(setRegions(data));
@@ -49,9 +55,9 @@ const HomeScreen = ({ navigation }) => {
       const chat = generateUserToken(user);
       dispatch(setUserStreamData(chat));
 
-      refetchOrders()
+      refetchOrders();
       // refetchRegions()
-    } 
+    }
   };
 
   useEffect(() => {
@@ -73,22 +79,41 @@ const HomeScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={{flex:1,flexDirection:'row',alignItems:'center',width:width,justifyContent:'space-between ',gap:90}}>
-
-        <AppHeader />
-          <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            width: width,
+            paddingHorizontal:10,
+            justifyContent: "space-between",
+            // gap: 90,
+          }}
+        >
+          <AppHeader />
+          <TouchableWithoutFeedback>
+            <View style={styles.WalletContainer}>
+              <AppText
+                style={{ fontSize: 15, color: "white" }}
+                text={"0.0" + CURRENCY}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          {/* <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/> */}
         </View>
-    
+
         <View style={styles.cardContainer}>
           <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
-          <Image source={require("../../assets/images/worker.png")} 
-           resizeMode='contain' style={{height:130,
-          width:120,flex:1.1}}/>
+          <Image
+            source={require("../../assets/images/worker.png")}
+            resizeMode="contain"
+            style={{ height: 130, width: 120, flex: 1.1 }}
+          />
         </View>
         {/* <View style={styles.cardContainer}>
           <OverviewComponent />
         </View> */}
-        <ServicesList/>
+        <ServicesList />
         {/* <CurrentOffersScreen subPage={true}/> */}
       </ScrollView>
     </SafeAreaView>
@@ -100,11 +125,27 @@ const styles = StyleSheet.create({
     height: 150,
     paddingHorizontal: 20,
     marginVertical: 10,
-    display:'flex',
-    flexDirection:'row'
+    display: "flex",
+    flexDirection: "row",
   },
-  FloatHeaderContainer:{
-  }
+  FloatHeaderContainer: {},
+    container: {
+      padding: 15,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      flexDirection: "row-reverse",
+      backgroundColor: Colors.piege,
+    },
+    WalletContainer:{
+      backgroundColor:Colors.primaryColor,
+      paddingHorizontal:19,
+      paddingVertical:3,
+      borderRadius:12
+      
+    }
+  
+  
 });
 
 export default HomeScreen;

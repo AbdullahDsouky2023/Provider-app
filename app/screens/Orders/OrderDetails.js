@@ -33,13 +33,14 @@ import { color } from "@rneui/base";
 import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
 import useNotifications from "../../../utils/notifications";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
   const { item } = route?.params;
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const { t } = useTranslation()
   const { data } = useOrders();
   const dispatch = useDispatch();
   const orders = useSelector((state) => state?.orders?.orders);
@@ -70,7 +71,7 @@ export default function OrderDetails({ navigation, route }) {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{ name: HOME }],
+              routes: [{ name: t(HOME) }],
             })
           );
           Alert.alert("تم بنجاح");
@@ -101,7 +102,7 @@ export default function OrderDetails({ navigation, route }) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: HOME }],
+            routes: [{ name: t(HOME) }],
           })
         );
         Alert.alert("تم بنجاح");
@@ -130,7 +131,7 @@ export default function OrderDetails({ navigation, route }) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: HOME }],
+            routes: [{ name: t(HOME) }],
           })
         );
         Alert.alert("تم بنجاح");
@@ -159,7 +160,7 @@ export default function OrderDetails({ navigation, route }) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: HOME }],
+            routes: [{ name: t(HOME) }],
           })
         );
         Alert.alert("تم بنجاح");

@@ -24,13 +24,14 @@ import {
   import { color } from "@rneui/base";
   import AppModal from "../../component/AppModal";
   import { CommonActions } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
   
   const { width } = Dimensions.get("screen");
   export default function CompletedOrderDetails({ navigation, route }) {
     const item = route?.params?.item;
     const [isLoading, setIsLoading] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
-  
+    const { t } = useTranslation()
     const {data}=useOrders()
   const dispatch = useDispatch()
   const handleOrderCancle = async (id) => {
@@ -41,7 +42,7 @@ import {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: HOME}],
+          routes: [{ name: t(HOME)}],
         })
       )
       Alert.alert("تم بنجاح");
@@ -63,7 +64,7 @@ import {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: HOME}],
+          routes: [{ name: t(HOME)}],
         })
       )
       Alert.alert("تم بنجاح");
@@ -84,7 +85,7 @@ import {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: HOME}],
+          routes: [{ name: t(HOME)}],
         })
       )
       Alert.alert("تم بنجاح");

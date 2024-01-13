@@ -56,7 +56,7 @@ const BottomTabBar = () => {
                 }}
             >
                 <Tab.Screen
-                    name={HOME}
+                    name={t(HOME)}
                     component={HomeScreen}
                     options={{
                         tabBarIcon: ({ color }) => 
@@ -65,14 +65,14 @@ const BottomTabBar = () => {
                     }}
                 />
                 <Tab.Screen
-                    name={OFFERS}
+                    name={t(OFFERS)}
                     component={CurrentOffersScreen}
                     options={{
-                        tabBarIcon: ({ color }) => <MaterialCommunityIcons name="gift-open-outline" size={27} color={color} />
+                        tabBarIcon: ({ color }) => <Feather name="inbox" size={27} color={color} />
                     }}
                 />
                 <Tab.Screen
-                     name={MY_ORDERS}
+                     name={t(MY_ORDERS)}
                     component={OrderScreen}
                     options={{
                         tabBarIcon: ({ color }) => <Feather name="shopping-bag" size={27} color={color} />
