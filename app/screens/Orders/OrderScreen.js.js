@@ -22,12 +22,12 @@ function OrderScreen() {
                    
                 />
         <Stack.Screen
-                    name={t(ORDERS_DETAILS)}
+                    name={(ORDERS_DETAILS)}
                     component={OrderDetails}
                    
                 />
         <Stack.Screen
-                    name={t(COMPLETE_ORDERS_DETAILS)}
+                    name={(COMPLETE_ORDERS_DETAILS)}
                     component={CompletedOrderDetails}
                    
                 />

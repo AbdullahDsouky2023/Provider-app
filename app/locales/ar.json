@@ -117,6 +117,8 @@
   "CommercialRecord": "السجل التجاري",
   "Register As Provider": "التسجيل كمقدم خدمة",
   "JobLicence": "الرخصة المهنية",
+  "There are no orders.":"لا يوجد طلبات حالية",
+
   "To receieve customer orders,please write you speciality in the box below": "لتلقي طلبات العملاء يرجي كتابه نخصصك في المربع ادناه",
   "You have denied location access permanently. Please go to Settings and enable location access for this app.": "لقد رفضت الوصول إلى الموقع بشكل دائم. يرجى الذهاب إلى الإعدادات وتمكين وصول الموقع لهذا التطبيق.",
   "Settings": "الإعدادات",
@@ -126,5 +128,12 @@
   "Choose method to charge your wallet": "یمكنك شحن المحفظة بالطرق التالیة :",
   "Enter Amount": "أدخل مبلغ الشحن",
   "Current": "الحالية",
-  "Previous":"السابقة"
+  "Previous":"السابقة",
+  "New":"طلب جديد",
+  "Status":"الحالة", 
+   "Accepted":"تم القبول",
+  "Working":"جاري العمل",
+  "Payed":"تم السداد",
+  "Finished":" تم الانتهاء",
+
 }

@@ -10,8 +10,8 @@ export const userChatConfigData = ()=>{
      const chatApiKey = EXPO_PUBLIC_CHAT_API_KEY ;
      const chatUserToken = chatData?.token
      const chatUserId = chatData?.userId
-     const chatUserName =  user?.attributes?.name
-   //   console.log("ffffffffffff",chatUserName)
+     const chatUserName =  "PROVIDER_ID2"
+     console.log("ffffffffffff",chatUserId)
 
      return {
         chatApiKey,

@@ -49,10 +49,10 @@ const fetchData = ()=>{
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }>
     {currentOrders?.length === 0 ? 
-      <View style={styles.noItemContainer}>
-      
-      <AppText text={"لا يوجد طلبات لعرضها"} /> 
-      </View>
+       <View style={styles.noItemContainer}>
+
+       <AppText text={"There are no orders."} style={{marginTop:"50%"}}/> 
+       </View>
       :
       <ScrollView style={styles.container}>
       <FlatList

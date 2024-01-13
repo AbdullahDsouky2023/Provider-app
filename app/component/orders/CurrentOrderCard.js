@@ -32,56 +32,79 @@ export default function CurrentOrderCard({ item ,onPress}) {
     style={styles.scrollContainer}
       onPress={onPress}
     >
-      <View style={styles.orderCardContainer}>
+      <View style={[styles.orderCardContainer,{backgroundColor: item?.attributes?.packages?.data.length > 0 ? Colors.piege : Colors.whiteColor}]}>
         <View style={styles.headerContainer}>
-
-        {/* name */}
-        <Image
-        height={30}
-        width={30}
-        source={{uri:item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.image?.data[0]?.attributes?.url}}/>
-        <AppText
-          text={item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name}
-          style={[styles.header,{color:Colors.primaryColor}]}
-          centered={false}
-          />
-          </View>
-        {/* category */}
+          {item?.attributes?.services.data.length > 0 && (
+            <>
+              <Image
+                height={22}
+                width={22}
+                source={{
+                  uri: item?.attributes?.services?.data[0]?.attributes?.category
+                    ?.data?.attributes?.image?.data[0]?.attributes?.url,
+                }}
+              />
+              <AppText
+                text={
+                  item?.attributes?.services?.data[0]?.attributes?.category
+                    ?.data?.attributes?.name
+                }
+                style={[
+                  styles.header,
+                  { color: Colors.primaryColor, fontSize: 17 },
+                ]}
+                centered={false}
+              />
+            </>
+          )}
+          {item?.attributes?.packages && (
+            <AppText
+              text={item?.attributes?.packages?.data[0]?.attributes?.name}
+              style={[
+                styles.header,
+                { color: Colors.primaryColor, fontSize: 17 },
+              ]}
+              centered={false}
+            />
+          )}
+        </View>
         <View style={styles.date}>
-          <Ionicons name="ios-location-outline" size={24} color="black" />
+          <AppText text={`Status`} centered={false} style={styles.status} />
           <AppText
-            text={item?.attributes?.location}
+            text={`${
+              item?.attributes?.status === "assigned"
+                ? "New"
+                : item?.attributes?.status === "pending"
+                ? "New"
+                : item?.attributes?.status === "accepted"
+                ? "Accepted"
+                : item?.attributes?.status === "working"
+                ? "Working"
+                : item?.attributes?.status === "finish_work"
+                ? "Finished"
+                : item?.attributes?.status === "payed"
+                ? "Payed"
+                : "Finished"
+            }`}
             centered={false}
             style={styles.title}
           />
         </View>
-        
+        {/* Price */}
         <View style={styles.date}>
-          <Ionicons name="time-outline" size={24} color="black" />
+          <FontAwesome5 name="money-check" size={16} color="black" />
+          <PriceTextComponent price={item?.attributes?.totalPrice} />
+        </View>
+        {/* date */}
+        <View style={styles.date}>
+          <FontAwesome name="calendar" size={21} color="black" />
           <AppText
             text={`${item?.attributes?.date}`}
             centered={false}
             style={styles.title}
           />
         </View>
-        <View style={styles.date}>
-          <AppText
-            text={`الحاله`}
-            centered={false}
-            style={styles.status}
-          />
-           <AppText
-            text={
-              `${item?.attributes?.status === "assigned"?
-              "طلب جديد":item?.attributes?.status =="accepted"?
-              "تم القبول":item?.attributes?.status =="working" ?
-               "جاري العمل":item?.attributes?.status =="finished" ?
-                " تم الانتهاء":item?.attributes?.status =="payed"?
-                "تم السداد":item?.attributes?.provider_payment_status =="payment_required" ?"في انتظار السداد":item?.attributes?.provider_payment_status ==="payed"?'تم السداد':"تم الانتهاء"}`}
-            centered={false}
-            style={styles.title}
-          />
-        </View>
+        
         {/*time */}
         <View  style={{
           display:'flex',
