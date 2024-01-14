@@ -86,15 +86,6 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
       }
     })();
   }, []);
-  
-
-
-
-
-
-  
- 
-
   const getServices = async () => {
     if (data) {
       dispatch(setServices(data));

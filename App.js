@@ -17,15 +17,15 @@ import { Colors } from "./app/constant/styles";
 const App = () => {
   const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-    reload()
-    I18nManager.forceRTL(true);
-    I18nManager.allowRTL(true);
-    setTimeout(() => {
-      setLoading(true);
-    }, 500);
+  // useEffect(()=>{
+  //   reload()
+  //   I18nManager.forceRTL(true);
+  //   I18nManager.allowRTL(true);
+  //   setTimeout(() => {
+  //     setLoading(true);
+  //   }, 500);
     
-  },[])
+  // },[])
 
   const reload = async () => {
     try {
