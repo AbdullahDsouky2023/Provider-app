@@ -17,7 +17,7 @@ import {
   import AppButton from "../component/AppButton";
   import { useDispatch, useSelector } from "react-redux";
   import { color } from "react-native-reanimated";
-  import ReserveButton from "../component/ReverveButton";
+  import LottieView from "lottie-react-native";
   import { ITEM_DETAILS, ORDER_SELECT_LOCATION } from "../navigation/routes";
 import useCategories from "../../utils/categories";
 import useOrders from "../../utils/orders";
@@ -26,7 +26,6 @@ import * as geolib from 'geolib';
   const { width, height } = Dimensions.get("screen");
   import AsyncStorage from '@react-native-async-storage/async-storage';
 import ChargeWalletScreen from "./wallet/ChargeWalletScreen";
-
   export default function OrdersScreen({ route ,navigation}) {
     const category = route.params?.name;
     const { data:categories, isLoading:loading, isError } = useCategories();
@@ -127,7 +126,17 @@ import ChargeWalletScreen from "./wallet/ChargeWalletScreen";
               <View style={{ paddingHorizontal: 10,marginTop:10 }}><ChargeWalletScreen/></View>
         :
         <View style={styles.noItemContainer}>
-
+<LottieView
+        autoPlay
+        // loop={false}
+        // ref={animation}
+        style={{
+          width: width*0.3,
+          height: height*0.4,
+        }}
+        // Find more Lottie files at https://lottiefiles.com/featured
+        source={require("../assets/empty_orders.json")}
+      />
        <AppText text={"There are no orders."} style={{marginBottom:"50%",color:Colors.blackColor}}/> 
        </View>
       }
@@ -156,9 +165,10 @@ import ChargeWalletScreen from "./wallet/ChargeWalletScreen";
       display:'flex',
       alignItems:'center',
       justifyContent:'center',
-      height:height,
+      height:height*0.849,
       width:width,
-      backgroundColor:Colors.grayColor
+      backgroundColor:Colors.whiteColor,
+      marginTop:2,
      }
    , 
     itemContainer: {

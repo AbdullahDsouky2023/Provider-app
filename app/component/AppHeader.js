@@ -10,8 +10,8 @@ export default function AppHeader({ subPage = false}) {
   return (
     <View style={styles.container}>
       <Image source={require("../assets/images/icon.png")} style={{
-        width:40,
-        height:40
+        width:70,
+        height:70
       }} height={50} width={50} />
       {subPage && (
         <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>

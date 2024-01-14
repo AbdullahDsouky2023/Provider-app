@@ -27,7 +27,9 @@ export default function SuccessModel({ visible,onPress }) {
         source={require('../assets/success.json')}
       />
 
-        <AppButton title={"عودة"} onPress={onPress} />
+        <AppText title={"تم الشحن بنجاح"} style={{color:"red"}} />
+        <AppButton title={"تم"} onPress={onPress} />
+        
       </View>
     </Dialog.Container>
   );

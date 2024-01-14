@@ -22,10 +22,6 @@ export const settingsItemArray = [
     icon: "share",
     desc: "شير وأكسب 50 جنيه داخل محفظتك ",
   },
-  {
-    name: "Offers",
-    icon: "present",
-  },
 
   {
     name: "Terms and Conditions",

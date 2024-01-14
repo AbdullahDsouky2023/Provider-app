@@ -122,19 +122,25 @@ const UserInfo = ({ navigation }) => {
                   style={styles.image}
                 />
               </View>
+             <HeaderComponent header={"fullName"}/>
               <FormField
                 autoCorrect={false}
                 name="fullName"
                 icon={"user"}
                 style={styles.inputStyle}
-                editable={false}
+                // editable={false}
+                activeUnderlineColor={"#FFF"}
+                underlineStyle={{borderWidth:0,backgroundColor:"#fff"}}
+
                 placeholderTextColor={Colors.blackColor}
 
                 placeholder={userData?.attributes?.name}
               />
+                           <HeaderComponent header={"city"}/>
+
               <FormField
                 autoCorrect={false}
-                name="fullName"
+                name="city"
                 icon={"user"}
                 placeholderTextColor={Colors.blackColor}
 
@@ -142,6 +148,8 @@ const UserInfo = ({ navigation }) => {
                 editable={false}
                 placeholder={userData?.attributes?.city}
               />
+                                         <HeaderComponent header={"phoneNumber"}/>
+
               <FormField
                 autoCorrect={false}
                 name="fullName"
@@ -193,4 +201,30 @@ const styles = StyleSheet.create({
     margin: "auto",
     borderRadius: width * 0.3 * 0.5,
   },
+  headerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: width,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    paddingHorizontal: 27,
+    marginBottom:-13,
+    // paddingVertical: 0,
+    margin: 0,
+    gap: 4,
+  },
+  header: {
+    fontSize: 14,
+    color: Colors.blackColor,
+  },
+  Star: {
+    color: Colors.primaryColor,
+  },
 });
+
+const HeaderComponent = ({ header }) => (
+  <View style={styles.headerContainer}>
+    <AppText text={"*"} centered={false} style={styles.Star} />
+    <AppText text={header} centered={false} style={styles.header} />
+  </View>
+);

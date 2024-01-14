@@ -15,7 +15,7 @@ import AppHeader from "../../component/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { setServices } from "../../store/features/serviceSlice";
 import { ScrollView } from "react-native-virtualized-view";
-import RegionDropDown from "../../component/Region/RegionDropDown";
+import LottieView from "lottie-react-native";
 import OrderOfferCard from "../../component/orders/OrderOfferCard";
 import { ITEM_DETAILS } from "../../navigation/routes";
 import useNotifications from "../../../utils/notifications";
@@ -154,6 +154,17 @@ userData?.attributes?.wallet_amount > 0 ?
             ) 
             : (
               <View style={styles.noItemContainer}>
+                <LottieView
+        autoPlay
+        // loop={false}
+        // ref={animation}
+        style={{
+          width: width*0.3,
+          height: height*0.4,
+        }}
+        // Find more Lottie files at https://lottiefiles.com/featured
+        source={require("../../assets/empty_orders.json")}
+      />
                 <AppText text={"لا يوجد طلبات متاحه حاليا"} />
               </View>
             )}
@@ -225,7 +236,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: height * 0.5,
+    height: height * 0.7,
     width: width,
     backgroundColor: Colors.whiteColor,
   },

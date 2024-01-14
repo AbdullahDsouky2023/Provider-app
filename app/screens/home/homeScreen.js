@@ -33,7 +33,7 @@ import CurrentOrders from "../Orders/CurrentOrders";
 import CurrentOffersScreen from "../CurrentOffersScreen/CurrentOffersScreen";
 import AppText from "../../component/AppText";
 import UseLocation from "../../../utils/useLocation";
-const { width } = Dimensions.get("screen");
+const { width,height } = Dimensions.get("screen");
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
   const dispatch = useDispatch();
@@ -74,15 +74,9 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
-      <ScrollView
-        style={{ flex: 1}}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
         <View
           style={{
-            flex: 1,
+            // flex: 1,
             flexDirection: "row",
             alignItems: "center",
             width: width,
@@ -95,13 +89,19 @@ const HomeScreen = ({ navigation }) => {
           <TouchableWithoutFeedback>
             <View style={styles.WalletContainer}>
               <AppText
-                style={{ fontSize: 15, color: "white" }}
+                style={{ fontSize: 15, color: "white" ,paddingVertical:5}}
                 text={`${userData?.attributes?.wallet_amount} ${CURRENCY}`}
               />
             </View>
           </TouchableWithoutFeedback>
           {/* <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/> */}
         </View>
+      <ScrollView
+        style={{ flex: 1}}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
 
         <View style={styles.cardContainer}>
           <Image
