@@ -18,12 +18,12 @@ export default function  PaymentMethod({ icon, paymentType, index ,currentPaymen
             
         onPress={() => updateState({ currentPaymentMethodIndex: index })}
         style={{
-                borderColor: currentPaymentMethodIndex == index ? Colors.primaryColor : '#E0E0E0',
+                borderColor: currentPaymentMethodIndex == index ? Colors.blueColor : '#E0E0E0',
                 ...styles.paymentMethodWrapStyle
             }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'center',height: height*0.03,width:width*0.7 }}>
                 {/* <AppText numberOfLines={1} style={{
-                     ...Fonts.primaryColor18Medium,
+                     ...Fonts.blueColor18Medium,
                      marginLeft: Sizes.fixPadding,
                      width: width / 2.2,
                  }}
@@ -38,7 +38,7 @@ export default function  PaymentMethod({ icon, paymentType, index ,currentPaymen
                 />
             </View>
             {/* <View style={{
-                borderColor: currentPaymentMethodIndex == index ? Colors.primaryColor : '#E0E0E0',
+                borderColor: currentPaymentMethodIndex == index ? Colors.blueColor : '#E0E0E0',
                 ...styles.radioButtonStyle
             }}>
                 {
@@ -47,7 +47,7 @@ export default function  PaymentMethod({ icon, paymentType, index ,currentPaymen
                             width: 12.0,
                             height: 12.0,
                             borderRadius: 6.0,
-                            backgroundColor: Colors.primaryColor
+                            backgroundColor: Colors.blueColor
                         }}>
                         </View> : null
                 }
@@ -58,7 +58,7 @@ export default function  PaymentMethod({ icon, paymentType, index ,currentPaymen
 
 const styles = StyleSheet.create({
     headerWrapStyle: {
-        backgroundColor: Colors.primaryColor,
+        backgroundColor: Colors.blueColor,
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent:"space-between",
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     payButtonWrapStyle: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.primaryColor,
+        backgroundColor: Colors.blueColor,
         borderRadius: Sizes.fixPadding - 5.0,
         paddingVertical: Sizes.fixPadding,
         width: '100%'
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     },
     successIconWrapStyle: {
         backgroundColor: Colors.whiteColor,
-        borderColor: Colors.primaryColor,
+        borderColor: Colors.blueColor,
         borderWidth: 1.0,
         width: 70.0,
         height: 70.0,

@@ -69,20 +69,27 @@ const [currentOffers,setCurrentOffers]=useState([])
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
         <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
+          style={styles.ItemContainer}
         >
-          <AppText text={"العروض التي تم استقبالها  : "} style={styles.text} centered={false} />
-          <AppText text={currentOffers?.length} style={styles.text} />
+          <View style={styles?.ballContainer}>
+            <AppText text={currentOrders?.length}  style={styles.text2} />
+          </View>
+          <View >
+          <AppText text={" الطلبات التي تم استلامها "} style={styles.text}  centered={false} />
+          </View>
+          {/* <AppText text={currentOrders?.length} style={styles.text} /> */}
         </View>
         <View
           style={styles.ItemContainer}
         >
-          <AppText text={" الطلبات التي تم استلامها : "} style={styles.text} centered={false} />
-          <AppText text={currentOrders?.length} style={styles.text} />
+          <View style={styles?.ballContainer}>
+            <AppText text={currentOffers?.length}  style={styles.text2} />
+          </View>
+          <View style={styles.container2}>
+          <AppText text={" العروض التي تم استلامها "} style={styles.text} centered={false} />
+            {/* <AppText text={currentOrders?.length} centered={false} style={styles.text} /> */}
+          </View>
+          {/* <AppText text={currentOrders?.length} style={styles.text} /> */}
         </View>
        
       </View>
@@ -93,6 +100,7 @@ const styles = StyleSheet.create({
   card: {
     minHeight: height*0.15,
     width: width * 0.90,
+    paddingVertical:20,
     backgroundColor: Colors.bodyBackColor,
     borderRadius: 10,
     flex: 1,
@@ -102,10 +110,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // alignItems: "center",
     gap: 4,
-    elevation: 10,
+    elevation: 3,
+  },
+  ballContainer :{
+    backgroundColor:Colors.whiteColor,
+    height:height*0.067,
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    borderColor:Colors.primaryColor,
+    borderWidth:2,
+    width:width*0.16,
+    outline:"blue",
+    paddingHorizontal:5,
+    borderRadius:height*0.067*0.5
   },
   text: {
-    color: Colors.blackColor,
+    color: Colors.grayColor,
+    // ...Fonts.blackColor14Medium
+  },
+  text2: {
+    color: Colors.primaryColor,
     // ...Fonts.blackColor14Medium
   },
   show: {
@@ -117,7 +142,13 @@ const styles = StyleSheet.create({
   },
   ItemContainer:{
     display: "flex",
-    flexDirection: "row",
+    gap:10,
+    // justifyContent:'center',
+    flexDirection: "row",marginBottom:10,
     alignItems: "center",
+  },
+  container2:{
+    display:'flex',
+    justifyContent:'flex-start'
   }
 });

@@ -120,8 +120,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   item: {
-    backgroundColor: Colors.grayColor,
+    backgroundColor: Colors.piege,
     height: "auto",
+    // borderWidth:1,
     borderRadius: 10,
     paddingHorizontal: 20,
     display: "flex",

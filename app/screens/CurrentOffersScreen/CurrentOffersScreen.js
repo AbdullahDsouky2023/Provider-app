@@ -20,26 +20,28 @@ import OrderOfferCard from "../../component/orders/OrderOfferCard";
 import { ITEM_DETAILS } from "../../navigation/routes";
 import useNotifications from "../../../utils/notifications";
 import { ErrorScreen } from "../Error/ErrorScreen";
-import useRegions from "../../../utils/useRegions";
+import * as Sound from 'expo-av';
+
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 const { width, height } = Dimensions.get("screen");
 import * as geolib from "geolib";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "../loading/LoadingScreen";
+import ChargeWalletScreen from "../wallet/ChargeWalletScreen";
 
 const CurrentOffersScreen = ({ route, subPage }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const regions = useSelector((state) => state?.regions?.regions);
   const orderRedux = useSelector((state) => state?.orders?.orders);
-  const [region, setRegion] = useState("");
+  const userData = useSelector((state) => state?.user?.userData);
   const [selectedItemsData, setselectedItemsData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { token } = useNotifications();
   const [enableRefetch, setEnableRefetch] = useState(false);
   const [locationCoordinate, setLocationCorrdinate] = useState(null);
   const [loading, setLoading] = useState(true);
+  console.log("wallet ",userData?.attributes?.wallet_amount )
 const userCategories = useSelector((state)=>state?.user?.userData.attributes?.categories)
   const fetchData = (coordinate) => {
     if (orderRedux && coordinate) {
@@ -84,11 +86,19 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
       }
     })();
   }, []);
-   
+  
+
+
+
+
+
+  
+ 
 
   const getServices = async () => {
     if (data) {
       dispatch(setServices(data));
+      
     } else if (isError) {
       console.log(isError);
     }
@@ -114,10 +124,16 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
             }
           >
             {selectedItemsData?.length > 0 ? (
+
+userData?.attributes?.wallet_amount > 0 ? 
               <View style={styles.container}>
                 <View style={styles.listContainer}>
                   <View style={{ paddingHorizontal: 10 }}>
                     <FlatList
+                    style={{
+                    display:'flex',
+                    alignItems:'center',
+                    justifyContent:'center'}}
                       data={selectedItemsData}
                       renderItem={({ item }) => {
                         return (
@@ -133,7 +149,10 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
                   </View>
                 </View>
               </View>
-            ) : (
+            :
+            <ChargeWalletScreen/>
+            ) 
+            : (
               <View style={styles.noItemContainer}>
                 <AppText text={"لا يوجد طلبات متاحه حاليا"} />
               </View>

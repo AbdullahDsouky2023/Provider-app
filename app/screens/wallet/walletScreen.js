@@ -19,7 +19,9 @@ import { CURRENCY } from "../../navigation/routes";
 import { ColorSpace } from "react-native-reanimated";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SuccessModel from "../../component/SuccessModal";
-
+import { useDispatch, useSelector} from 'react-redux'
+import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
+import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
 const { width } = Dimensions.get("screen");
 export default function WalletScreen() {
   const [state, setState] = useState({
@@ -29,6 +31,8 @@ export default function WalletScreen() {
   const [amount, setAmmount] = useState("0");
   const [AddedAmount, setAddedAmount] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const userData = useSelector((state)=>state?.user?.userData)
+  const dispatch = useDispatch()
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const handleAmountChange = (text) => {
     const parsedAmount = Number(text);
@@ -41,12 +45,23 @@ export default function WalletScreen() {
       // Alert.alert("Please enter a valid amount greater than 0.");
     }
   };
-  const handleConfirmCharge = () => {
-    if (Number(AddedAmount) > 0) {
-      setAmmount((prevAmount) => Number(prevAmount) + Number(AddedAmount));
+  const handleConfirmCharge = async() => {
+    try {
+      
+      if (Number(AddedAmount) > 0) {
+    const res =  await  updateUserData(userData?.id,{wallet_amount:(Number(userData?.attributes?.wallet_amount)+Number(AddedAmount))})
+    if (userData?.attributes.phoneNumber) {
+
+      const gottenuser = await getUserByPhoneNumber(userData?.attributes?.phoneNumber);
+      if (gottenuser) {
+        dispatch(setUserData(gottenuser));
+        dispatch(userRegisterSuccess(userData));
+      }}
       setShowSuccessModal(true);
-      setAddedAmount(null); // Clear the input after successful charge
     }
+  } catch (error) {
+    console.log("error update the wallet",error)
+  }
   };
 
   // In SuccessModel component:
@@ -63,7 +78,7 @@ export default function WalletScreen() {
       <ScrollView>
         <View style={styles.wrapper}>
           <AppText text={"Your Balance"} style={styles.text} />
-          <AppText text={`${amount} ` + CURRENCY} style={styles.amount} />
+          <AppText text={`${userData?.attributes?.wallet_amount} ` + CURRENCY} style={styles.amount} />
         </View>
 
         <View style={styles.wrapper}>
@@ -108,8 +123,8 @@ export default function WalletScreen() {
               />
               <TextInput
                 keyboardType="numeric"
-                selectionColor={Colors.primaryColor}
-                value={AddedAmount}
+                selectionColor={Colors.blueColor}
+                value={AddedAmount?.toString()}
                 onChangeText={(text) => handleAmountChange(text)}
                 style={styles.input}
               />
@@ -124,7 +139,7 @@ export default function WalletScreen() {
           <AppButton
             title={"Confirm"}
             style={styles.button}
-            // onPress={handleConfirmCharge}
+            onPress={handleConfirmCharge}
             textStyle={{ color: Colors.whiteColor }}
           />
         </View>
@@ -146,7 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   amount: {
-    color: Colors.primaryColor,
+    color: Colors.blueColor,
   },
   wrapper: {
     display: "flex",
@@ -160,9 +175,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.piege,
   },
   button: {
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: Colors.blueColor,
     borderWidth: 1,
-    borderColor: Colors.primaryColor,
+    borderColor: Colors.blueColor,
     // width:width * 0.7.toFixed,
     // marginHorizontal:20
   },
@@ -189,7 +204,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 35,
     marginTop: -10,
     fontSize: 18,
-    borderColor: Colors.primaryColor,
+    borderColor: Colors.blueColor,
   },
   amountContainer: {
     paddingTop: 18,

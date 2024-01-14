@@ -90,7 +90,13 @@ const styles = StyleSheet.create({
     paddingVertical: -10,
   },
  listContainer:{
-  display:"flex",
+  
+    display:'flex',
+    // alignItems:'center',
+    // justifyContent:'center',
+    flexDirection:'column',
+    // width:width*0.9,
+    // paddingHorizontal:10,
   gap:10,
   height:"100%",
  },

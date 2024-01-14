@@ -22,6 +22,7 @@ export const REGISTER_ERROR_DOCS='RegisterErrorDocument'
 export const ADDITION_INFO='AdditionInfoScreen'
 export const CHOOSE_CATEGORIES = "ChooseCategories"
 export const CHOOSE_DCOUMENT = "ChooseDocumentScreen"
+export const CHARGE_WALLET_SCREEN = "chargewallettoactivate"
 
 export const HOME = "Home"
 

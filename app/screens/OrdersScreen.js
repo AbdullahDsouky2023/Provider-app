@@ -25,6 +25,7 @@ import OrderOfferCard from "../component/orders/OrderOfferCard";
 import * as geolib from 'geolib';
   const { width, height } = Dimensions.get("screen");
   import AsyncStorage from '@react-native-async-storage/async-storage';
+import ChargeWalletScreen from "./wallet/ChargeWalletScreen";
 
   export default function OrdersScreen({ route ,navigation}) {
     const category = route.params?.name;
@@ -32,7 +33,7 @@ import * as geolib from 'geolib';
     const reduxOrders = useSelector(state=>state.orders.orders)
     const [locationCoordinate,setLocationCorrdinate]=useState(null) 
     const [isLoading,setIsLoading]=useState(false)
-
+    const userData = useSelector((state)=>state?.user?.userData)
     const [categoryOrders,setCategoryOrders]=useState([])
     useEffect(() => {
       (async () => {
@@ -98,6 +99,10 @@ import * as geolib from 'geolib';
               }}
             />
           </View>
+          {
+            categoryOrders?.length > 0 ?
+            userData?.attributes?.wallet_amount > 0 ? 
+
           <View style={{ paddingHorizontal: 10,marginTop:10 }}>
                 <FlatList
                   data={categoryOrders}
@@ -118,8 +123,14 @@ import * as geolib from 'geolib';
                   }}
                 />
               </View>
-        
-        
+              :
+              <View style={{ paddingHorizontal: 10,marginTop:10 }}><ChargeWalletScreen/></View>
+        :
+        <View style={styles.noItemContainer}>
+
+       <AppText text={"There are no orders."} style={{marginBottom:"50%",color:Colors.blackColor}}/> 
+       </View>
+      }
         </ScrollView>
         
             
@@ -141,6 +152,15 @@ import * as geolib from 'geolib';
       fontSize: 17,
       color: Colors.blackColor,
     },
+    noItemContainer:{
+      display:'flex',
+      alignItems:'center',
+      justifyContent:'center',
+      height:height,
+      width:width,
+      backgroundColor:Colors.grayColor
+     }
+   , 
     itemContainer: {
       display: "flex",
       flexDirection: "row",
