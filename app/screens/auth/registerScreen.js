@@ -72,7 +72,6 @@ const RegisterScreen = ({ navigation,route}) => {
       //   // phoneNumber:phoneNumber
       // })
       dispatch(setCurrentRegisterProperties({...values}))
-      console.log("values",values)
       navigation.navigate(CHOOSE_CATEGORIES)
       // if(res){
       //   dispatch(userRegisterSuccess(auth?.currentUser));

@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <ScrollView
-        style={{ flex: 1 }}
+        style={{ flex: 1}}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -102,8 +102,8 @@ const HomeScreen = ({ navigation }) => {
           {/* <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/> */}
         </View>
 
-        <View style={styles.cardContainer}>
           <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
+        <View style={styles.cardContainer}>
           <Image
             source={require("../../assets/images/worker.png")}
             resizeMode="contain"

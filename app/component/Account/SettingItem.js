@@ -30,7 +30,6 @@ export default function SettingItem({ item }) {
         message: "Check out this awesome app!",
         // You can also add a URL to your app here
       });
-      console.log("the sare mod", Share); // Check if Share is defined
 
       if (result.action === Share.sharedAction) {
         if (result.activityType) {

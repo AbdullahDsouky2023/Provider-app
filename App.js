@@ -23,7 +23,6 @@ const App = () => {
     I18nManager.allowRTL(true);
     setTimeout(() => {
       setLoading(true);
-      console.log("f");
     }, 500);
     
   },[])
@@ -32,7 +31,6 @@ const App = () => {
     try {
       if (!I18nManager.isRTL) {
         // Log the current RTL state
-        console.log('Current RTL state:', I18nManager.isRTL);
         
         // Enable RTL layout
         I18nManager.forceRTL(true);

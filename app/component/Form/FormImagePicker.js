@@ -39,7 +39,6 @@ const FormImagePicker = ({ name, width, ...otherProps }) => {
         if (image && Array.isArray(image)) {
           if (result?.assets[0]?.uri) {
             setImage([...image, result?.assets[0]?.uri]);
-            console.log("the iamge uri", result?.assets[0]?.uri)
             setFieldValue(name, [...values[name], result?.assets[0]?.uri]);
           }
         } else {

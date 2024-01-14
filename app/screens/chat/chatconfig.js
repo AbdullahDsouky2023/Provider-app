@@ -11,7 +11,6 @@ export const userChatConfigData = ()=>{
      const chatUserToken = chatData?.token
      const chatUserId = chatData?.userId
      const chatUserName =  "PROVIDER_ID2"
-     console.log("ffffffffffff",chatUserId)
 
      return {
         chatApiKey,

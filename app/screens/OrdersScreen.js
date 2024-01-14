@@ -29,11 +29,7 @@ import * as geolib from 'geolib';
   export default function OrdersScreen({ route ,navigation}) {
     const category = route.params?.name;
     const { data:categories, isLoading:loading, isError } = useCategories();
-    // const { data:orders} = useOrders();
-    const [services, setServices] = useState([]);
-    const dispatch = useDispatch();
     const reduxOrders = useSelector(state=>state.orders.orders)
-    const [slectedCategory, setSelectedCategory] = useState([]);
     const [locationCoordinate,setLocationCorrdinate]=useState(null) 
     const [isLoading,setIsLoading]=useState(false)
 
@@ -41,11 +37,9 @@ import * as geolib from 'geolib';
     useEffect(() => {
       (async () => {
         const value = await AsyncStorage.getItem('userLocation');
-        console.log("this is value",JSON.parse(value).coordinate)
         if (value !== null) {
           // We have data!!
           setLocationCorrdinate(JSON.parse(value).coordinate);
-          console.log(JSON.parse(value)," this is the data that will be setting first mount")
           setIsLoading(false);
   
           fetchData(JSON.parse(value).coordinate);
@@ -54,7 +48,6 @@ import * as geolib from 'geolib';
       })();
      }, [])
     const fetchData =(coordinate)=>{
-      console.log('etch',coordinate)
       if(reduxOrders  && coordinate){  
         const orders = reduxOrders?.data?.filter(
           (item) => {
@@ -117,6 +110,11 @@ import * as geolib from 'geolib';
                         item={item}
                       />
                     );
+                  }}
+                  style={{
+                    display:'flex',
+                    alignItems:'center',
+                    justifyContent:'center'
                   }}
                 />
               </View>

@@ -93,7 +93,6 @@ const SplashScreen = ({ navigation }) => {
             dispatch(setUserData(gottenuser));
             dispatch(userRegisterSuccess(userData));
             fetchData();
-            console.log("the current user data ",gottenuser?.attributes?.Provider_status )
             if(gottenuser?.attributes?.Provider_status === "pending"){
               navigation.dispatch(
                 CommonActions.reset({

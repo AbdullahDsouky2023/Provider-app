@@ -26,7 +26,6 @@ import { useDispatch} from  'react-redux'
 export default function CurrentOrderCard({ item ,onPress}) {
   const navigation = useNavigation();
   const dispatch = useDispatch()
-  console.log("fff",    item?.attributes?.user?.data?.attributes?.username )
   return (
     <TouchableWithoutFeedback
     style={styles.scrollContainer}

@@ -40,18 +40,15 @@ const CurrentOffersScreen = ({ route, subPage }) => {
   const [enableRefetch, setEnableRefetch] = useState(false);
   const [locationCoordinate, setLocationCorrdinate] = useState(null);
   const [loading, setLoading] = useState(true);
-
+const userCategories = useSelector((state)=>state?.user?.userData.attributes?.categories)
   const fetchData = (coordinate) => {
-    console.log("refetching before", coordinate);
     if (orderRedux && coordinate) {
-      // console.log("refetching after")
 
       const orders = orderRedux?.data?.filter((item) => {
         const orderCoordinate = {
           latitude: item.attributes.googleMapLocation.coordinate.latitude,
           longitude: item.attributes.googleMapLocation.coordinate.longitude,
         };
-        // console.log("the is the coodainte revi",coordinate,orderCoordinate)
         const distance = geolib.getDistance(coordinate, orderCoordinate);
         return distance <= 10000; // 10 kilometers
       });
@@ -61,13 +58,15 @@ const CurrentOffersScreen = ({ route, subPage }) => {
           item?.attributes?.status === "pending" &&
           item?.attributes?.services?.data?.length > 0
       );
-      console.log(pendingOrders,"pend")
-      setselectedItemsData(pendingOrders);
+      const filteredOrders = pendingOrders?.filter((order)=>  userCategories?.data?.filter((category)=>{
+        return  (order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id)})[0])
+      setselectedItemsData(filteredOrders);
     }
     setRefreshing(false);
     setEnableRefetch(false);
     setLoading(false)
   };
+  
   useEffect(() => {
     (async () => {
       try {
@@ -136,7 +135,7 @@ const CurrentOffersScreen = ({ route, subPage }) => {
               </View>
             ) : (
               <View style={styles.noItemContainer}>
-                <AppText text={"لا يوجد طلبات في المنطقه"} />
+                <AppText text={"لا يوجد طلبات متاحه حاليا"} />
               </View>
             )}
           </ScrollView>

@@ -37,10 +37,8 @@ const SigninScreen = ({ navigation }) => {
     setState((state) => ({ ...state, ...data }));
     const { phoneNumber, agreedToTerms, length } = { ...state, ...data };
 
-    console.log(phoneNumber, agreedToTerms, length, "fff");
     if (phoneNumber?.length === state?.length - 1 && agreedToTerms === true) {
       setDisabled(false);
-      console.log("rr");
     } else {
       setDisabled(true);
     }
@@ -53,7 +51,6 @@ const SigninScreen = ({ navigation }) => {
   const handleSendVerificationCode = async () => {
     try {
       setDisabled(true);
-      console.log("curreit", state);
       const phoneNumberValidToFirebase = `${state.countryCode}${state.phoneNumber}`;
       const validPhone = `${phoneNumberValidToFirebase
         .replace(/\s/g, "")
