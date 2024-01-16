@@ -75,6 +75,7 @@
   "Cancle": "الغاء",
   "Request Payment": "طلب الدفع",
   "Chat": "دردشه",
+  "Download Docs":"تنزيل المستندات",
   "Your Data": "بيانات الحساب",
   "Reactivate":"تفعيل",
   "":"",
@@ -141,6 +142,8 @@
    "Accepted":"تم القبول",
   "Working":"جاري العمل",
   "Payed":"تم السداد",
-  "Finished":" تم الانتهاء"
+  "Finished":" تم الانتهاء",
+  "Documents":"المستندات",
+  "city":"المدينة"
 
 }

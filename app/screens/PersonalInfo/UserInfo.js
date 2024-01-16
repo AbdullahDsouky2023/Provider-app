@@ -28,6 +28,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from "@react-navigation/native";
 import { HOME } from "../../navigation/routes";
 import { useTranslation } from "react-i18next";
+import DocumentDownloadComponent from "../../component/Account/DocumentDownloadComponent";
 const { width } = Dimensions.get("screen");
 
 const UserInfo = ({ navigation }) => {
@@ -160,8 +161,9 @@ const UserInfo = ({ navigation }) => {
                 editable={false}
                 placeholder={userData?.attributes?.phoneNumber}
               />
-             
+                                                      <HeaderComponent header={"Documents"}/>
 
+<DocumentDownloadComponent/>
               
 
               {/* <SubmitButton title="Save" /> */}
