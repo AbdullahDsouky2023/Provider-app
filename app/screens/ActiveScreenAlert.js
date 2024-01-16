@@ -67,7 +67,7 @@ export default function ActiveScreenAlert({}) {
               width: width * 0.4,
               height: height * 0.2,
             }}
-            source={require("../assets/wallet-charge.json")}
+            source={require("../assets/inactive.json")}
           />
           <View style={{ alignItems: "center", marginTop: 10 }}>
             <AppText
