@@ -88,7 +88,7 @@ const SigninScreen = ({ navigation }) => {
   const { phoneNumber } = state;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>

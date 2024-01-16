@@ -50,7 +50,7 @@ export default function WalletScreen() {
       
       if (Number(AddedAmount) > 0) {
     const res =  await  updateUserData(userData?.id,{wallet_amount:(Number(userData?.attributes?.wallet_amount)+Number(AddedAmount))})
-    if (userData?.attributes.phoneNumber) {
+    if (userData?.attributes?.phoneNumber) {
 
       const gottenuser = await getUserByPhoneNumber(userData?.attributes?.phoneNumber);
       if (gottenuser) {

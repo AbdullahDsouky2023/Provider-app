@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-virtualized-view";
-import { Colors } from "../../constant/styles";
+import { Colors, mainFont } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
 
 import { setOrders } from "../../store/features/ordersSlice";
@@ -26,13 +26,17 @@ import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
 import { generateUserToken, useChatConfig } from "../chat/chatconfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from "expo-location";
+import ToggleSwitch from 'toggle-switch-react-native'
 
-import { setUserStreamData } from "../../store/features/userSlice";
+
+import { setUserData, setUserStreamData, userRegisterSuccess } from "../../store/features/userSlice";
 import ServicesList from "../../component/Home/ServicesList";
 import CurrentOrders from "../Orders/CurrentOrders";
 import CurrentOffersScreen from "../CurrentOffersScreen/CurrentOffersScreen";
 import AppText from "../../component/AppText";
 import UseLocation from "../../../utils/useLocation";
+import { t } from "i18next";
+import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 const { width,height } = Dimensions.get("screen");
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
@@ -48,19 +52,46 @@ const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const { location: currentLocation } = UseLocation();
   const userData = useSelector((state)=>state?.user?.userData)
+  // const []
+  console.log("userCurrentStatus ",userData?.attributes?.status)
   const fetchData = async () => {
-    if (orders) {
-      // dispatch(setRegions(data));
-      dispatch(setOrders(orders));
-      setRefreshing(false);
-      const chat = generateUserToken(user);
-      dispatch(setUserStreamData(chat));
-
-      refetchOrders();
-      // refetchRegions()
+    try {
+      if (orders) {
+        // dispatch(setRegions(data));
+        dispatch(setOrders(orders));
+        setRefreshing(false);
+        const chat = generateUserToken(user);
+        dispatch(setUserStreamData(chat));
+        if (userData?.attributes?.phoneNumber) {
+  
+          const gottenuser = await getUserByPhoneNumber(userData?.attributes?.phoneNumber);
+          if (gottenuser) {
+            dispatch(setUserData(gottenuser));
+            dispatch(userRegisterSuccess(userData));
+          }}
+        refetchOrders();
+        // refetchRegions()
+      }
+    } catch (error) {
+      console.log("error refetch data",error)
     }
+  
   };
-
+  const handleChangeStatus= async(ison)=>{
+    try {
+      const res = await updateUserData(userData?.id,{status:ison ? "active":"inactive"})
+      if (userData?.attributes?.phoneNumber) {
+  
+        const gottenuser = await getUserByPhoneNumber(userData?.attributes?.phoneNumber);
+        if (gottenuser) {
+          dispatch(setUserData(gottenuser));
+          dispatch(userRegisterSuccess(userData));
+        }}
+      console.log("swithch change",ison)
+    } catch (error) {
+      
+    }
+  }
   useEffect(() => {
     fetchData();
   }, [orders]);
@@ -104,6 +135,20 @@ const HomeScreen = ({ navigation }) => {
       >
 
         <View style={styles.cardContainer}>
+          <View style={styles.swithContainer}>
+<AppText text={"Receive Orders"} style={styles.switchText}/>
+        <ToggleSwitch
+        
+  isOn={userData?.attributes?.status === "active"?true :false}
+  onColor={Colors.success}
+  offColor={Colors.grayColor}
+  label={t("Receive Orders")}
+animationSpeed={300}  
+  labelStyle={{ color: "black", fontWeight: "900",fontFamily:mainFont.bold,display:"none", }}
+  size="large"
+  onToggle={handleChangeStatus}
+/>
+  </View>
           <Image
             source={require("../../assets/images/worker.png")}
             resizeMode="contain"
@@ -126,8 +171,10 @@ const styles = StyleSheet.create({
     height: 150,
     paddingHorizontal: 20,
     marginVertical: 10,
+    gap:30,
     display: "flex",
     flexDirection: "row",
+    alignItems:'center',justifyContent:'center'
   },
   FloatHeaderContainer: {},
     container: {
@@ -144,6 +191,18 @@ const styles = StyleSheet.create({
       paddingVertical:3,
       borderRadius:12
       
+    },
+    swithContainer:{
+      display:'flex',
+      flexDirection:"column",
+      gap:10,
+      alignItems:'center',
+      backgroundColor:Colors.primaryColor,
+      padding:15,
+      borderRadius:15
+    },
+    switchText:{
+      color:Colors.whiteColor
     }
   
   

@@ -50,8 +50,7 @@ const handleNavigation = ()=>{
         <AppText
           style={styles.text}
           text={
-            "تم استلام الطلب وسيتم دراسته والرد خالل 24 ساعة ولمتابعة الطلب يمكنك التواصل معنا على الواتساب رقم "
-          }
+"تم رفض طلبك الرجاء   إعادة ادخال البيانات  "          }
           onPress={() => handleReturn()}
         />
         <TouchableOpacity

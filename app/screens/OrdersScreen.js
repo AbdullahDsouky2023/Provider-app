@@ -26,6 +26,7 @@ import * as geolib from 'geolib';
   const { width, height } = Dimensions.get("screen");
   import AsyncStorage from '@react-native-async-storage/async-storage';
 import ChargeWalletScreen from "./wallet/ChargeWalletScreen";
+import ActiveScreenAlert from "./ActiveScreenAlert";
   export default function OrdersScreen({ route ,navigation}) {
     const category = route.params?.name;
     const { data:categories, isLoading:loading, isError } = useCategories();
@@ -75,6 +76,9 @@ import ChargeWalletScreen from "./wallet/ChargeWalletScreen";
       fetchData(locationCoordinate);
     };
     if ( isLoading || loading) return <LoadingScreen />;
+    if (userData?.attributes?.status === "inactive") {
+      return <ActiveScreenAlert />;
+    }
     return (
       <>
         <ScrollView

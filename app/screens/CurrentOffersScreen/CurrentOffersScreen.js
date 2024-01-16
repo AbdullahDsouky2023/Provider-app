@@ -29,6 +29,7 @@ import * as geolib from "geolib";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "../loading/LoadingScreen";
 import ChargeWalletScreen from "../wallet/ChargeWalletScreen";
+import ActiveScreenAlert from "../ActiveScreenAlert";
 
 const CurrentOffersScreen = ({ route, subPage }) => {
   const dispatch = useDispatch();
@@ -102,6 +103,9 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
   };
   if (loading) {
     return <LoadingScreen />;
+  }
+  if (userData?.attributes?.status === "inactive") {
+    return <ActiveScreenAlert />;
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
