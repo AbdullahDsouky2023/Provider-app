@@ -88,7 +88,7 @@ const SigninScreen = ({ navigation }) => {
   const { phoneNumber } = state;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.warning }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -99,7 +99,7 @@ const SigninScreen = ({ navigation }) => {
             <AppText
               centered={true}
               text={"Signin with Phone Number"}
-              style={{ marginBottom: 10, fontSize:RFPercentage(2.2) }}
+              style={{ marginBottom: 10, fontSize:RFPercentage(2.2),color:"white" }}
             />
           </View>
           <PhoneNumberTextField
@@ -109,13 +109,14 @@ const SigninScreen = ({ navigation }) => {
           <CheckBox
             title={t("I agree to the Terms and Conditions")}
             checked={agreedToTerms}
-            style={{ backgroundColor: Colors.redColor }}
-            checkedColor={Colors.redColor}
+            style={{ backgroundColor: Colors.whiteColor }}
+            checkedColor={Colors.whiteColor}
             containerStyle={{
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.primaryColor,
               borderWidth: 0,
               marginTop: 10,
             }}
+            textStyle={{color:Colors.whiteColor}}
             onPress={toggleAgreement}
           />
           <View style={{ backgroundColor: "red" }}>
@@ -129,6 +130,8 @@ const SigninScreen = ({ navigation }) => {
             path={"Verification"}
             title={"Continue"}
             disabled={disabled}
+            style={{borderWidth:0,paddingHorizontal:10,backgroundColor:disabled ?Colors?.grayColor : Colors.success}}
+            textStyle={{borderWidth:0,paddingHorizontal:10}}
             onPress={() => handleSendVerificationCode()}
           />
           <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
@@ -136,19 +139,19 @@ const SigninScreen = ({ navigation }) => {
               text={"We'll send OTP for Verification"}
               style={{
                 marginTop: Sizes.fixPadding - 5.0,
-                ...Fonts.grayColor18Medium,
+                ...Fonts.whiteColor16Medium,
               }}
             />
           </View>
         </ScrollView>
           <View style={{ flex: 1, alignItems: "center", marginTop: 150 }}>
-            <TouchableOpacity onPress={()=>Linking.openURL('https://facebook.com')}>
+            <TouchableOpacity onPress={()=>Linking.openURL('https://njik.sa')}>
 
             <AppText
               text={"Privacy"}
               style={{
                 fontSize:15,
-               color:Colors.primaryColor
+               color:Colors.whiteColor
               }}
               />
               </TouchableOpacity>

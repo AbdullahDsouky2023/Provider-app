@@ -103,7 +103,7 @@ const convertPhoneTovalid=(phone)=>{
 
   
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.primaryColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ArrowBack />
@@ -113,7 +113,7 @@ const convertPhoneTovalid=(phone)=>{
               text={"verification"}
               style={{
                 fontSize: 28,
-                color: Colors.primaryColor,
+                color: Colors.whiteColor,
                 marginBottom: 10,
               }}
               centered={false}
@@ -122,12 +122,12 @@ const convertPhoneTovalid=(phone)=>{
             <AppText
               text={`OTP Code Was Sent To`}
               // centered={false}
-              style={{ fontSize:RFPercentage(2.1), }}
+              style={{ fontSize:RFPercentage(2.1),color:Colors.whiteColor }}
             />
             <AppText
               text={`+${phoneNumber}`}
               // centered={false}
-              style={{ fontSize:RFPercentage(2),color:Colors.primaryColor,marginTop:4 }}
+              style={{ fontSize:RFPercentage(2),color:Colors.whiteColor,marginTop:4 }}
               />
               </View>
               </View>
@@ -142,7 +142,7 @@ const convertPhoneTovalid=(phone)=>{
            <AppButton
             title={"Continue"}
             path={"Register"}
-            style={{marginTop:otpInput.length !== 6?30:30}}
+            style={{marginTop:otpInput.length !== 6?30:30,borderWidth:0,backgroundColor:otpInput.length === 6 ?Colors.success : Colors.grayColor}}
             disabled={otpInput.length !== 6 }
             onPress={confirmVerificationCode}
           />
@@ -153,6 +153,7 @@ const convertPhoneTovalid=(phone)=>{
                 fontSize: 18,
                 paddingTop: resendDisabled ? 44 : 11,
                 paddingRight: 20,
+                color:Colors.whiteColor
               }}
               centered={false}
             />
@@ -160,7 +161,8 @@ const convertPhoneTovalid=(phone)=>{
               title={
                 resendDisabled ? ` 00 :${secondsRemaining} ` : "Resend"
               }
-              textStyle={{fontSize:14}}
+              textStyle={{fontSize:14,color:Colors.primaryColor}}
+              style={{backgroundColor:Colors.whiteColor,}}
               disabled={resendDisabled}
               onPress={() => {
               setResendDisabled(true);

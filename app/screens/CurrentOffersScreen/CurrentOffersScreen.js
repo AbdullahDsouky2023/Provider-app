@@ -9,27 +9,30 @@ import {
   Dimensions,
   RefreshControl,
 } from "react-native";
-import { Colors, Sizes } from "../../constant/styles";
-import AppText from "../../component/AppText";
-import AppHeader from "../../component/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { setServices } from "../../store/features/serviceSlice";
 import { ScrollView } from "react-native-virtualized-view";
+import { isEqual } from 'lodash';
+import * as geolib from "geolib";
+
 import LottieView from "lottie-react-native";
-import OrderOfferCard from "../../component/orders/OrderOfferCard";
-import { ITEM_DETAILS } from "../../navigation/routes";
-import useNotifications from "../../../utils/notifications";
-import { ErrorScreen } from "../Error/ErrorScreen";
 import * as Sound from 'expo-av';
 
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
+import { Colors, Sizes } from "../../constant/styles";
+import AppText from "../../component/AppText";
+import AppHeader from "../../component/AppHeader";
+import { setServices } from "../../store/features/serviceSlice";
+import OrderOfferCard from "../../component/orders/OrderOfferCard";
+import { ITEM_DETAILS } from "../../navigation/routes";
+import useNotifications from "../../../utils/notifications";
+import { ErrorScreen } from "../Error/ErrorScreen";
 const { width, height } = Dimensions.get("screen");
-import * as geolib from "geolib";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "../loading/LoadingScreen";
 import ChargeWalletScreen from "../wallet/ChargeWalletScreen";
 import ActiveScreenAlert from "../ActiveScreenAlert";
+import { Audio } from 'expo-av';
 
 const CurrentOffersScreen = ({ route, subPage }) => {
   const dispatch = useDispatch();
@@ -42,8 +45,32 @@ const CurrentOffersScreen = ({ route, subPage }) => {
   const [enableRefetch, setEnableRefetch] = useState(false);
   const [locationCoordinate, setLocationCorrdinate] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log("wallet ",userData?.attributes?.wallet_amount )
 const userCategories = useSelector((state)=>state?.user?.userData.attributes?.categories)
+const [sound, setSound] = useState();
+const [prevOrderRedux, setPrevOrderRedux] = useState(null);
+
+async function playSound() {
+  console.log('Loading Sound');
+  const { sound } = await Audio.Sound.createAsync(
+     require('../../assets/Ring-tone-sound.mp3')
+  );
+  setSound(sound);
+
+  console.log('Playing Sound');
+  await sound.playAsync(); 
+}
+
+useEffect(() => {
+  return sound
+    ? () => {
+        console.log('Unloading Sound');
+        sound.unloadAsync(); 
+      }
+    : undefined;
+}, [sound]);
+
+
+
   const fetchData = (coordinate) => {
     if (orderRedux && coordinate) {
 
@@ -69,7 +96,20 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
     setEnableRefetch(false);
     setLoading(false)
   };
+  useEffect(() => {
+    // Check if the orderRedux state is not null
+    if (orderRedux) {
+      // Check if the prevOrderRedux state is null or different from the orderRedux state
+      if (!prevOrderRedux || !isEqual(prevOrderRedux, orderRedux)) {
+        // Call the playSound function
+        playSound();
+        // Update the prevOrderRedux state with the current orderRedux state
+        setPrevOrderRedux(orderRedux);
+      }
+    }
+  }, [orderRedux]); // Pass the orderRedux state as a dependency
   
+  // Pass the selectedItemsData state as a dependency
   useEffect(() => {
     (async () => {
       try {
@@ -101,6 +141,7 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
     setLoading(true)
     fetchData(locationCoordinate);
   };
+
   if (loading) {
     return <LoadingScreen />;
   }

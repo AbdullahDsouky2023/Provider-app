@@ -37,6 +37,9 @@ import AppText from "../../component/AppText";
 import UseLocation from "../../../utils/useLocation";
 import { t } from "i18next";
 import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
+import OrdersListner from "../../component/OrdersListner";
+import { useMemo } from 'react';
+
 const { width,height } = Dimensions.get("screen");
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
@@ -52,8 +55,14 @@ const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const { location: currentLocation } = UseLocation();
   const userData = useSelector((state)=>state?.user?.userData)
-  // const []
-  console.log("userCurrentStatus ",userData?.attributes?.status)
+  const switchValue = useMemo(() => {
+    return userData?.attributes?.status === "active";
+  }, [userData]);
+  // useEffect(() => {
+  //   setSwitchValue(userData?.attributes?.status === "active");
+  // }, [userData]);
+
+
   const fetchData = async () => {
     try {
       if (orders) {
@@ -87,7 +96,6 @@ const HomeScreen = ({ navigation }) => {
           dispatch(setUserData(gottenuser));
           dispatch(userRegisterSuccess(userData));
         }}
-      console.log("swithch change",ison)
     } catch (error) {
       
     }
@@ -100,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
     fetchData();
   };
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading ) return <LoadingScreen />;
   if (error) return <ErrorScreen hanleRetry={fetchData} />;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
@@ -133,17 +141,17 @@ const HomeScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-
         <View style={styles.cardContainer}>
           <View style={styles.swithContainer}>
 <AppText text={"Receive Orders"} style={styles.switchText}/>
+<OrdersListner/>
         <ToggleSwitch
         
-  isOn={userData?.attributes?.status === "active"?true :false}
+  isOn={switchValue}
   onColor={Colors.success}
   offColor={Colors.grayColor}
   label={t("Receive Orders")}
-animationSpeed={300}  
+animationSpeed={3000}  
   labelStyle={{ color: "black", fontWeight: "900",fontFamily:mainFont.bold,display:"none", }}
   size="large"
   onToggle={handleChangeStatus}

@@ -96,6 +96,7 @@ export default function useOrders() {
   const { data, isLoading, isError,refetch } = useQuery({
     queryKey: ["order"],
     queryFn: fetchOrders,
+    refetchInterval:200
   }); // Changed the query key to 'superheroes'
 
   return {
@@ -121,6 +122,7 @@ export function useOrder() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["singleorder"],
     queryFn: fetchOrders,
+  
   }); // Changed the query key to 'superheroes'
 
   return {

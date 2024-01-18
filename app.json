@@ -10,9 +10,9 @@
       "icon": "./app/assets/images/icon2.png"
     },
     "splash": {
-      "image": "./app/assets/images/splash.png",
+      "image": "./app/assets/images/splash2.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F26527"
+      "backgroundColor": "#FFFFFF"
     },
     "assetBundlePatterns": [
       "**/*"

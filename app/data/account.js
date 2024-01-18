@@ -10,8 +10,8 @@ export const settingsItemArray = [
     desc: "تفاصيل محفظتك الخاصه",
   },
   {
-    name: "Tickets",
-    icon: "compass",
+    name: "Reviews",
+    icon: "star",
   },
   {
     name: "Contact Us",

@@ -16,8 +16,7 @@ import { Colors } from "./app/constant/styles";
  export const client = new QueryClient();
 const App = () => {
   const [loading, setLoading] = useState(false);
-
-  useEffect(()=>{
+   useEffect(()=>{
     reload()
     I18nManager.forceRTL(true);
     I18nManager.allowRTL(true);
@@ -51,10 +50,10 @@ const App = () => {
         <AnimatedSplash
             // translucent={true}
             isLoaded={loading}
-            logoImage={require("./app/assets/images/splash.png")}
-            backgroundColor={Colors.primaryColor}
-            logoHeight={height}
-            logoWidth={width}
+            logoImage={require("./app/assets/images/splash2.png")}
+            backgroundColor={Colors.whiteColor}
+            logoHeight={height*1.2}
+            logoWidth={width*1.2}
           >
             <RootNavigator />
           </AnimatedSplash>

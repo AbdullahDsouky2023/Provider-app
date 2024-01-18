@@ -54,6 +54,7 @@ const AdditionInfoScreen = ({ navigation, route }) => {
   const validationSchema = yup.object().shape({
     Additional_phone: yup.string().required(t("This Field is Required!")),
     IdNumber: yup.string().required(t("This Field is Required!")),
+    email:yup.email.required(t("This Field is Required!")),
   });
 
   const handleFormSubmit = async (values) => {
@@ -81,7 +82,7 @@ const AdditionInfoScreen = ({ navigation, route }) => {
             routes: [{ name:ORDER_SUCCESS_SCREEN }],
           }))
       }else {
-        Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
+        Alert.alert("ثمت مشكلة الرجاء مراجعة البيانات والمحاولة مرة اخري")
         console.log("the is the message befoe email and name is used befoer res",res)
       }
     } catch (err) {
