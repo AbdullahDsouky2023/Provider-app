@@ -151,7 +151,7 @@ const HomeScreen = ({ navigation }) => {
   onColor={Colors.success}
   offColor={Colors.grayColor}
   label={t("Receive Orders")}
-animationSpeed={3000}  
+animationSpeed={300}  
   labelStyle={{ color: "black", fontWeight: "900",fontFamily:mainFont.bold,display:"none", }}
   size="large"
   onToggle={handleChangeStatus}

@@ -28,8 +28,9 @@ export default function HeaderTextComponent({ name, showAll, children }) {
 }
 const styles = StyleSheet.create({
   Container: {
-    margin: Sizes.fixPadding * 1.0,
+    marginHorizontal: Sizes.fixPadding * 1.0,
     padding: Sizes.fixPadding * 1.0,
+    // backgroundColor:'red'
   },
   headerTextContainer: {
     display: "flex",

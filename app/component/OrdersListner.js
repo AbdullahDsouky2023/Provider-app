@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Dimensions } from "react-native";
 import { isEqual } from 'lodash';
 import { Audio } from 'expo-av';
+import { setOrders } from "../store/features/ordersSlice";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -68,12 +69,12 @@ export default OrdersListner = () => {
         })[0]
         );
         setselectedItemsData(filteredOrders);
-        
+        dispatch(setOrders(orderRedux))
         // Play sound only if orderRedux data has changed
-        console.log("first opening the app ",prevOrderRedux?.data?.length)
-        if (!isEqual(prevOrderRedux?.data, orderRedux?.data) && prevOrderRedux?.data ) {
+        console.log("first opening the app ",(prevOrderRedux?.data=== orderRedux?.data))
+        if (!isEqual(prevOrderRedux?.data, orderRedux?.data) && prevOrderRedux?.data?.length>0 ) {
+          playSound();
             console.log("current order from api ",orderRedux?.data)
-        playSound();
       }
     //   setOdersorderRedux; // Update prevOrderRedux after playing sound
     }
@@ -102,7 +103,7 @@ export default OrdersListner = () => {
         setLoading(false);
       }
     })();
-  }, [orderRedux]);
+  }, [orderRedux,prevOrderRedux]);
 
 
 

@@ -40,13 +40,16 @@ import ArrowBack from "../../component/ArrowBack";
 import CitiesDropDownComponent from "./CitiesDropDownComponent";
 import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
 import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
+import UserDatePicker from "../../component/Account/UserDatePicker";
 const { width, height } = Dimensions.get("screen");
 const AdditionInfoScreen = ({ navigation, route }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const registerData = useSelector((state) => state.register.currentRegisterDate);
+  const registerData = useSelector(
+    (state) => state.register.currentRegisterDate
+  );
   const user = useSelector((state) => state.user.userData);
   const [city, setCity] = useState(null);
 
@@ -54,36 +57,59 @@ const AdditionInfoScreen = ({ navigation, route }) => {
   const validationSchema = yup.object().shape({
     Additional_phone: yup.string().required(t("This Field is Required!")),
     IdNumber: yup.string().required(t("This Field is Required!")),
-    email:yup.email.required(t("This Field is Required!")),
+    birth_date: yup.date().required("This Field is Required!"),
+    email: yup
+    .string()
+    .email(t("Invalid email address"))
+    .required(t("Email is required")),
   });
 
   const handleFormSubmit = async (values) => {
     try {
-      console.log("submiting",route?.params?.status,user?.id );
+      console.log("submiting", route?.params?.status, user?.id);
       let res;
       // const validPhone = auth?.currentUser?.Additional_phone?.replace("+", "")
       setIsLoading(true);
-      const  name = `${registerData.FirstName} ${registerData.MiddleName} ${registerData.LastName}`;
-      if(route?.params?.status === "rejected"){
-        res = await updateUserData(user?.id,{...registerData,...values,city,Provider_status:"pending"})
-      }else {
-
-       res = await createUser({...registerData,...values,name,phoneNumber:auth?.currentUser?.phoneNumber,city})
-      }// registerData.name = name
-      console.log("values",{...registerData,...values,name,phoneNumber:auth?.currentUser?.phoneNumber} );
-      dispatch(setCurrentRegisterProperties({...values}))
-      if(res){
+      const name = `${registerData.FirstName} ${registerData.MiddleName} ${registerData.LastName}`;
+      if (route?.params?.status === "rejected") {
+        res = await updateUserData(user?.id, {
+          ...registerData,
+          ...values,
+          city,
+          Provider_status: "pending",
+        });
+      } else {
+        res = await createUser({
+          ...registerData,
+          ...values,
+          name,
+          phoneNumber: auth?.currentUser?.phoneNumber,
+          city,
+        });
+      } // registerData.name = name
+      console.log("values", {
+        ...registerData,
+        ...values,
+        name,
+        phoneNumber: auth?.currentUser?.phoneNumber,
+      });
+      dispatch(setCurrentRegisterProperties({ ...values }));
+      if (res) {
         dispatch(userRegisterSuccess(auth?.currentUser));
         setItem("userData", auth?.currentUser);
-        setUserData(res)
+        setUserData(res);
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name:ORDER_SUCCESS_SCREEN }],
-          }))
-      }else {
-        Alert.alert("ثمت مشكلة الرجاء مراجعة البيانات والمحاولة مرة اخري")
-        console.log("the is the message befoe email and name is used befoer res",res)
+            routes: [{ name: ORDER_SUCCESS_SCREEN }],
+          })
+        );
+      } else {
+        Alert.alert("ثمت مشكلة الرجاء مراجعة البيانات والمحاولة مرة اخري");
+        console.log(
+          "the is the message befoe email and name is used befoer res",
+          res
+        );
       }
     } catch (err) {
       console.log("error creating the resi", err.message);
@@ -123,19 +149,33 @@ const AdditionInfoScreen = ({ navigation, route }) => {
               initialValues={{
                 Additional_phone: auth?.currentUser?.phoneNumber,
                 IdNumber: "",
+                email:"",
+                birth_date:""
               }}
               onSubmit={handleFormSubmit}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
-              <HeaderComponent header={"Phone Number"} />
+              {/* <HeaderComponent header={"Phone Number"} />
               <FormField
                 autoCorrect={false}
                 icon="account"
                 name="Additional_phone"
                 //   value="201144254129"
+              /> */}
+              <HeaderComponent header={"email"} />
+
+              <FormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                name="email"
+                // placeholder="email"
+                textContentType="email"
               />
 
+              <HeaderComponent header={"Birth Date"} />
+              <UserDatePicker name="birth_date" birthDate={Date.now()} />
               <HeaderComponent header={"Identification Number"} />
               <FormField
                 autoCorrect={false}
@@ -167,10 +207,10 @@ const AdditionInfoScreen = ({ navigation, route }) => {
               </View>
               {city && (
                 <SubmitButton
-                title="Register"
-                style={{ paddingHorizontal: 60, marginTop: 40 }}
+                  title="Register"
+                  style={{ paddingHorizontal: 60, marginTop: 40 }}
                 />
-                )}
+              )}
             </AppForm>
           </View>
         </ScrollView>
