@@ -26,10 +26,13 @@ import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
 import { generateUserToken, useChatConfig } from "../chat/chatconfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from "expo-location";
-import ToggleSwitch from 'toggle-switch-react-native'
+import ToggleSwitch from "toggle-switch-react-native";
 
-
-import { setUserData, setUserStreamData, userRegisterSuccess } from "../../store/features/userSlice";
+import {
+  setUserData,
+  setUserStreamData,
+  userRegisterSuccess,
+} from "../../store/features/userSlice";
 import ServicesList from "../../component/Home/ServicesList";
 import CurrentOrders from "../Orders/CurrentOrders";
 import CurrentOffersScreen from "../CurrentOffersScreen/CurrentOffersScreen";
@@ -38,9 +41,9 @@ import UseLocation from "../../../utils/useLocation";
 import { t } from "i18next";
 import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 import OrdersListner from "../../component/OrdersListner";
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-const { width,height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 const HomeScreen = ({ navigation }) => {
   const user = useSelector((state) => state?.user?.userData);
   const dispatch = useDispatch();
@@ -54,14 +57,13 @@ const HomeScreen = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const { location: currentLocation } = UseLocation();
-  const userData = useSelector((state)=>state?.user?.userData)
+  const userData = useSelector((state) => state?.user?.userData);
   const switchValue = useMemo(() => {
     return userData?.attributes?.status === "active";
   }, [userData]);
   // useEffect(() => {
   //   setSwitchValue(userData?.attributes?.status === "active");
   // }, [userData]);
-
 
   const fetchData = async () => {
     try {
@@ -72,34 +74,37 @@ const HomeScreen = ({ navigation }) => {
         const chat = generateUserToken(user);
         dispatch(setUserStreamData(chat));
         if (userData?.attributes?.phoneNumber) {
-  
-          const gottenuser = await getUserByPhoneNumber(userData?.attributes?.phoneNumber);
+          const gottenuser = await getUserByPhoneNumber(
+            userData?.attributes?.phoneNumber
+          );
           if (gottenuser) {
             dispatch(setUserData(gottenuser));
             dispatch(userRegisterSuccess(userData));
-          }}
+          }
+        }
         refetchOrders();
         // refetchRegions()
       }
     } catch (error) {
-      console.log("error refetch data",error)
+      console.log("error refetch data", error);
     }
-  
   };
-  const handleChangeStatus= async(ison)=>{
+  const handleChangeStatus = async (ison) => {
     try {
-      const res = await updateUserData(userData?.id,{status:ison ? "active":"inactive"})
+      const res = await updateUserData(userData?.id, {
+        status: ison ? "active" : "inactive",
+      });
       if (userData?.attributes?.phoneNumber) {
-  
-        const gottenuser = await getUserByPhoneNumber(userData?.attributes?.phoneNumber);
+        const gottenuser = await getUserByPhoneNumber(
+          userData?.attributes?.phoneNumber
+        );
         if (gottenuser) {
           dispatch(setUserData(gottenuser));
           dispatch(userRegisterSuccess(userData));
-        }}
-    } catch (error) {
-      
-    }
-  }
+        }
+      }
+    } catch (error) {}
+  };
   useEffect(() => {
     fetchData();
   }, [orders]);
@@ -113,57 +118,61 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
-        <View
-          style={{
-            // flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            width: width,
-            paddingHorizontal:10,
-            justifyContent: "space-between",
-            // gap: 90,
-          }}
-        >
-          <AppHeader />
-          <TouchableWithoutFeedback>
-            <View style={styles.WalletContainer}>
-              <AppText
-                style={{ fontSize: 15, color: "white" ,paddingVertical:5}}
-                text={`${userData?.attributes?.wallet_amount} ${CURRENCY}`}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          {/* <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/> */}
-        </View>
+      <View
+        style={{
+          // flex: 1,
+          flexDirection: "row",
+          alignItems: "center",
+          width: width,
+          paddingHorizontal: 10,
+          justifyContent: "space-between",
+          // gap: 90,
+        }}
+      >
+        <AppHeader />
+        <TouchableWithoutFeedback>
+          <View style={styles.WalletContainer}>
+            <AppText
+              style={{ fontSize: 15, color: "white", paddingVertical: 5 }}
+              text={`${userData?.attributes?.wallet_amount} ${CURRENCY}`}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+        {/* <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/> */}
+      </View>
       <ScrollView
-        style={{ flex: 1}}
+        style={{ flex: 1 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         <View style={styles.cardContainer}>
           <View style={styles.swithContainer}>
-<AppText text={"Receive Orders"} style={styles.switchText}/>
-<OrdersListner/>
-        <ToggleSwitch
-        
-  isOn={switchValue}
-  onColor={Colors.success}
-  offColor={Colors.grayColor}
-  label={t("Receive Orders")}
-animationSpeed={300}  
-  labelStyle={{ color: "black", fontWeight: "900",fontFamily:mainFont.bold,display:"none", }}
-  size="large"
-  onToggle={handleChangeStatus}
-/>
-  </View>
+            <AppText text={"Receive Orders"} style={styles.switchText} />
+            {/* <OrdersListner/> */}
+            <ToggleSwitch
+              isOn={switchValue}
+              onColor={Colors.success}
+              offColor={Colors.grayColor}
+              label={t("Receive Orders")}
+              animationSpeed={300}
+              labelStyle={{
+                color: "black",
+                fontWeight: "900",
+                fontFamily: mainFont.bold,
+                display: "none",
+              }}
+              size="large"
+              onToggle={handleChangeStatus}
+            />
+          </View>
           <Image
             source={require("../../assets/images/worker.png")}
             resizeMode="contain"
             style={{ height: 130, width: 120, flex: 1.1 }}
           />
         </View>
-          <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
+        <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
         {/* <View style={styles.cardContainer}>
           <OverviewComponent />
         </View> */}
@@ -179,41 +188,39 @@ const styles = StyleSheet.create({
     height: 150,
     paddingHorizontal: 20,
     marginVertical: 10,
-    gap:30,
+    gap: 30,
     display: "flex",
     flexDirection: "row",
-    alignItems:'center',justifyContent:'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   FloatHeaderContainer: {},
-    container: {
-      padding: 15,
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      flexDirection: "row-reverse",
-      backgroundColor: Colors.piege,
-    },
-    WalletContainer:{
-      backgroundColor:Colors.primaryColor,
-      paddingHorizontal:19,
-      paddingVertical:3,
-      borderRadius:12
-      
-    },
-    swithContainer:{
-      display:'flex',
-      flexDirection:"column",
-      gap:10,
-      alignItems:'center',
-      backgroundColor:Colors.primaryColor,
-      padding:15,
-      borderRadius:15
-    },
-    switchText:{
-      color:Colors.whiteColor
-    }
-  
-  
+  container: {
+    padding: 15,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row-reverse",
+    backgroundColor: Colors.piege,
+  },
+  WalletContainer: {
+    backgroundColor: Colors.primaryColor,
+    paddingHorizontal: 19,
+    paddingVertical: 3,
+    borderRadius: 12,
+  },
+  swithContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    alignItems: "center",
+    backgroundColor: Colors.primaryColor,
+    padding: 15,
+    borderRadius: 15,
+  },
+  switchText: {
+    color: Colors.whiteColor,
+  },
 });
 
 export default HomeScreen;

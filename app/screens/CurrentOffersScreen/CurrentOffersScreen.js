@@ -49,25 +49,6 @@ const userCategories = useSelector((state)=>state?.user?.userData.attributes?.ca
 const [sound, setSound] = useState();
 const [prevOrderRedux, setPrevOrderRedux] = useState(null);
 
-async function playSound() {
-  console.log('Loading Sound');
-  const { sound } = await Audio.Sound.createAsync(
-     require('../../assets/Ring-tone-sound.mp3')
-  );
-  setSound(sound);
-
-  console.log('Playing Sound');
-  await sound.playAsync(); 
-}
-
-useEffect(() => {
-  return sound
-    ? () => {
-        console.log('Unloading Sound');
-        sound.unloadAsync(); 
-      }
-    : undefined;
-}, [sound]);
 
 
 
@@ -96,18 +77,7 @@ useEffect(() => {
     setEnableRefetch(false);
     setLoading(false)
   };
-  useEffect(() => {
-    // Check if the orderRedux state is not null
-    if (orderRedux) {
-      // Check if the prevOrderRedux state is null or different from the orderRedux state
-      if (!prevOrderRedux || !isEqual(prevOrderRedux, orderRedux)) {
-        // Call the playSound function
-        playSound();
-        // Update the prevOrderRedux state with the current orderRedux state
-        setPrevOrderRedux(orderRedux);
-      }
-    }
-  }, [orderRedux]); // Pass the orderRedux state as a dependency
+// Pass the orderRedux state as a dependency
   
   // Pass the selectedItemsData state as a dependency
   useEffect(() => {

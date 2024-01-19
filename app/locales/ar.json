@@ -65,7 +65,7 @@
   "Manual Location": "العنوان اليدوي",
   "Add Address": " اضافه عنوان جديد",
   "choose region": "اختار المنطفه ",
-  "Add": "أضافه",
+  "Add": "إضافه",
   "comfirm": "تأكيد",
   "Please add the location": "من فضلك ادخل العنوان",
   "accept offer": "قبول العرض",
@@ -134,8 +134,10 @@
   "Our Accounts On Social Media": "حساباتنا على منصات  التواصل الإجتماعي",
   "Your Balance": "الرصید الحالي",
   "Choose method to charge your wallet": "یمكنك شحن المحفظة بالطرق التالیة :",
-  "Enter Amount": "أدخل مبلغ الشحن",
+  "Enter Amount": "أدخل المبلغ ",
+  "Enter Charge Amount": "أدخل مبلغ ",
   "Current": "الحالية",
+  "Amount Details":"تفاصيل المبلغ",
   "Previous":"السابقة",
   "New":"طلب جديد",
   "Status":"الحالة", 
@@ -148,7 +150,11 @@
   "Reviews":"تقيماتي",
   "email": "البريد الإلكتروني",
   "Birth Date": "تاريخ الميلاد",
-  "Overview":"نظرة عامة"
+  "Overview":"نظرة عامة",
+  "Add Additional Price":" سعر إضافى",
+  "Amount":"المبلغ",
+  "Price":"السعر",
+  "Description":"تفاصيل المبلغ"
 
 
 

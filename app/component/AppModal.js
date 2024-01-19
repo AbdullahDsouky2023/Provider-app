@@ -15,7 +15,7 @@ export default function AppModal({onPress,setModalVisible,isModalVisible,message
     <View style={styles.container}>
       <Modal isVisible={isModalVisible}>
         <View style={{ flex: 1,marginTop:"50%" ,gap:20}} >
-          <AppText text={message}/>
+          {message}
 
           <AppButton title="Comfirm" onPress={onPress} />
           <AppButton title="Cancle" onPress={toggleModal} />

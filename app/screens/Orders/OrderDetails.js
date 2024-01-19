@@ -24,7 +24,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { CHAT_ROOM, HOME, OFFERS, ORDERS } from "../../navigation/routes";
+import { CHAT_ROOM, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native-virtualized-view";
@@ -46,7 +46,6 @@ export default function OrderDetails({ navigation, route }) {
   const orders = useSelector((state) => state?.orders?.orders);
   const provider = useSelector((state) => state?.user?.userData);
   const { sendPushNotification } = useNotifications();
-
   const handleOrderCancle = async (id) => {
     try {
       setIsLoading(true);
@@ -313,11 +312,12 @@ export default function OrderDetails({ navigation, route }) {
               source={{
                 uri: item?.attributes?.images?.data[0]?.attributes?.url,
               }}
+              resizeMode="contain"
               style={{
-                height: 420,
+                minHeight:250,
                 width: width * 0.85,
                 borderRadius: 10,
-                resizeMode:'contain'
+                // resizeMode:'cover'
               }}
             />
           </View>
@@ -327,7 +327,7 @@ export default function OrderDetails({ navigation, route }) {
           <AppButton
             title={"Request Payment"}
             style={{ backgroundColor: Colors.success }}
-            onPress={() => handleRequestPayment(item.id)}
+            onPress={() => navigation.navigate(PAY_AFTER_SERVICES_SCREEN,{orderID:item?.id})}
           />
         ) : item?.attributes?.status === "accepted" ? (
           <View>

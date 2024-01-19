@@ -26,5 +26,5 @@ export const CHARGE_WALLET_SCREEN = "chargewallettoactivate"
 
 export const HOME = "Home"
 
-
+export const PAY_AFTER_SERVICES_SCREEN ="Pay-after-services"
 export const CURRENCY = " ج.م"

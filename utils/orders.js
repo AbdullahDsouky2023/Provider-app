@@ -65,6 +65,19 @@ export const requestPayment = async (id) => {
     console.error("Error accepting order   :", error.message); // Log the error response
   }
 };
+export const UpdateOrder = async (id,data) => {
+  try {
+    const data = await api.put(`/api/orders/${id}`, {
+      data: {
+...data
+      },
+    });
+    if (data?.data?.data?.id) return true;
+    return false;
+  } catch (error) {
+    console.error("Error updaing order   :", error.message); // Log the error response
+  }
+};
 export const acceptOrder = async (id, providerId, channel_id) => {
   try {
     const data = await api.put(`/api/orders/${id}`, {
@@ -96,7 +109,7 @@ export default function useOrders() {
   const { data, isLoading, isError,refetch } = useQuery({
     queryKey: ["order"],
     queryFn: fetchOrders,
-    refetchInterval:10000
+    // refetchInterval:10000
   }); // Changed the query key to 'superheroes'
 
   return {
