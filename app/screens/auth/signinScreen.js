@@ -88,7 +88,7 @@ const SigninScreen = ({ navigation }) => {
   const { phoneNumber } = state;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.warning }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -110,13 +110,13 @@ const SigninScreen = ({ navigation }) => {
             title={t("I agree to the Terms and Conditions")}
             checked={agreedToTerms}
             style={{ backgroundColor: Colors.whiteColor }}
-            checkedColor={Colors.whiteColor}
+            checkedColor={Colors.primaryColor}
             containerStyle={{
-              backgroundColor: Colors.primaryColor,
+              backgroundColor: Colors.whiteColor,
               borderWidth: 0,
               marginTop: 10,
             }}
-            textStyle={{color:Colors.whiteColor}}
+            textStyle={{color:Colors.blackColor}}
             onPress={toggleAgreement}
           />
           <View style={{ backgroundColor: "red" }}>
