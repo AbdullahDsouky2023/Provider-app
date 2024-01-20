@@ -32,7 +32,7 @@ import { CommonActions } from "@react-navigation/native";
 import useNotifications from "../../../utils/notifications";
 import { useTranslation } from "react-i18next";
 
-const { width ,height} = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 export default function ItemScreen({ navigation, route }) {
   const { item } = route?.params;
   const [ModalisLoading, setModalIsLoading] = useState(false);
@@ -41,7 +41,7 @@ export default function ItemScreen({ navigation, route }) {
   const orders = useSelector((state) => state?.orders?.orders);
   const { data, isLoading } = useOrders();
   const dispatch = useDispatch();
-  const { t } =useTranslation()
+  const { t } = useTranslation();
   const { sendPushNotification } = useNotifications();
   const createUniqueName = (userId, providerId, orderId) => {
     return `user_${userId}_provider_${providerId}_order_${orderId}`;
@@ -88,8 +88,8 @@ export default function ItemScreen({ navigation, route }) {
   return (
     <ScrollView style={styles.scrollContainer}>
       {ModalisLoading ? (
-        <View  style={styles.container2}>
-          <LoadingScreen  />
+        <View style={styles.container2}>
+          <LoadingScreen />
         </View>
       ) : (
         <>
@@ -222,9 +222,8 @@ export default function ItemScreen({ navigation, route }) {
           </ScrollView>
           <AppModal
             isModalVisible={isModalVisible}
-            message={"تأكيد قبول الطلب"}
+            message={<AppText text={"تأكيد قبول الطلب"}/>}
             setModalVisible={setModalVisible}
-            
             onPress={() => handleOrderAccept(item.id)}
           />
         </>
@@ -244,9 +243,9 @@ const styles = StyleSheet.create({
   container2: {
     paddingVertical: 10,
     paddingHorizontal: 18,
-    display:'flex',
-    alignItems:'center',
-    height:height
+    display: "flex",
+    alignItems: "center",
+    height: height,
   },
   name: {
     fontSize: 17,

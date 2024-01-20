@@ -26,7 +26,7 @@ const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-  const currentOrders = orders?.filter((item)=> item?.attributes?.provider_payment_status === "payed")
+  const currentOrders = orders?.filter((item)=> item?.attributes?.provider_payment_status === "payed" && item?.attributes?.providerOrderRating !== null)
   setCurrentData(currentOrders)
   refetch()
   dispatch(setCompleteOrders(currentOrders?.length))
@@ -89,6 +89,8 @@ const styles = StyleSheet.create({
   display:"flex",
   gap:10,
   height:"100%",
+  alignItems:'center',
+  justifyContent:'center'
  },
  noItemContainer:{
   display:'flex',

@@ -23,6 +23,7 @@ import { CreateAdditionalPrice } from "../../utils/AddionalOrderPrice";
 import { UpdateOrder } from "../../utils/orders";
 import useNotifications from "../../utils/notifications";
 import LoadingModal from "../component/Loading";
+import LoadingScreen from "./loading/LoadingScreen";
 // import AppText from '../../'
 export default function PaymentAfterServiceDetails({route,navigation}) {
   const [AddedAmount, setAddedAmount] = useState(null);
@@ -72,7 +73,9 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
   };
  const handleConfirmAddPrice = async()=>{
     try {
+        setShowModal(false)
         setLoading(true)
+
         let addionalAmmountIds ;
         if(additionalAmounts){
 
@@ -82,8 +85,11 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
       const res = await  UpdateOrder(route?.params?.orderID,{
         totalPrice:getAdditionalPriceSum(),
         additional_prices:{
-            connect: addionalAmmountIds?.length > 0 ? addionalAmmountIds:[]
-        }
+            connect: addionalAmmountIds?.length > 0 ? addionalAmmountIds:[],
+
+        },
+        status: "payment_required",
+        provider_payment_status:"payment_required"
        })
        console.log("the comming repsons ",route?.params?.orderID)
        const selectedOrder = orders?.data.filter((order) => order?.id === route?.params?.orderID);
@@ -95,13 +101,13 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
           userNotificationToken,
           ` قام ${provider?.attributes?.name}  بانهاء العمل علي الطلب و طلب الدفع`
         );
-        // navigation.dispatch(
-        //   CommonActions.reset({
-        //     index: 0,
-        //     routes: [{ name: t(HOME)  }],
-        //   })
-        // );
-        // navigation.goBack()
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: t(HOME)  }],
+          })
+        );
+        navigation.goBack()
         Alert.alert("تم بنجاح");
       } else {
         Alert.alert("حدثت مشكله حاول مرة اخري");
@@ -110,7 +116,6 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
         console.log("error creaing addional orce",error)
     }finally{
         setLoading(false)
-        setShowModal(false)
         setAddionalAmountIds([])
 
     }
@@ -130,6 +135,7 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
         console.log("error creaing addional orce",error)
     }
  }
+ if(loading) return <LoadingScreen/>
   return (
     <>
       <ScrollView
@@ -250,7 +256,6 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
         isModalVisible={showModal}
         onPress={handleConfirmAddPrice}
       />
-      <LoadingModal isModalVisible={loading}/>
       {AddedAmount > 0 && (
         <View
           style={{

@@ -8,7 +8,7 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { ADDITION_INFO, BROWSE_ORDERS, CHARGE_WALLET_SCREEN, CHAT_ROOM, CHOOSE_CATEGORIES, CHOOSE_DCOUMENT, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN, PAY_AFTER_SERVICES_SCREEN, REGISTER_ERROR_DOCS } from "./routes";
+import { ADDITION_INFO, BROWSE_ORDERS, CHARGE_WALLET_SCREEN, CHAT_ROOM, CHOOSE_CATEGORIES, CHOOSE_DCOUMENT, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN, REGISTER_ERROR_DOCS } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
 import OrderCreationSuccess from "../screens/OrderCreationSuccess";
@@ -24,6 +24,7 @@ import AdditionInfoScreen from "../screens/ResgisterAccount.js/AdditionalIInfo";
 import ChooseCategories from "../screens/ResgisterAccount.js/ChooseCategories";
 import ChargeWalletScreen from "../screens/wallet/ChargeWalletScreen";
 import PaymentAfterServiceDetails from "../screens/PaymentAfterServiceDetails";
+import StarsComponent from "../component/StarsComponent";
 
 LogBox.ignoreAllLogs();
 
@@ -72,6 +73,11 @@ const RootNavigator = () => {
         <Stack.Screen
           name={ORDER_SELECT_LOCATION}
           component={SlectLocationOrderScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RATE_CLIENT_sSCREEN}
+          component={StarsComponent}
           options={{ headerShown: false }}
         />
         <Stack.Screen

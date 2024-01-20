@@ -24,7 +24,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { CHAT_ROOM, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN } from "../../navigation/routes";
+import { CHAT_ROOM, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native-virtualized-view";
@@ -34,6 +34,7 @@ import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
 import useNotifications from "../../../utils/notifications";
 import { useTranslation } from "react-i18next";
+import ArrowBack from "../../component/ArrowBack";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
@@ -182,7 +183,7 @@ export default function OrderDetails({ navigation, route }) {
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: HOME }],
+            routes: [{ name: t(HOME) }],
           })
         );
         Alert.alert("تم بنجاح");
@@ -200,7 +201,7 @@ export default function OrderDetails({ navigation, route }) {
   if (isLoading) return <LoadingScreen />;
   return (
     <ScrollView style={styles.scrollContainer}>
-      <AppHeader subPage={true} />
+      <ArrowBack />
       <ScrollView style={styles.container}>
         <View style={styles.itemContainer}>
           <FlatList
@@ -322,12 +323,18 @@ export default function OrderDetails({ navigation, route }) {
             />
           </View>
         )}
-
-        {item?.attributes?.status === "finish_work" ? (
+        {(item?.attributes?.provider_payment_status === "payed" && item?.attributes?.providerOrderRating === null ) && (
+          <AppButton
+            title={"Rate and Finish Work"}
+            style={{ backgroundColor: Colors.success }}
+            onPress={() =>navigation.navigate(RATE_CLIENT_sSCREEN,{orderID:item?.id})}
+          />
+        )}
+        {item?.attributes?.status === "finish_work"  && item?.attributes?.provider_payment_status === "pending" ? (
           <AppButton
             title={"Request Payment"}
             style={{ backgroundColor: Colors.success }}
-            onPress={() => navigation.navigate(PAY_AFTER_SERVICES_SCREEN,{orderID:item?.id})}
+            onPress={() => item?.attributes?.totalPrice > 0 ? handleRequestPayment(item?.id):navigation.navigate(PAY_AFTER_SERVICES_SCREEN,{orderID:item?.id})}
           />
         ) : item?.attributes?.status === "accepted" ? (
           <View>
@@ -371,7 +378,7 @@ export default function OrderDetails({ navigation, route }) {
      }
       <AppModal
         isModalVisible={isModalVisible}
-        message={"تأكيد رفض الطلب"}
+        message={<AppText text={"تأكيد رفض الطلب"}/>}
         setModalVisible={setModalVisible}
         onPress={() => handleOrderCancle(item.id)}
       />

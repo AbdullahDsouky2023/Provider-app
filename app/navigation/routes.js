@@ -25,6 +25,6 @@ export const CHOOSE_DCOUMENT = "ChooseDocumentScreen"
 export const CHARGE_WALLET_SCREEN = "chargewallettoactivate"
 
 export const HOME = "Home"
-
+export const RATE_CLIENT_sSCREEN = "rate-client"
 export const PAY_AFTER_SERVICES_SCREEN ="Pay-after-services"
 export const CURRENCY = " ج.م"

@@ -6,7 +6,8 @@
   "Continue": "استمرار",
   "Register Your Account": "سجّل حسابك",
   "Register": "تسجيل",
-  "fullName": "الاسم الكامل",
+  "fullName": "الاسم ",
+  "Rate and Finish Work":"تقييم و انهاء الطلب",
   "Accept Order": "قبول الطلب",
   "emailAddress": "عنوان البريد الإلكتروني",
   "password": "كلمة المرور",
@@ -154,7 +155,13 @@
   "Add Additional Price":" سعر إضافى",
   "Amount":"المبلغ",
   "Price":"السعر",
-  "Description":"تفاصيل المبلغ"
+  "Description":"تفاصيل المبلغ",
+  "There is no any Review yet!":"لا يوجد أي تقييمات بعد",
+  "Excellent":"ممتاز",
+ "Bad":"سيئ",
+ "Good":"جيد",
+ "Average":"مقبول",
+ "Very Bad":"سيئ جداً"
 
 
 

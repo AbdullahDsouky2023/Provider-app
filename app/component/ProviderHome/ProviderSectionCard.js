@@ -10,6 +10,7 @@ const { width, height } = Dimensions.get("screen");
 import * as geolib from "geolib";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HeaderTextComponent from "../Home/HeaderTextComponent";
+import { ActivityIndicator } from 'react-native';
 
 export default function ProviderSectionCard({ image, name, onPress }) {
   const user = useSelector((state) => state?.user?.userData);
@@ -21,6 +22,7 @@ export default function ProviderSectionCard({ image, name, onPress }) {
   );
   const [currentOrders, setCurrentOrders] = useState([]);
   const [currentOffers, setCurrentOffers] = useState([]);
+  
   useEffect(() => {
     const userId = user?.id;
     const orders = ordersRedux?.data?.filter(
@@ -28,7 +30,7 @@ export default function ProviderSectionCard({ image, name, onPress }) {
     );
     setCurrentOrders(orders);
     console.log("the user current items", orders?.length);
-  }, [ordersRedux]);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -72,7 +74,13 @@ export default function ProviderSectionCard({ image, name, onPress }) {
   };
   useEffect(() => {
     fetchData(locationCoordinate);
-  }, [ordersRedux]);
+  }, []);
+  
+  if (loading) {
+    // show a loading indicator while data is being fetched
+    return <ActivityIndicator size="large" color={Colors.primaryColor}/>;
+  }
+
   if (!currentOrders) return <LoadingScreen />;
   return (
     <TouchableWithoutFeedback onPress={onPress}>

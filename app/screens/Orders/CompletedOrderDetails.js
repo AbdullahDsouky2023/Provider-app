@@ -208,7 +208,7 @@ import { useTranslation } from "react-i18next";
         </ScrollView>
         <LoadingModal visible={isLoading} />
         <AppModal isModalVisible={isModalVisible} 
-        message={"تأكيد رفض الطلب"}
+        message={<AppText text={"تأكيد رفض الطلب"}/>}
         setModalVisible={setModalVisible} onPress={()=> handleOrderCancle(item.id)}/>
       </ScrollView>
     );

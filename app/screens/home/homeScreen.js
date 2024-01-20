@@ -138,7 +138,6 @@ const HomeScreen = ({ navigation }) => {
             />
           </View>
         </TouchableWithoutFeedback>
-        {/* <AppText text={currentLocation?.readable} centered={false} style={{marginTop:25,maxWidth:width*0.8,fontSize:10,color:Colors.blackColor}}/> */}
       </View>
       <ScrollView
         style={{ flex: 1 }}
@@ -149,13 +148,12 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.cardContainer}>
           <View style={styles.swithContainer}>
             <AppText text={"Receive Orders"} style={styles.switchText} />
-            {/* <OrdersListner/> */}
             <ToggleSwitch
-              isOn={switchValue}
+              isOn={switchValue }
               onColor={Colors.success}
               offColor={Colors.grayColor}
               label={t("Receive Orders")}
-              animationSpeed={300}
+              animationSpeed={"none"}
               labelStyle={{
                 color: "black",
                 fontWeight: "900",
@@ -173,11 +171,7 @@ const HomeScreen = ({ navigation }) => {
           />
         </View>
         <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
-        {/* <View style={styles.cardContainer}>
-          <OverviewComponent />
-        </View> */}
         <ServicesList />
-        {/* <CurrentOffersScreen subPage={true}/> */}
       </ScrollView>
     </SafeAreaView>
   );

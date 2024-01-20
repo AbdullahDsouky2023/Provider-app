@@ -67,13 +67,14 @@ export const requestPayment = async (id) => {
 };
 export const UpdateOrder = async (id,data) => {
   try {
-    const data = await api.put(`/api/orders/${id}`, {
+    const res= await api.put(`/api/orders/${id}`, {
       data: {
 ...data
       },
     });
-    if (data?.data?.data?.id) return true;
-    return false;
+    console.log("the rsult of reohohh",data,res?.data?.data?.id)
+   return data,res?.data?.data?.id;
+   
   } catch (error) {
     console.error("Error updaing order   :", error.message); // Log the error response
   }

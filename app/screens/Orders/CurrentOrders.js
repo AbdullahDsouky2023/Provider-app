@@ -26,7 +26,8 @@ const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-  const currentOrders = orders?.filter((item)=>item?.attributes?.provider_payment_status !== "payed")
+  const currentOrders = orders?.filter((item)=>item?.attributes?.providerOrderRating === null )
+  // console.log("the all curennt ")
   setCurrentData(currentOrders)
   setRefreshing(false);
   refetch()
