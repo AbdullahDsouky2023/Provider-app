@@ -1,5 +1,5 @@
 import { View, Text, TouchableWithoutFeedback, Dimensions } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,memo } from "react";
 import { StyleSheet } from "react-native";
 import { Colors, Fonts } from "../../constant/styles";
 import AppText from "../AppText";
@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import HeaderTextComponent from "../Home/HeaderTextComponent";
 import { ActivityIndicator } from 'react-native';
 
-export default function ProviderSectionCard({ image, name, onPress }) {
+const  ProviderSectionCard = ({ image, name, onPress }) => {
   const user = useSelector((state) => state?.user?.userData);
   const ordersRedux = useSelector((state) => state?.orders?.orders);
   const [locationCoordinate, setLocationCorrdinate] = useState(null);
@@ -76,10 +76,10 @@ export default function ProviderSectionCard({ image, name, onPress }) {
     fetchData(locationCoordinate);
   }, []);
   
-  if (loading) {
-    // show a loading indicator while data is being fetched
-    return <ActivityIndicator size="large" color={Colors.primaryColor}/>;
-  }
+  // if (loading ) {
+  //   // show a loading indicator while data is being fetched
+  //   return <ActivityIndicator size="large" color={Colors.primaryColor}/>;
+  // }
 
   if (!currentOrders) return <LoadingScreen />;
   return (
@@ -118,6 +118,7 @@ export default function ProviderSectionCard({ image, name, onPress }) {
     </TouchableWithoutFeedback>
   );
 }
+export default memo(ProviderSectionCard)
 const styles = StyleSheet.create({
   card: {
     minHeight: height * 0.15,

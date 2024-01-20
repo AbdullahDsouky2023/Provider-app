@@ -84,7 +84,7 @@ const DocumentDownloadComponent = () => {
             img {
               width: 100%;
               height:  100%; // Divide by 4 because there are 4 images
-              object-fit:contain
+              object-fit:fit
             }
           </style>
         </head>

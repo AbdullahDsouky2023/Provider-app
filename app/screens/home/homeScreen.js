@@ -153,7 +153,7 @@ const HomeScreen = ({ navigation }) => {
               onColor={Colors.success}
               offColor={Colors.grayColor}
               label={t("Receive Orders")}
-              animationSpeed={"none"}
+              animationSpeed={0}
               labelStyle={{
                 color: "black",
                 fontWeight: "900",

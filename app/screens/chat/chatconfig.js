@@ -11,7 +11,10 @@ export const userChatConfigData = ()=>{
      const chatUserToken = chatData?.token
      const chatUserId = chatData?.userId
      const chatUserName =  "PROVIDER_ID2"
-
+   console.log("the chat data are ",   chatApiKey,
+   chatUserToken,
+   chatUserId,
+   chatUserName)
      return {
         chatApiKey,
         chatUserToken,
@@ -23,10 +26,10 @@ export const userChatConfigData = ()=>{
 }
 export const generateUserToken = async (user) => {
 try {
-    const userId = `provider-${user?.id}`
+    const userId = `p-${user?.id}`
     const key = EXPO_PUBLIC_JWT_SECRET;
     
-   const token =  JWT.encode({ ...user,user_id:userId}, key);
+   const token =  JWT.encode({ user_id:`p-${user?.id}`}, key );
    const data = {
     token,
     userId

@@ -129,7 +129,7 @@ const UserInfo = ({ navigation }) => {
                 name="fullName"
                 icon={"user"}
                 style={styles.inputStyle}
-                // editable={false}
+                editable={false}
                 activeUnderlineColor={"#FFF"}
                 underlineStyle={{borderWidth:0,backgroundColor:"#fff"}}
 
