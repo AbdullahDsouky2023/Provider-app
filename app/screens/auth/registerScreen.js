@@ -53,11 +53,7 @@ const RegisterScreen = ({ navigation,route}) => {
       .required(t("This Field is Required!"))
       .min(3, "Full Name is too short")
       .max(50, "Full Name is too long"),
-    LastName: yup
-      .string()
-      .required(t("This Field is Required!"))
-      .min(3, "Full Name is too short")
-      .max(50, "Full Name is too long"),
+    
   });
 
   const handleFormSubmit = async (values) => {
@@ -113,14 +109,13 @@ const RegisterScreen = ({ navigation,route}) => {
             enableReinitialize={true}
             initialValues={{
              FirstName:"",
-             LastName:"",
              MiddleName:""
             }}
             onSubmit={handleFormSubmit}
             validationSchema={validationSchema}
           >
             <ErrorMessage error={error} visible={error} />
-            <HeaderComponent header={"First Name"} />
+            <HeaderComponent header={"fullName"} />
             <FormField
               autoCorrect={false}
               icon="account"
@@ -128,20 +123,14 @@ const RegisterScreen = ({ navigation,route}) => {
               // placeholdesr="fullName"
             />
             
-             <HeaderComponent header={"Middle Name"} />
+            <HeaderComponent header={"Family Name"} />
             <FormField
               autoCorrect={false}
               icon="account"
               name="MiddleName"
               // placeholdesr="fullName"
             />
-             <HeaderComponent header={"Last Name"} />
-            <FormField
-              autoCorrect={false}
-              icon="account"
-              name="LastName"
-              // placeholdesr="fullName"
-            />
+            
             <SubmitButton title="Confirm" style={{paddingHorizontal:60,marginTop:40}} />
            
           </AppForm>

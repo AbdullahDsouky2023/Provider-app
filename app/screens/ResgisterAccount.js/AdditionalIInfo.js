@@ -70,7 +70,7 @@ const AdditionInfoScreen = ({ navigation, route }) => {
       let res;
       // const validPhone = auth?.currentUser?.Additional_phone?.replace("+", "")
       setIsLoading(true);
-      const name = `${registerData.FirstName} ${registerData.MiddleName} ${registerData.LastName}`;
+      const name = `${registerData.FirstName} ${registerData.MiddleName} `;
       if (route?.params?.status === "rejected") {
         res = await updateUserData(user?.id, {
           ...registerData,

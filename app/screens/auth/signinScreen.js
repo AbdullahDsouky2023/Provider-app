@@ -130,7 +130,7 @@ const SigninScreen = ({ navigation }) => {
             path={"Verification"}
             title={"Continue"}
             disabled={disabled}
-            style={{borderWidth:0,paddingHorizontal:10,backgroundColor:disabled ?Colors?.grayColor : Colors.success}}
+            style={{borderWidth:0,paddingHorizontal:10,backgroundColor:disabled ?Colors?.grayColor : Colors.primaryColor}}
             textStyle={{borderWidth:0,paddingHorizontal:10}}
             onPress={() => handleSendVerificationCode()}
           />
@@ -151,7 +151,7 @@ const SigninScreen = ({ navigation }) => {
               text={"Privacy"}
               style={{
                 fontSize:15,
-               color:Colors.whiteColor
+               color:Colors.primaryColor
               }}
               />
               </TouchableOpacity>
