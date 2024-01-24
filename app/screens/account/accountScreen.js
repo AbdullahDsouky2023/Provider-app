@@ -90,9 +90,9 @@ const AccountScreen = ({ navigation, route }) => {
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         <ScrollView>
-          <View style={styles.LogoStyles}>
-            <Logo />
-          </View>
+         <View style={styles.LogoStyles}> 
+            {/* <Logo /> */}
+          </View> 
           {/* <View style={styles.ImageContainer}>
           <Image source={{uri:imageUri}}
           style={styles.image}
@@ -148,5 +148,6 @@ const styles = StyleSheet.create({
   },
   LogoStyles: {
     padding: 17,
+    marginTop:30
   },
 });

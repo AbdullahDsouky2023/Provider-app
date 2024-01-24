@@ -44,9 +44,11 @@ const DocumentDownloadComponent = () => {
     }
   }
   async function downloadImages() {
-    // Create a folder in the cache directory to store the images
-    const folder = FileSystem.cacheDirectory + 'images/';
-    await FileSystem.makeDirectoryAsync(folder, {intermediates: true});
+    try {
+
+      // Create a folder in the cache directory to store the images
+      const folder = FileSystem.cacheDirectory + 'images/';
+      await FileSystem.makeDirectoryAsync(folder, {intermediates: true});
     // Download the images from the URLs and save them to the folder
     const personalImage = await FileSystem.downloadAsync(
         personalImageSource
@@ -65,19 +67,24 @@ const DocumentDownloadComponent = () => {
     );
     const professional_licence= await FileSystem.downloadAsync(
         professionalLicenceSource
-      ,
-      folder + 'professional_licence.jpg'
-    );
+        ,
+        folder + 'professional_licence.jpg'
+        );
    
         console.log("the current useri ",[personalImage])
     // Return the local URIs of the images
     return [personalImage.uri, Commercial_record.uri,personalImage.uri,professional_licence?.uri];
+  }catch(err){
+    console.log("rrttot donlwoad iamge",err)
   }
-
+  }
+  
   // Define the function that creates the PDF file
   async function createPDF(images) {
-    // Create a HTML string that contains the images
-    const html = `
+    try {
+      
+      // Create a HTML string that contains the images
+      const html = `
       <html>
         <head>
           <style>
@@ -117,12 +124,20 @@ const DocumentDownloadComponent = () => {
 
     // Return the local URI of the PDF file
     return pdf.uri;
+  } catch (error) {
+    console.log("error donla the ",error)
+  }
   }
 
   // Define the function that shares the PDF file
   async function sharePDF(pdf) {
-    // Share the PDF file with other apps
-    await Sharing.shareAsync(pdf);
+    try {
+      
+      // Share the PDF file with other apps
+      await Sharing.shareAsync(pdf);
+    } catch (error) {
+      console.log("sgarubg ag")
+    }
   }
 
   // Render the button component

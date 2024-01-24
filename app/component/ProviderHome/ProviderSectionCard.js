@@ -92,7 +92,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
             </View>
             <View>
               <AppText
-                text={" الطلبات التي تم استلامها "}
+                text={" الطلبات المقبولة "}
                 style={styles.text}
                 centered={false}
               />
@@ -105,7 +105,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
             </View>
             <View style={styles.container2}>
               <AppText
-                text={" العروض التي تم استلامها "}
+                text={" العروض الواردة "}
                 style={styles.text}
                 centered={false}
               />
