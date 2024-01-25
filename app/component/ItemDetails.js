@@ -4,11 +4,13 @@ import AppText from "./AppText";
 import { StyleSheet } from "react-native";
 import { Colors } from "../constant/styles";
 import AppHeader from "./AppHeader";
+import ArrowBack from "./ArrowBack";
 const { width, height } = Dimensions.get("screen");
 export default function ItemDetails({ item }) {
   return (
     <View style={styles.container}>
-      <AppHeader subPage={true} />
+      <ArrowBack/>
+      {/* <AppHeader subPage={true} /> */}
       <ScrollView>
         <Image source={{ uri: item?.attributes?.image?.data?.attributes?.url }} style={styles.image} />
         <View style={styles.overlay}>

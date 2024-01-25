@@ -170,6 +170,7 @@ const HomeScreen = ({ navigation }) => {
             style={{ height: 130, width: 120, flex: 1.1 }}
           />
         </View>
+        {/* <Orders Listner/> */}
         <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
         <ServicesList />
       </ScrollView>

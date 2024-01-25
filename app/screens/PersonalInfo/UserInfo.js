@@ -29,6 +29,7 @@ import { CommonActions } from "@react-navigation/native";
 import { HOME } from "../../navigation/routes";
 import { useTranslation } from "react-i18next";
 import DocumentDownloadComponent from "../../component/Account/DocumentDownloadComponent";
+import FormDatePicker from "../../component/Form/FormDatePicker";
 const { width } = Dimensions.get("screen");
 
 const UserInfo = ({ navigation }) => {
@@ -105,7 +106,7 @@ const UserInfo = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <ArrowBack />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ flex: 1, alignItems: "center" }}>
+          <View style={{ flex: 1, alignItems: "center",paddingBottom:40 }}>
             <AppText
               text={"Personal information"}
               style={{ color: Colors.primaryColor, marginBottom: 10 }}
@@ -119,11 +120,14 @@ const UserInfo = ({ navigation }) => {
               <ErrorMessage error={error} visible={error} />
               <View style={styles.ImageContainer}>
                 <Image
-                  source={{ uri: userData?.attributes?.Personal_image?.data[0]?.attributes?.url }}
+                  source={{
+                    uri: userData?.attributes?.Personal_image?.data[0]
+                      ?.attributes?.url,
+                  }}
                   style={styles.image}
                 />
               </View>
-             <HeaderComponent header={"fullName"}/>
+              <HeaderComponent header={"fullName"} />
               <FormField
                 autoCorrect={false}
                 name="fullName"
@@ -131,42 +135,49 @@ const UserInfo = ({ navigation }) => {
                 style={styles.inputStyle}
                 editable={false}
                 activeUnderlineColor={"#FFF"}
-                underlineStyle={{borderWidth:0,backgroundColor:"#fff"}}
-
+                underlineStyle={{ borderWidth: 0, backgroundColor: "#fff" }}
                 placeholderTextColor={Colors.blackColor}
-
                 placeholder={userData?.attributes?.name}
               />
-                           <HeaderComponent header={"city"}/>
+              <HeaderComponent header={"city"} />
 
               <FormField
                 autoCorrect={false}
                 name="city"
                 icon={"user"}
                 placeholderTextColor={Colors.blackColor}
-
                 style={styles.inputStyle}
                 editable={false}
                 placeholder={userData?.attributes?.city}
               />
-                                         <HeaderComponent header={"phoneNumber"}/>
+              <HeaderComponent header={"phoneNumber"} />
 
               <FormField
                 autoCorrect={false}
                 name="fullName"
                 icon={"user"}
                 placeholderTextColor={Colors.blackColor}
-
                 style={styles.inputStyle}
                 editable={false}
                 placeholder={userData?.attributes?.phoneNumber}
               />
-                                                      <HeaderComponent header={"Documents"}/>
+              <HeaderComponent header={"Birth Date"} />
 
-<DocumentDownloadComponent/>
+              <FormDatePicker
+                autoCorrect={false}
+                name="fullName"
+                icon={"user"}
+               disabled={true}
+
+                placeholderTextColor={Colors.blackColor}
+                style={[styles.dateStyle]}
+                placeholder={userData?.attributes?.birth_date}
+              />
+              <HeaderComponent header={"Documents"} />
+
+              <DocumentDownloadComponent />
+
               
-
-              {/* <SubmitButton title="Save" /> */}
             </AppForm>
           </View>
         </ScrollView>
@@ -183,7 +194,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: width * 0.9,
     backgroundColor: Colors.whiteColor,
+    display:'flex',
+    // alignItems:'center',
+    justifyContent:'center',
     borderRadius: 10,
+  },
+  dateStyle: {
+    // borderWidth: 1,
+    width: width * 0.99,
+    marginRight:-26,
+    backgroundColor: Colors.whiteColor,
+    borderRadius: 10,
+    alignSelf:'center',
+    margin:"auto",
+    padding:4,
+    marginTop:5
   },
   ImageContainer: {
     paddingHorizontal: width * 0.4,
@@ -210,7 +235,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     paddingHorizontal: 27,
-    marginBottom:-13,
+    marginBottom: -13,
     // paddingVertical: 0,
     margin: 0,
     gap: 4,

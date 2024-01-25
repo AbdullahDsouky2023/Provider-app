@@ -25,6 +25,7 @@ import {
   import AppModal from "../../component/AppModal";
   import { CommonActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import ArrowBack from "../../component/ArrowBack";
   
   const { width } = Dimensions.get("screen");
   export default function CompletedOrderDetails({ navigation, route }) {
@@ -102,7 +103,7 @@ import { useTranslation } from "react-i18next";
     if(isLoading) return <LoadingScreen/>
     return (
       <ScrollView style={styles.scrollContainer}>
-        <AppHeader subPage={true} />
+        <ArrowBack />
         <ScrollView style={styles.container}>
         <View style={styles.itemContainer}>
           <FlatList

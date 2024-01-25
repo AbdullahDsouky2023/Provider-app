@@ -9,7 +9,7 @@ import Stars from 'react-native-stars';
 // import i18n from 'i18n-js'; // import i18n-js library
 const { width , height} = Dimensions.get("screen")
 export default function ReviewOrderCard({item}) {
-  const date = moment(item?.attributes?.date);
+  // const date  = moment(item?.attributes?.date);
 // format the date as you like, for example:
 // const readableDate =  date.locale(i18n.locale).format('LL')
   return ( 
@@ -18,10 +18,12 @@ export default function ReviewOrderCard({item}) {
       <AppText text={item?.attributes?.date} style={styles.date} centered={false}/>
     <View style={styles.reviewContainer}>
     <Stars
+    
   default={5} // set the default rating value
   count={Number(item?.attributes?.userOrderRating)} // set the total number of stars
   half={true} // enable half star mode
   starSize={24} // set the size of the stars
+  disabled={true}
   fullStar={<AntDesign name="star" size={24} color={Colors.primaryColor} />} 
   />
     </View>

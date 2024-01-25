@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView } from "react-native-virtualized-view";
-import * as Location from "expo-location";
-import { Colors, Sizes } from "../constant/styles";
 import AppText from "../component/AppText";
-import AppHeader from "../component/AppHeader";
-import LoadingScreen from "./loadingScreen";
 import { useNavigation } from "@react-navigation/native";
 import * as geolib from "geolib";
 import useOrders from "../../utils/orders";
@@ -72,10 +67,16 @@ export default OrdersListner = () => {
         dispatch(setOrders(orderRedux))
         // Play sound only if orderRedux data has changed
         console.log("first opening the app ",(prevOrderRedux?.data=== orderRedux?.data))
-        if (!isEqual(prevOrderRedux?.data, orderRedux?.data) && prevOrderRedux?.data?.length>0 ) {
-          playSound();
-            console.log("current order from api ",orderRedux?.data)
-      }
+       // Compare the length of the orders
+// if (prevOrderRedux?.data?.length !== orderRedux?.data?.length) {
+//   playSound();
+// }
+
+// Compare the IDs of the orders
+if (!orderRedux?.data?.every((order) => prevOrderRedux?.data?.find((prevOrder) => prevOrder.id === order.id))) {
+  playSound();
+}
+
     //   setOdersorderRedux; // Update prevOrderRedux after playing sound
     }
     setRefreshing(false);
@@ -85,9 +86,6 @@ export default OrdersListner = () => {
         console.log("error listnent to the orders",error)
 }
   };
-
-  // Remove useEffect for prevOrderRedux comparison
-  // Removed prevOrderRedux state
 
   useEffect(() => {
     (async () => {
@@ -103,10 +101,6 @@ export default OrdersListner = () => {
         setLoading(false);
       }
     })();
-  }, [orderRedux,prevOrderRedux]);
-
-
-
-    
+  }, [fetchData]);
     return <AppText text={"FF"} />;
   };

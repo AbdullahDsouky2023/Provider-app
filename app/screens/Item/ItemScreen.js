@@ -31,6 +31,7 @@ import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
 import useNotifications from "../../../utils/notifications";
 import { useTranslation } from "react-i18next";
+import ArrowBack from "../../component/ArrowBack";
 
 const { width, height } = Dimensions.get("screen");
 export default function ItemScreen({ navigation, route }) {
@@ -93,7 +94,7 @@ export default function ItemScreen({ navigation, route }) {
         </View>
       ) : (
         <>
-          <AppHeader subPage={true} />
+          <ArrowBack subPage={true} />
           <ScrollView style={styles.container}>
             <View style={styles.itemContainer}>
               <FlatList

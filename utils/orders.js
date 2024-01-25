@@ -108,9 +108,9 @@ export default function useOrders() {
   };
 
   const { data, isLoading, isError,refetch } = useQuery({
-    queryKey: ["order"],
+    queryKey: ["orders"],
     queryFn: fetchOrders,
-    // refetchInterval:10000
+    refetchIntervalInBackground:true
   }); // Changed the query key to 'superheroes'
 
   return {
