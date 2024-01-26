@@ -45,6 +45,7 @@ function FormDatePicker({ name, width, style,disabled=false,...otherProps }) {
       <TouchableOpacity onPress={showDatepicker} disabled={disabled}>
         <View style={styles.date}>
           <TextInput
+          editable={false}
             onChangeText={(text) => setFieldValue(name, text)}
             value={formattedDate}
             onBlur={() => setFieldTouched(name)}

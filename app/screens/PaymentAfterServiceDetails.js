@@ -139,6 +139,7 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
   return (
     <>
       <ScrollView
+      showsVerticalScrollIndicator={false}
         keyboardDismissMode="ondrag"
         style={{
           height: height * 1,

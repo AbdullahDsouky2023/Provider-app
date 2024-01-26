@@ -200,9 +200,9 @@ export default function OrderDetails({ navigation, route }) {
 
   if (isLoading) return <LoadingScreen />;
   return (
-    <ScrollView style={styles.scrollContainer}>
+    <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
       <ArrowBack />
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.itemContainer}>
           <FlatList
             data={item?.attributes?.services.data}

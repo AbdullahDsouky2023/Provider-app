@@ -24,6 +24,7 @@ export default function ChargeWalletScreen({}) {
   return (
     <>
       <ScrollView
+      showsVerticalScrollIndicator={false}
         style={{
           height: height * 0.78,
         }}

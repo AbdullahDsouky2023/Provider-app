@@ -27,7 +27,7 @@ export default function ConditionsScreen() {
     <View style={styles.container}>
 
       <ArrowBack subPage={true} />
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
     {/* <AppText text={CurrentTerms} centered={false} style={{
       fontSize:12,
       color:Colors.blackColor,

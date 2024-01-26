@@ -40,6 +40,7 @@ const fetchData=()=>{
     
   return (
     <ScrollView 
+    showsVerticalScrollIndicator={false}
     style={{
       backgroundColor:"white",
       height:"100%"
@@ -56,7 +57,7 @@ const fetchData=()=>{
       </View>
     }
     { currentOrders?.length > 0 &&
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <FlatList
       data={currentOrders}
       style={styles.listContainer}

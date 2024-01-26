@@ -35,7 +35,7 @@ export default function SocialAccountSettings() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <AppText text="Contact Us" centered={false} style={styles.header} />
       <View
       >

@@ -82,7 +82,7 @@ import ActiveScreenAlert from "./ActiveScreenAlert";
     return (
       <>
         <ScrollView
-       
+       showsVerticalScrollIndicator={false}
           style={{
             height: height * 0.78,
           }}

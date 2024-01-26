@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
-import { ScrollView } from "react-native-virtualized-view";
+import { Ionicons } from "@expo/vector-icons";
 
 import AppText from "../AppText";
 import AppButton from "../AppButton";
@@ -36,18 +36,26 @@ export default function GeneralSettings() {
 
   return (
     <View style={styles.container}>
-      <AppText text="Settings" style={styles.header} />
+      <View style={styles.headerContainer}>
+        <Ionicons
+          name="settings-outline"
+          size={24}
+          color={Colors.primaryColor}
+        />
+
+        <AppText text="Settings" style={styles.header} />
+      </View>
       <View>
         <FlatList
           data={settingsItemArray}
           style={{
             display: "flex",
             gap: 20,
-            flexWrap:'wrap',
-            alignItems:'center',
-            justifyContent:'center',
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
             // backgroundColor:'red',
-            flexDirection:'row'
+            flexDirection: "row",
           }}
           renderItem={({ item }) => {
             return <SettingItem item={item} />;
@@ -55,7 +63,6 @@ export default function GeneralSettings() {
           keyExtractor={(item, index) => item.name + index}
         />
       </View>
-      
     </View>
   );
 }
@@ -63,11 +70,10 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
   },
+  
   header: {
     color: Colors.primaryColor,
     fontSize: 18,
-    marginBottom:25,
-    paddingHorizontal:10
   },
   textHeader: {
     color: Colors.blackColor,
@@ -94,5 +100,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     // justifyContent:'center',
     gap: 15,
+  },
+  headerContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 25,
+    backgroundColor:Colors.whiteColor,
+    paddingHorizontal: 10,
+    gap: 10,
   },
 });

@@ -1,17 +1,16 @@
 import React from "react";
 import { Dimensions, FlatList, StyleSheet } from "react-native";
 
-import ServiceCard from "./ServiceCard";
-import HeaderTextComponent from "./HeaderTextComponent";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { BROWSE_ORDERS, OFFERS } from "../../navigation/routes";
 import useCategories from "../../../utils/categories";
 import LoadingScreen from "../../screens/loading/LoadingScreen";
+import HeaderTextComponent from "./HeaderTextComponent";
+import { BROWSE_ORDERS, OFFERS } from "../../navigation/routes";
+import ServiceCard from "./ServiceCard";
 const { width } = Dimensions.get("screen");
 
 export default function ServicesList() {
-  // const categories = useSelector((state) => state?.categories?.categories);
   const navigation = useNavigation();
   const { data: categories, isLoading } = useCategories();
   const user = useSelector(
@@ -39,7 +38,7 @@ export default function ServicesList() {
             />
           );
         }}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={(item, index) => item?.id}
       />
     </HeaderTextComponent>
   );

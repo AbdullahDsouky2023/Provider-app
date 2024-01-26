@@ -11,7 +11,7 @@ export default function ItemDetails({ item }) {
     <View style={styles.container}>
       <ArrowBack/>
       {/* <AppHeader subPage={true} /> */}
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Image source={{ uri: item?.attributes?.image?.data?.attributes?.url }} style={styles.image} />
         <View style={styles.overlay}>
           <AppText text={item?.attributes?.name} style={{ color: Colors.whiteColor,fontSize:17 }} />

@@ -152,7 +152,7 @@ export default function StarsComponent({ route }) {
     return <LoadingScreen/>
   }
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <ArrowBack subPage={true} />
       <View style={{ flex: 1 }}>
         <AppText text={"أكتب تقييمك للعميل"} style={styles.text} />

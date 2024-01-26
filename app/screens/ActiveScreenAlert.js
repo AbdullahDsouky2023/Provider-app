@@ -45,6 +45,7 @@ export default function ActiveScreenAlert({}) {
   return (
     <>
       <ScrollView
+      showsVerticalScrollIndicator={false}
         style={{
           height: height * 0.78,
         }}

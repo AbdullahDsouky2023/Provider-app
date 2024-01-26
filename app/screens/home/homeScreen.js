@@ -140,6 +140,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableWithoutFeedback>
       </View>
       <ScrollView
+      showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

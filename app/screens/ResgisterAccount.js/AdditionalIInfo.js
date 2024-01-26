@@ -41,6 +41,8 @@ import CitiesDropDownComponent from "./CitiesDropDownComponent";
 import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
 import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 import UserDatePicker from "../../component/Account/UserDatePicker";
+import FormDatePicker from "../../component/Form/FormDatePicker";
+import useNotifications from "../../../utils/notifications";
 const { width, height } = Dimensions.get("screen");
 const AdditionInfoScreen = ({ navigation, route }) => {
   const [error, setError] = useState();
@@ -50,10 +52,11 @@ const AdditionInfoScreen = ({ navigation, route }) => {
   const registerData = useSelector(
     (state) => state.register.currentRegisterDate
   );
+  const {token} = useNotifications()
   const user = useSelector((state) => state.user.userData);
   const [city, setCity] = useState(null);
 
-  // const { phoneNumber } = route?.params
+console.log("the notification token is isi for addion",token)
   const validationSchema = yup.object().shape({
     Additional_phone: yup.string().required(t("This Field is Required!")),
     IdNumber: yup.string().required(t("This Field is Required!")),
@@ -77,12 +80,15 @@ const AdditionInfoScreen = ({ navigation, route }) => {
           ...values,
           city,
           Provider_status: "pending",
+          expoPushNotificationToken:token
         });
       } else {
         res = await createUser({
           ...registerData,
           ...values,
           name,
+          expoPushNotificationToken:token,
+
           phoneNumber: auth?.currentUser?.phoneNumber,
           city,
         });
@@ -171,11 +177,13 @@ const AdditionInfoScreen = ({ navigation, route }) => {
                 keyboardType="email-address"
                 name="email"
                 // placeholder="email"
-                textContentType="email"
+                // textContentType="email"
               />
+              <View style={{marginBottom:10}}> 
 
               <HeaderComponent header={"Birth Date"} />
-              <UserDatePicker name="birth_date" birthDate={Date.now()} />
+              </View>
+              <FormDatePicker name="birth_date" birthDate={Date.now()} />
               <HeaderComponent header={"Identification Number"} />
               <FormField
                 autoCorrect={false}

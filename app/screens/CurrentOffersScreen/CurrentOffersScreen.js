@@ -125,6 +125,7 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
           <StatusBar backgroundColor={Colors.primaryColor} />
           {/* {!subPage && <AppHeader />} */}
           <ScrollView
+          showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

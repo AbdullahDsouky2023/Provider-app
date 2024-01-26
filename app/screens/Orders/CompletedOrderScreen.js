@@ -45,7 +45,9 @@ const fetchData = ()=>{
     };
     if(isLoading) return <LoadingScreen/>
     return (
-    <ScrollView style={styles.wrapper} refreshControl={
+    <ScrollView style={styles.wrapper}
+    showsVerticalScrollIndicator={false}
+    refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     }>
     {currentOrders?.length === 0 ? 
@@ -54,7 +56,7 @@ const fetchData = ()=>{
       <AppText text={"لا يوجد طلبات لعرضها"} /> 
       </View>
       :
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <FlatList
       data={currentOrders}
       style={styles.listContainer}

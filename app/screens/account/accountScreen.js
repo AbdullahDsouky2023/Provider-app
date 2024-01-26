@@ -89,7 +89,7 @@ const AccountScreen = ({ navigation, route }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
          <View style={styles.LogoStyles}> 
             {/* <Logo /> */}
           </View> 

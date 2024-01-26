@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 import { Colors, Fonts } from "../../constant/styles";
 import AppText from "../AppText";
 import { useSelector } from "react-redux";
-import { getUserCurrentOrders } from "../../../utils/user";
 import LoadingScreen from "../../screens/loading/LoadingScreen";
 const { width, height } = Dimensions.get("screen");
 import * as geolib from "geolib";
@@ -81,7 +80,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
   //   return <ActivityIndicator size="large" color={Colors.primaryColor}/>;
   // }
 
-  if (!currentOrders) return <LoadingScreen />;
+  // if (loading) return <LoadingScreen />;
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <HeaderTextComponent name={"Overview"} showAll={false}>
@@ -97,7 +96,6 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
                 centered={false}
               />
             </View>
-            {/* <AppText text={currentOrders?.length} style={styles.text} /> */}
           </View>
           <View style={styles.ItemContainer}>
             <View style={styles?.ballContainer}>
@@ -109,9 +107,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
                 style={styles.text}
                 centered={false}
               />
-              {/* <AppText text={currentOrders?.length} centered={false} style={styles.text} /> */}
             </View>
-            {/* <AppText text={currentOrders?.length} style={styles.text} /> */}
           </View>
         </View>
       </HeaderTextComponent>

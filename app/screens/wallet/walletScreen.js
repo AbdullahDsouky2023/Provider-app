@@ -75,7 +75,7 @@ export default function WalletScreen() {
   return (
     <View style={styles.container}>
       <ArrowBack subPage={true} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
           <AppText text={"Your Balance"} style={styles.text} />
           <AppText text={`${userData?.attributes?.wallet_amount} ` + CURRENCY} style={styles.amount} />
