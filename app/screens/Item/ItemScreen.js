@@ -13,6 +13,8 @@ import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
 import { ScrollView } from "react-native-virtualized-view";
+import Carousel from "react-native-snap-carousel-v4";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 import useOrders, {
   acceptOrder,
@@ -22,7 +24,13 @@ import useOrders, {
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { HOME, MY_ORDERS, OFFERS, ORDERS } from "../../navigation/routes";
+import {
+  CURRENCY,
+  HOME,
+  MY_ORDERS,
+  OFFERS,
+  ORDERS,
+} from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 
@@ -87,7 +95,10 @@ export default function ItemScreen({ navigation, route }) {
   };
 
   return (
-    <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.scrollContainer}
+      showsVerticalScrollIndicator={false}
+    >
       {ModalisLoading ? (
         <View style={styles.container2}>
           <LoadingScreen />
@@ -95,7 +106,10 @@ export default function ItemScreen({ navigation, route }) {
       ) : (
         <>
           <ArrowBack subPage={true} />
-          <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={styles.container}
+            showsVerticalScrollIndicator={false}
+          >
             <View style={styles.itemContainer}>
               <FlatList
                 data={item?.attributes?.services.data}
@@ -126,18 +140,19 @@ export default function ItemScreen({ navigation, route }) {
                         text={item.attributes?.name}
                         style={[
                           styles.name,
-                          { fontSize: 14, paddingRight: 10 },
+                          { fontSize: RFPercentage(1.8), paddingRight: 10 },
                         ]}
                       />
-                      <AppText
-                        text={`${item.attributes?.Price} جنيه`}
+
+                      <PriceTextComponent
                         style={{
                           backgroundColor: Colors.primaryColor,
-                          fontSize: 14,
+                          fontSize: RFPercentage(1.5),
                           padding: 6,
                           borderRadius: 40,
                           color: Colors.whiteColor,
                         }}
+                        price={item?.attributes?.totalPrice}
                       />
                     </View>
                   );
@@ -154,11 +169,15 @@ export default function ItemScreen({ navigation, route }) {
             <View style={styles.itemContainer}>
               <AppText centered={false} text={" السعر"} style={styles.title} />
               <PriceTextComponent
-                style={{ color: Colors.blackColor, fontSize: 16, marginTop: 4 }}
+                style={{
+                  color: Colors.blackColor,
+                  fontSize: RFPercentage(1.8),
+                  marginTop: 4,
+                }}
                 price={item?.attributes?.totalPrice}
               />
             </View>
-            <View style={styles.itemContainer}>
+            <View style={styles.descriptionContainer}>
               <AppText
                 centered={false}
                 text={" العنوان"}
@@ -167,7 +186,7 @@ export default function ItemScreen({ navigation, route }) {
               <AppText
                 centered={false}
                 text={item?.attributes?.location}
-                style={styles.price}
+                style={styles.location}
               />
             </View>
             <View style={styles.itemContainer}>
@@ -196,25 +215,47 @@ export default function ItemScreen({ navigation, route }) {
                 />
               </View>
             )}
-            {item?.attributes?.images?.data && (
+            {item?.attributes?.images?.data ? (
               <View style={styles.descriptionContainer}>
-                <AppText
-                  centered={false}
-                  text={" صور للطلب"}
-                  style={styles.title}
-                />
-                <Image
-                  source={{
-                    uri: item?.attributes?.images?.data[0]?.attributes?.url,
-                  }}
-                  style={{
-                    height: 120,
-                    width: 200,
-                    borderRadius: 10,
-                  }}
-                />
+                <>
+                  <AppText
+                    centered={false}
+                    text={"Images"}
+                    style={styles.title}
+                  />
+                  <Carousel
+                    data={item?.attributes?.images?.data}
+                    sliderWidth={width}
+                    slideStyle={{
+                      backgroundColor: "transparent",
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    autoplay={true}
+                    loop={true}
+                    autoplayInterval={10000}
+                    itemWidth={width}
+                    renderItem={({ item }) => {
+                      return (
+                        <Image
+                          //  resizeMethod="contain"
+                          source={{
+                            uri: item?.attributes?.url,
+                          }}
+                          style={{
+                            height: height * 0.2,
+                            width: width * 0.6,
+                            objectFit: "contain",
+                            borderRadius: 10,
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                </>
               </View>
-            )}
+            ) : null}
 
             <AppButton
               title={"accept offer"}
@@ -223,7 +264,7 @@ export default function ItemScreen({ navigation, route }) {
           </ScrollView>
           <AppModal
             isModalVisible={isModalVisible}
-            message={<AppText text={"تأكيد قبول الطلب"}/>}
+            message={<AppText text={"تأكيد قبول الطلب"} />}
             setModalVisible={setModalVisible}
             onPress={() => handleOrderAccept(item.id)}
           />
@@ -249,7 +290,7 @@ const styles = StyleSheet.create({
     height: height,
   },
   name: {
-    fontSize: 17,
+    fontSize: RFPercentage(1.7),
     color: Colors.blackColor,
   },
   itemContainer: {
@@ -296,12 +337,20 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   price: {
-    fontSize: 17,
+    fontSize: RFPercentage(1.9),
     color: Colors.blackColor,
     marginTop: 5,
   },
   title: {
-    fontSize: 21,
+    fontSize: RFPercentage(2.3),
     color: Colors.primaryColor,
+  },
+  location: {
+    fontSize: RFPercentage(1.7),
+    color: Colors.blackColor,
+    // marginTop: 5,
+    paddingHorizontal: 10,
+    minWidth: width * 0.8,
+    // backgroundColor:'red'
   },
 });

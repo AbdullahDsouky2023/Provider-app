@@ -11,7 +11,7 @@ import useOrders from "../../../utils/orders";
 import LoadingScreen from "../loading/LoadingScreen";
 import { COMPLETE_ORDERS_DETAILS, ORDERS_DETAILS } from '../../navigation/routes';
 import { setCompleteOrders } from '../../store/features/ordersSlice';
-const { width } = Dimensions.get("screen");
+const { width ,height} = Dimensions.get("screen");
 
 
 export default function CompletedOrdersScreen({navigation}) {

@@ -11,12 +11,14 @@ import {
   import AppButton from "../../component/AppButton";
   import AppText from "../../component/AppText";
   import { Colors } from "../../constant/styles";
-  import AppHeader from "../../component/AppHeader";
+  import { RFPercentage } from "react-native-responsive-fontsize";
+
+  import Carousel from "react-native-snap-carousel-v4";
   import useOrders, { acceptOrder, cancleOrder, changeOrderStatus, finishOrder, requestPayment } from "../../../utils/orders";
   import { useDispatch, useSelector } from "react-redux";
   import { setOrders } from "../../store/features/ordersSlice";
   import LoadingModal from "../../component/Loading";
-  import { HOME, OFFERS, ORDERS } from "../../navigation/routes";
+  import { CURRENCY, HOME, OFFERS, ORDERS } from "../../navigation/routes";
   import PriceTextComponent from "../../component/PriceTextComponent";
   import { Image } from "react-native";
   import { ScrollView } from "react-native-virtualized-view";
@@ -27,7 +29,7 @@ import {
 import { useTranslation } from "react-i18next";
 import ArrowBack from "../../component/ArrowBack";
   
-  const { width } = Dimensions.get("screen");
+  const { width ,height} = Dimensions.get("screen");
   export default function CompletedOrderDetails({ navigation, route }) {
     const item = route?.params?.item;
     const [isLoading, setIsLoading] = useState(false);
@@ -133,13 +135,13 @@ import ArrowBack from "../../component/ArrowBack";
                   <AppText
                     centered={false}
                     text={item.attributes?.name}
-                    style={[styles.name, { fontSize: 14, paddingRight: 10 }]}
+                    style={[styles.name, { fontSize: RFPercentage(1.7), paddingRight: 10 }]}
                   />
                   <AppText
-                    text={`${item.attributes?.Price} جنيه`}
+                    text={`${item.attributes?.Price} ${CURRENCY}`}
                     style={{
                       backgroundColor: Colors.primaryColor,
-                      fontSize: 14,
+                      fontSize:  RFPercentage(1.7),
                       padding: 6,
                       borderRadius: 40,
                       color: Colors.whiteColor,
@@ -153,21 +155,21 @@ import ArrowBack from "../../component/ArrowBack";
           <View style={styles.itemContainer}>
             <AppText centered={false} text={" السعر"} style={styles.title} />
             <PriceTextComponent
-            style={{color:Colors.blackColor,fontSize:14,marginTop:4}}
-            price={item?.attributes?.service?.data?.attributes?.name}
+            style={{color:Colors.blackColor,fontSize:RFPercentage(1.8),marginTop:4}}
+            price={item?.attributes?.totalPrice}
             />
           </View>
-          <View style={styles.itemContainer}>
+          <View style={styles.descriptionContainer}>
             <AppText centered={false} text={" العنوان"} style={styles.title} />
             <AppText
               centered={false}
               text={item?.attributes?.location}
-              style={styles.price}
+              style={styles.location}
             />
           </View>
          
   
-          <View style={styles.itemContainer}>
+          <View style={styles.descriptionContainer}>
             <AppText centered={false} text={" الموعد"} style={styles.title} />
             <AppText
               centered={false}
@@ -190,21 +192,43 @@ import ArrowBack from "../../component/ArrowBack";
             />
           </View>
           }
-           {
-              item?.attributes?.images?.data  && (
+           {item?.attributes?.images?.data ? (
           <View style={styles.descriptionContainer}>
-            <AppText centered={false} text={" صور للطلب"} style={styles.title} />
-             <Image 
-             source={{
-              uri:item?.attributes?.images?.data[0]?.attributes?.url}} style={{
-               height:120,
-               width:200,
-               borderRadius:10
-             }}/> 
+            <>
+              <AppText centered={false} text={"Images"} style={styles.title} />
+              <Carousel
+                data={item?.attributes?.images?.data}
+                sliderWidth={width}
+                slideStyle={{
+                  backgroundColor: "transparent",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                autoplay={true}
+                loop={true}
+                autoplayInterval={10000}
+                itemWidth={width}
+                renderItem={({ item }) => {
+                  return (
+                    <Image
+                      //  resizeMethod="contain"
+                      source={{
+                        uri: item?.attributes?.url,
+                      }}
+                      style={{
+                        height: height * 0.2,
+                        width: width * 0.6,
+                        objectFit: "contain",
+                        borderRadius: 10,
+                      }}
+                    />
+                  );
+                }}
+              />
+            </>
           </View>
-           )
-            
-          }
+        ) : null}
    
         </ScrollView>
         <LoadingModal visible={isLoading} />
@@ -226,7 +250,7 @@ import ArrowBack from "../../component/ArrowBack";
       
     },
     name: {
-      fontSize: 17,
+      fontSize: RFPercentage(1.8),
       color: Colors.blackColor,
     },
     itemContainer: {
@@ -273,13 +297,21 @@ import ArrowBack from "../../component/ArrowBack";
       elevation: 2,
     },
     price: {
-      fontSize: 17,
+      fontSize: RFPercentage(1.8),
       color: Colors.blackColor,
       marginTop: 5,
     },
     title: {
-      fontSize: 21,
+      fontSize: RFPercentage(2.3),
       color: Colors.primaryColor,
+    },
+    location:{
+      fontSize: RFPercentage(1.7),
+      color: Colors.blackColor,
+      marginTop: 5,
+      paddingHorizontal:10,
+      minWidth:width*0.8,
+      // backgroundColor:'red'
     },
   });
   

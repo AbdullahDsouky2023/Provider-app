@@ -7,10 +7,11 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
-import AppHeader from "../../component/AppHeader";
+import Carousel from "react-native-snap-carousel-v4";
 import useOrders, {
   acceptOrder,
   cancleOrder,
@@ -24,7 +25,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { CHAT_ROOM, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
+import { CHAT_ROOM, CURRENCY, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native-virtualized-view";
@@ -36,7 +37,7 @@ import useNotifications from "../../../utils/notifications";
 import { useTranslation } from "react-i18next";
 import ArrowBack from "../../component/ArrowBack";
 
-const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
   const { item } = route?.params;
   const [isLoading, setIsLoading] = useState(false);
@@ -155,7 +156,7 @@ export default function OrderDetails({ navigation, route }) {
         dispatch(setOrders(data));
         sendPushNotification(
           userNotificationToken,
-          ` قام ${provider?.attributes?.name} بقبول العمل علي الطلب`
+          ` قام ${provider?.attributes?.name} ببدء العمل علي الطلب`
         );
         navigation.dispatch(
           CommonActions.reset({
@@ -231,18 +232,19 @@ export default function OrderDetails({ navigation, route }) {
                   <AppText
                     centered={false}
                     text={item.attributes?.name}
-                    style={[styles.name, { fontSize: 14, paddingRight: 10 }]}
+                    style={[styles.name, { fontSize: RFPercentage(1.7), paddingRight: 10 }]}
                   />
-                  <AppText
-                    text={`${item.attributes?.Price} جنيه`}
-                    style={{
-                      backgroundColor: Colors.primaryColor,
-                      fontSize: 14,
-                      padding: 6,
-                      borderRadius: 40,
-                      color: Colors.whiteColor,
-                    }}
-                  />
+                    
+                    <PriceTextComponent
+                style={{
+                  backgroundColor: Colors.primaryColor,
+                  fontSize: RFPercentage(1.5),
+                  padding: 6,
+                  borderRadius: 40,
+                  color: Colors.whiteColor,
+                }}
+                price={item?.attributes?.totalPrice}
+              />
                 </View>
               );
             }}
@@ -258,16 +260,16 @@ export default function OrderDetails({ navigation, route }) {
         <View style={styles.itemContainer}>
           <AppText centered={false} text={" السعر"} style={styles.title} />
           <PriceTextComponent
-            style={{ color: Colors.blackColor, fontSize: 16, marginTop: 4 }}
+            style={{ color: Colors.blackColor, fontSize:  RFPercentage(2), marginTop: 4 }}
             price={item?.attributes?.totalPrice}
           />
         </View>
-        <View style={styles.itemContainer}>
+        <View style={styles.descriptionContainer}>
           <AppText centered={false} text={" العنوان"} style={styles.title} />
           <AppText
             centered={false}
             text={item?.attributes?.location}
-            style={styles.price}
+            style={styles.location}
           />
         </View>
         {/* <View style={styles.itemContainer}>
@@ -279,7 +281,7 @@ export default function OrderDetails({ navigation, route }) {
           />
         </View> */}
 
-        <View style={styles.itemContainer}>
+        <View style={styles.descriptionContainer}>
           <AppText centered={false} text={" الموعد"} style={styles.title} />
           <AppText
             centered={false}
@@ -302,27 +304,43 @@ export default function OrderDetails({ navigation, route }) {
             />
           </View>
         )}
-        {item?.attributes?.images?.data && (
+         {item?.attributes?.images?.data ? (
           <View style={styles.descriptionContainer}>
-            <AppText
-              centered={false}
-              text={" صور للطلب"}
-              style={styles.title}
-            />
-            <Image
-              source={{
-                uri: item?.attributes?.images?.data[0]?.attributes?.url,
-              }}
-              resizeMode="contain"
-              style={{
-                minHeight:250,
-                width: width * 0.85,
-                borderRadius: 10,
-                // resizeMode:'cover'
-              }}
-            />
+            <>
+              <AppText centered={false} text={"Images"} style={styles.title} />
+              <Carousel
+                data={item?.attributes?.images?.data}
+                sliderWidth={width}
+                slideStyle={{
+                  backgroundColor: "transparent",
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                autoplay={true}
+                loop={true}
+                autoplayInterval={10000}
+                itemWidth={width}
+                renderItem={({ item }) => {
+                  return (
+                    <Image
+                      //  resizeMethod="contain"
+                      source={{
+                        uri: item?.attributes?.url,
+                      }}
+                      style={{
+                        height: height * 0.2,
+                        width: width * 0.6,
+                        objectFit: "contain",
+                        borderRadius: 10,
+                      }}
+                    />
+                  );
+                }}
+              />
+            </>
           </View>
-        )}
+        ) : null}
         {(item?.attributes?.provider_payment_status === "payed" && item?.attributes?.providerOrderRating === null ) && (
           <AppButton
             title={"Rate and Finish Work"}
@@ -395,7 +413,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
   },
   name: {
-    fontSize: 17,
+    fontSize: RFPercentage(1.7),
     color: Colors.blackColor,
   },
   itemContainer: {
@@ -442,12 +460,22 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   price: {
-    fontSize: 17,
+    fontSize: RFPercentage(1.83),
     color: Colors.blackColor,
     marginTop: 5,
+    width:width*1,
+    // backgroundColor:'red'
+  },
+  location:{
+    fontSize: RFPercentage(1.7),
+    color: Colors.blackColor,
+    marginTop: 5,
+    paddingHorizontal:10,
+    minWidth:width*0.8,
+    // backgroundColor:'red'
   },
   title: {
-    fontSize: 21,
+    fontSize: RFPercentage(2.3),
     color: Colors.primaryColor,
   },
   chatContainer: {

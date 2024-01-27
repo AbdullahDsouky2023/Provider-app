@@ -26,7 +26,7 @@ try {
     const userId = `p-${user?.id}`
     const key = EXPO_PUBLIC_JWT_SECRET;
     
-   const token =  JWT.encode({ user_id:`p-${user?.id}`}, key );
+   const token =  JWT.encode({ user_id:userId}, key );
    const data = {
     token,
     userId

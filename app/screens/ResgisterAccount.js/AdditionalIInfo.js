@@ -206,7 +206,7 @@ console.log("the notification token is isi for addion",token)
                   style={{
                     color: Colors.blackColor,
                     fontSize: RFPercentage(1.5),
-                    minWidth: width * 0.9,
+                    minWidth: width * 0.86,
                     // backgroundColor:'red',
                     marginLeft: 10,
                   }}

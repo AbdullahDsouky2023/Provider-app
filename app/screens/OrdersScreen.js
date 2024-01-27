@@ -127,7 +127,10 @@ import ActiveScreenAlert from "./ActiveScreenAlert";
                 />
               </View>
               :
-              <View style={{ paddingHorizontal: 10,marginTop:10 }}><ChargeWalletScreen/></View>
+              <View style={{ paddingHorizontal: 10,marginTop:10 ,  
+                 backgroundColor:Colors.whiteColor,  
+                  height:height*0.90,
+              }}><ChargeWalletScreen/></View>
         :
         <View style={styles.noItemContainer}>
 <LottieView
@@ -169,7 +172,8 @@ import ActiveScreenAlert from "./ActiveScreenAlert";
       display:'flex',
       alignItems:'center',
       justifyContent:'center',
-      height:height*0.849,
+      height:height*0.9,
+      overflow:'hidden',
       width:width,
       backgroundColor:Colors.whiteColor,
       marginTop:2,

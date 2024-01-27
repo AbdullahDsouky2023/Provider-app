@@ -24,7 +24,7 @@ export const useChatClient = () => {
       } catch (error) {
         if (error instanceof Error) {
           console.error(
-            `An error occurred while connecting the user: ${error.message}`
+            `An error occurred while connecting the user: ${error.message}`,"userDA",user
           );
         }
       }

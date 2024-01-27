@@ -17,7 +17,7 @@ export default function AuthNavigator() {
     screenOptions={{
         headerShown: false,
     }}
-      initialRouteName={"Register"}
+      initialRouteName={"SignIn"}
     >
        <Stack.Screen name="SignIn"  component={SigninScreen} options={{ ...TransitionPresets.DefaultTransition }} />
         <Stack.Screen name="Verification" component={VerificationScreen} />

@@ -159,11 +159,11 @@ const styles = StyleSheet.create({
     gap:10
   },
   text1: {
-    fontSize: RFPercentage(2.2),
+    fontSize: RFPercentage(2),
     color: Colors.primaryColor,
   },
   text2: {
-    fontSize: RFPercentage(1.6),
+    fontSize: RFPercentage(1.5),
     width: width * 1,
     maxWidth: width * 1,
     color:Colors.blackColor,
