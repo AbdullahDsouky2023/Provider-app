@@ -110,8 +110,14 @@ export default function useOrders() {
   const { data, isLoading, isError,refetch } = useQuery({
     queryKey: ["orders"],
     queryFn: fetchOrders,
-    refetchIntervalInBackground:true
-  }); // Changed the query key to 'superheroes'
+    refetchIntervalInBackground:true,
+    // refetchInterval:1000,
+    onDataChange: (newData) => {
+      // Play sound when new data arrives
+      console.log("the data has been changed abdullah notify the user",newData)
+      // soundObject.playAsync();
+    },  }); // Changed the query key to 'superheroes'
+
 
   return {
     refetch,

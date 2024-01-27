@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: height * 0.7,
+    height: height * 0.9,
     width: width,
     backgroundColor: Colors.whiteColor,
   },

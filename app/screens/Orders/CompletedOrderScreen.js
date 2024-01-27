@@ -61,6 +61,7 @@ const fetchData = ()=>{
       data={currentOrders}
       style={styles.listContainer}
       renderItem={({item})=>{
+        console.log("item render",item?.id)
         return <CurrentOrderCard item={item} onPress={() => navigation.navigate(COMPLETE_ORDERS_DETAILS, { item })}/>
       }}
       keyExtractor={(item)=>item?.id}
@@ -89,8 +90,11 @@ const styles = StyleSheet.create({
   },
  listContainer:{
   display:"flex",
+  flexDirection:'column',
   gap:10,
-  height:"100%",
+  backgroundColor:Colors.whiteColor,
+
+  // height:height*1,
   alignItems:'center',
   justifyContent:'center'
  },

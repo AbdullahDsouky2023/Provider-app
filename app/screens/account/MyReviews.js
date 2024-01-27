@@ -20,8 +20,7 @@ const { height , width } = Dimensions.get('screen')
   const {data,isLoading,refetch} = useOrders()
   const [refreshing, setRefreshing] = useState(false);
   const [currentOrders,setCurrentData]=useState([])
-// console.log("currentOrders",currentOrders[0]?.attributes?.userOrderReview)
-  const onRefresh = () => {
+   const onRefresh = () => {
     setRefreshing(true);
     fetchData();
   };

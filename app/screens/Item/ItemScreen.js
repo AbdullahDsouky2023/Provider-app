@@ -105,60 +105,106 @@ export default function ItemScreen({ navigation, route }) {
         </View>
       ) : (
         <>
-          <ArrowBack subPage={true} />
+          <ArrowBack />
           <ScrollView
             style={styles.container}
             showsVerticalScrollIndicator={false}
           >
-            <View style={styles.itemContainer}>
-              <FlatList
-                data={item?.attributes?.services.data}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item, index) => item.id}
+            {item?.attributes?.services.data.length > 0 ? (
+          <View style={styles.itemContainer}>
+            <FlatList
+              data={item?.attributes?.services.data}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => item.id}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                direction: "rtl",
+                flexWrap: "wrap",
+                marginTop: 15,
+                gap: 15,
+                width: width,
+              }}
+              renderItem={({ item }) => {
+                return (
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 15,
+                    }}
+                  >
+                    <AppText
+                      centered={false}
+                      text={item.attributes?.name}
+                      style={[styles.name, { fontSize: RFPercentage(1.8), paddingRight: 10 }]}
+                    />
+                     
+                     <PriceTextComponent
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  direction: "rtl",
-                  flexWrap: "wrap",
-                  marginTop: 15,
-                  gap: 15,
-                  width: width,
+                  backgroundColor: Colors.primaryColor,
+                  fontSize: RFPercentage(1.5),
+                  padding: 6,
+                  borderRadius: 40,
+                  color: Colors.whiteColor,
                 }}
-                renderItem={({ item }) => {
-                  return (
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 15,
-                      }}
-                    >
-                      <AppText
-                        centered={false}
-                        text={item.attributes?.name}
-                        style={[
-                          styles.name,
-                          { fontSize: RFPercentage(1.8), paddingRight: 10 },
-                        ]}
-                      />
-
-                      <PriceTextComponent
-                        style={{
-                          backgroundColor: Colors.primaryColor,
-                          fontSize: RFPercentage(1.5),
-                          padding: 6,
-                          borderRadius: 40,
-                          color: Colors.whiteColor,
-                        }}
-                        price={item?.attributes?.totalPrice}
-                      />
-                    </View>
-                  );
-                }}
+                price={item?.attributes?.Price}
               />
-            </View>
+                  </View>
+                );
+              }}
+            />
+          </View>
+        ) : (
+          <View style={styles.itemContainer}>
+            <FlatList
+              data={item?.attributes?.packages.data}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => item.id}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                direction: "rtl",
+                flexWrap: "wrap",
+                marginTop: 15,
+                gap: 15,
+                width: width,
+              }}
+              renderItem={({ item }) => {
+                console.log('item')
+                return (
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 15,
+                    }}
+                  >
+                    <AppText
+                      centered={false}
+                      text={item.attributes?.name}
+                      style={[styles.name, { fontSize:RFPercentage(1.65), paddingRight: 10 }]}
+                    />
+                     <PriceTextComponent
+                style={{
+                  backgroundColor: Colors.primaryColor,
+                  fontSize: RFPercentage(1.5),
+                  padding: 6,
+                  borderRadius: 40,
+                  color: Colors.whiteColor,
+                }}
+                price={item?.attributes?.price}
+              />
+                  </View>
+                );
+              }}
+            />
+          </View>
+        )}
             <View>
               <AppText
                 centered={false}
@@ -226,15 +272,18 @@ export default function ItemScreen({ navigation, route }) {
                   <Carousel
                     data={item?.attributes?.images?.data}
                     sliderWidth={width}
+                    inactiveSlideOpacity={1}
+                    inactiveSlideScale={1}
+                    autoplayInterval={10000}
                     slideStyle={{
                       backgroundColor: "transparent",
                       flex: 1,
                       alignItems: "center",
                       justifyContent: "center",
                     }}
-                    autoplay={true}
+                    // autoplay={true}
                     loop={true}
-                    autoplayInterval={10000}
+                    // autoplayInterval={10000}
                     itemWidth={width}
                     renderItem={({ item }) => {
                       return (

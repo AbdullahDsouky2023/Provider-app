@@ -20,7 +20,7 @@ import AppButton from "../AppButton";
 import { Entypo } from '@expo/vector-icons'; 
 
 import { setcurrentChatChannel } from "../../store/features/ordersSlice";
-const { width } = Dimensions.get("screen");
+const { width,height } = Dimensions.get("screen");
 
 import { useDispatch} from  'react-redux'
 export default function CurrentOrderCard({ item ,onPress}) {
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
   container: {
     height: "100%",
-    backgroundColor: Colors.redColor,
+    backgroundColor: Colors.whiteColor,
     width: width,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     width: width * 0.88,
     paddingHorizontal: 20,
-    height: "100%",
+    maxHeight: height*0.23,
     marginTop: 12,
     marginBottom:10,
     flex: 1,

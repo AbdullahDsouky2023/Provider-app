@@ -204,38 +204,39 @@ export default function OrderDetails({ navigation, route }) {
     <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
       <ArrowBack />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.itemContainer}>
-          <FlatList
-            data={item?.attributes?.services.data}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => item.id}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              direction: "rtl",
-              flexWrap: "wrap",
-              marginTop: 15,
-              gap: 15,
-              width: width,
-            }}
-            renderItem={({ item }) => {
-              return (
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 15,
-                  }}
-                >
-                  <AppText
-                    centered={false}
-                    text={item.attributes?.name}
-                    style={[styles.name, { fontSize: RFPercentage(1.7), paddingRight: 10 }]}
-                  />
-                    
-                    <PriceTextComponent
+      {item?.attributes?.services.data.length > 0 ? (
+          <View style={styles.itemContainer}>
+            <FlatList
+              data={item?.attributes?.services.data}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => item.id}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                direction: "rtl",
+                flexWrap: "wrap",
+                marginTop: 15,
+                gap: 15,
+                width: width,
+              }}
+              renderItem={({ item }) => {
+                return (
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 15,
+                    }}
+                  >
+                    <AppText
+                      centered={false}
+                      text={item.attributes?.name}
+                      style={[styles.name, { fontSize: RFPercentage(1.8), paddingRight: 10 }]}
+                    />
+                     
+                     <PriceTextComponent
                 style={{
                   backgroundColor: Colors.primaryColor,
                   fontSize: RFPercentage(1.5),
@@ -243,13 +244,61 @@ export default function OrderDetails({ navigation, route }) {
                   borderRadius: 40,
                   color: Colors.whiteColor,
                 }}
-                price={item?.attributes?.totalPrice}
+                price={item?.attributes?.Price}
               />
-                </View>
-              );
-            }}
-          />
-        </View>
+                  </View>
+                );
+              }}
+            />
+          </View>
+        ) : (
+          <View style={styles.itemContainer}>
+            <FlatList
+              data={item?.attributes?.packages.data}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => item.id}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                direction: "rtl",
+                flexWrap: "wrap",
+                marginTop: 15,
+                gap: 15,
+                width: width,
+              }}
+              renderItem={({ item }) => {
+                console.log('item')
+                return (
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 15,
+                    }}
+                  >
+                    <AppText
+                      centered={false}
+                      text={item.attributes?.name}
+                      style={[styles.name, { fontSize:RFPercentage(1.65), paddingRight: 10 }]}
+                    />
+                     <PriceTextComponent
+                style={{
+                  backgroundColor: Colors.primaryColor,
+                  fontSize: RFPercentage(1.5),
+                  padding: 6,
+                  borderRadius: 40,
+                  color: Colors.whiteColor,
+                }}
+                price={item?.attributes?.price}
+              />
+                  </View>
+                );
+              }}
+            />
+          </View>
+        )}
         <View>
           <AppText
             centered={false}
@@ -300,7 +349,7 @@ export default function OrderDetails({ navigation, route }) {
                   ? item?.attributes?.description
                   : "لا يوجد"
               }
-              style={styles.price}
+              style={styles.description}
             />
           </View>
         )}
@@ -318,6 +367,8 @@ export default function OrderDetails({ navigation, route }) {
                   justifyContent: "center",
                 }}
                 autoplay={true}
+                inactiveSlideOpacity={1}
+                inactiveSlideScale={1}
                 loop={true}
                 autoplayInterval={10000}
                 itemWidth={width}
@@ -490,4 +541,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  description:{
+    fontSize: RFPercentage(1.8),
+    color: Colors.blackColor,
+    marginTop: 5,
+    paddingHorizontal:10,
+    // minWidth:width*0.8,
+    // backgroundColor:'red
+  }
 });
