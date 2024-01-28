@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
  listContainer:{
   display:"flex",
   flexDirection:'column',
-  gap:10,
+  gap:1,
   backgroundColor:Colors.whiteColor,
 
   // height:height*1,
