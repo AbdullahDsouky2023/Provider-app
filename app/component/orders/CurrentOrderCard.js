@@ -82,7 +82,7 @@ export default function CurrentOrderCard({ item ,onPress}) {
                 : item?.attributes?.status === "finish_work"
                 ? "Finished"
                 : item?.attributes?.status === "payed"
-                ? "Payed"
+                ? "Payed": item?.attributes?.provider_payment_status === "payment_required" ?"انتظار استلام الدفع"
                 : "Finished"
             }`}
             centered={false}

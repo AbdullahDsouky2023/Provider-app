@@ -23,7 +23,7 @@ export const settingsItemArray = [
     desc: "شير وأكسب 50 جنيه داخل محفظتك ",
   },
   {
-    name: "Privacy",
+    name: "Pricing",
     icon: "question",
   },
   {

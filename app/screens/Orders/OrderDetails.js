@@ -427,9 +427,9 @@ export default function OrderDetails({ navigation, route }) {
           ) :item?.attributes?.status === "assigned" ?(
           <View>
             <AppButton
-              title={"Accept Order"}
+              title={"Start Work"}
               style={{ backgroundColor: Colors.success }}
-              onPress={() => handleOrderAccept(item.id)}
+              onPress={() => handleStartWorking(item.id)}
             />
             <AppButton
               title={"Reject Order"}

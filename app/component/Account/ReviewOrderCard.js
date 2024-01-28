@@ -55,10 +55,13 @@ export default function ReviewOrderCard({ item }) {
           style={styles.name}
           centered={false}
           />
+          {
+            item?.attributes?.userOrderReview  &&
   <AppText
-
-       text={item?.attributes?.userOrderReview || ""}
-        style={styles.review} centered={false}/>
+  
+  text={item?.attributes?.userOrderReview || null}
+  style={styles.review} centered={false}/>
+}
           </View>
         <View style={styles.reviewContainer}>
           <Stars
@@ -92,6 +95,7 @@ const styles = StyleSheet.create({
   name: {
     color: Colors.primaryColor,
     fontSize: RFPercentage(1.5),
+ 
   },
   review: {
     color: Colors.blackColor,

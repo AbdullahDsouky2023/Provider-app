@@ -19,7 +19,7 @@ import LoadingScreen from "../loading/LoadingScreen";
 import { ErrorScreen } from "../Error/ErrorScreen";
 import useOrders from "../../../utils/orders";
 import ProviderSectionCard from "../../component/ProviderHome/ProviderSectionCard";
-import { CURRENCY, MY_ORDERS } from "../../navigation/routes";
+import { CURRENCY, MY_ORDERS, PROVIDER_LOCATION } from "../../navigation/routes";
 import { setRegions } from "../../store/features/regionSlice";
 import useRegions from "../../../utils/useRegions";
 import OverviewComponent from "../../component/ProviderHome/OverviewComponent";
@@ -42,6 +42,7 @@ import { t } from "i18next";
 import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 import OrdersListner from "../../component/OrdersListner";
 import { useMemo } from "react";
+import AppButton from "../../component/AppButton";
 
 const { width, height } = Dimensions.get("screen");
 const HomeScreen = ({ navigation }) => {

@@ -26,7 +26,7 @@ const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-  const currentOrders = orders?.filter((item)=> item?.attributes?.provider_payment_status === "payed" && item?.attributes?.providerOrderRating !== null)
+  const currentOrders = orders?.filter((item)=>  item?.attributes?.userOrderRating !== null)
   setCurrentData(currentOrders)
   refetch()
   dispatch(setCompleteOrders(currentOrders?.length))

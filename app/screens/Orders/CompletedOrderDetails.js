@@ -18,7 +18,7 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { setOrders } from "../../store/features/ordersSlice";
   import LoadingModal from "../../component/Loading";
-  import { CURRENCY, HOME, OFFERS, ORDERS } from "../../navigation/routes";
+  import { CURRENCY, HOME, OFFERS, ORDERS, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
   import PriceTextComponent from "../../component/PriceTextComponent";
   import { Image } from "react-native";
   import { ScrollView } from "react-native-virtualized-view";
@@ -281,7 +281,13 @@ import ArrowBack from "../../component/ArrowBack";
             </>
           </View>
         ) : null}
-   
+    {(item?.attributes?.provider_payment_status === "payed" && item?.attributes?.providerOrderRating === null ) && (
+          <AppButton
+            title={"Rate"}
+            style={{ backgroundColor: Colors.success }}
+            onPress={() =>navigation.navigate(RATE_CLIENT_sSCREEN,{orderID:item?.id})}
+          />
+        )}
         </ScrollView>
         <LoadingModal visible={isLoading} />
         <AppModal isModalVisible={isModalVisible} 

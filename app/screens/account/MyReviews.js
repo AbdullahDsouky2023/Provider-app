@@ -26,7 +26,7 @@ const { height , width } = Dimensions.get('screen')
   };
 const fetchData=()=>{
     const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === user?.id)
-    const currentOrders = orders?.filter((item)=> item?.attributes?.provider_payment_status === "payed")
+    const currentOrders = orders?.filter((item)=> item?.attributes?.userOrderRating !== null)
     setCurrentData(currentOrders)
   setRefreshing(false)
   refetch()
