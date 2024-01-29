@@ -47,7 +47,7 @@ function FormDatePicker({ name, width, style,value,disabled=false,...otherProps 
           <TextInput
           editable={false}
             onChangeText={(text) => setFieldValue(name, text)}
-            value={ formattedDate}
+            value={ value?value :formattedDate}
             onBlur={() => setFieldTouched(name)}
           />
           <Ionicons name="calendar" size={24} color="black" />
