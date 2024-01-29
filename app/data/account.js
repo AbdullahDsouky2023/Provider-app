@@ -27,6 +27,10 @@ export const settingsItemArray = [
     icon: "question",
   },
   {
+    name: "Terms and Conditions",
+    icon: "doc",
+  },
+  {
     name: "Sign Out",
     icon: "logout",
   },

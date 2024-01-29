@@ -115,7 +115,7 @@ const RegisterScreen = ({ navigation,route}) => {
             validationSchema={validationSchema}
           >
             <ErrorMessage error={error} visible={error} />
-            <HeaderComponent header={"fullName"} />
+            <HeaderComponent header={"First Name"} />
             <FormField
               autoCorrect={false}
               icon="account"
@@ -123,7 +123,7 @@ const RegisterScreen = ({ navigation,route}) => {
               // placeholdesr="fullName"
             />
             
-            <HeaderComponent header={"Family Name"} />
+            <HeaderComponent header={"Last Name"} />
             <FormField
               autoCorrect={false}
               icon="account"

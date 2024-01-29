@@ -69,12 +69,12 @@ const FormImagePicker = ({ name, width, ...otherProps }) => {
       base64: true,
     });
 
+   
     if (!result.canceled) {
       if (image && Array.isArray(image)) {
         if (result?.assets[0]?.uri) {
           setImage([...image, result?.assets[0]?.uri]);
-
-          setFieldValue(name, [...values?.images, result?.assets[0]?.uri]);
+          setFieldValue(name, [...values[name], result?.assets[0]?.uri]);
         }
       } else {
         // console.log(image && Array.isArray(image));

@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("screen");
 
-function FormDatePicker({ name, width, style,disabled=false,...otherProps }) {
+function FormDatePicker({ name, width, style,value,disabled=false,...otherProps }) {
   const { setFieldTouched, setFieldValue, errors, touched, values } =
     useFormikContext();
   const [date, setDate] = useState(new Date());
@@ -47,7 +47,7 @@ function FormDatePicker({ name, width, style,disabled=false,...otherProps }) {
           <TextInput
           editable={false}
             onChangeText={(text) => setFieldValue(name, text)}
-            value={formattedDate}
+            value={ formattedDate}
             onBlur={() => setFieldTouched(name)}
           />
           <Ionicons name="calendar" size={24} color="black" />

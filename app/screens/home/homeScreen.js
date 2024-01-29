@@ -134,7 +134,7 @@ const HomeScreen = ({ navigation }) => {
         <TouchableWithoutFeedback>
           <View style={styles.WalletContainer}>
             <AppText
-              style={{ fontSize: 15, color: "white", paddingVertical: 5 }}
+              style={{ fontSize: 15, color: "white", paddingVertical: 1 }}
               text={`${userData?.attributes?.wallet_amount} ${CURRENCY}`}
             />
           </View>

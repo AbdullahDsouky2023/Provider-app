@@ -89,6 +89,8 @@ const UserInfo = ({ navigation }) => {
       console.log("error getting the user fo rthe fir", error);
     }
   };
+  console.log("user data bir",userData?.attributes?.Personal_image?.data[0]
+  ?.attributes?.url)
   const convertPhoneTovalid = (phone) => {
     const phoneNumberWithoutPlus = phone?.replace("+", "");
 
@@ -118,15 +120,20 @@ const UserInfo = ({ navigation }) => {
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
+              {
+                userData?.attributes?.Personal_image?.data[0]
+                ?.attributes?.url &&
               <View style={styles.ImageContainer}>
                 <Image
                   source={{
                     uri: userData?.attributes?.Personal_image?.data[0]
-                      ?.attributes?.url,
+                    ?.attributes?.url
                   }}
+                  
                   style={styles.image}
-                />
+                  />
               </View>
+                }
               <HeaderComponent header={"fullName"} />
               <FormField
                 autoCorrect={false}
@@ -171,7 +178,7 @@ const UserInfo = ({ navigation }) => {
 
                 placeholderTextColor={Colors.blackColor}
                 style={[styles.dateStyle]}
-                placeholder={userData?.attributes?.birth_date}
+                value={userData?.attributes?.birth_date}
               />
               <HeaderComponent header={"Documents"} />
 

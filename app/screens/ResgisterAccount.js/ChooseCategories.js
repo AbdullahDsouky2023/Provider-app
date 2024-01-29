@@ -83,14 +83,6 @@ return (
             centered={false}
             style={styles.text1}
           />
-          <AppText
-            //   centered={false}
-
-            text={
-              "To receieve customer orders,please write you speciality in the box below"
-            }
-            style={styles.text2}
-          />
           {
             getSelectedIds()?.length > 0 &&
           <View style={styles.numberContainer}>
@@ -104,7 +96,7 @@ return (
               />
           </View>
             }
-          <View style={styles.searchContainer}>
+          {/* <View style={styles.searchContainer}>
             <Searchbar
               style={styles.searchinput}
               // placeholder="Search"
@@ -112,7 +104,7 @@ return (
               onChangeText={onChangeSearch}
               value={query}
             />
-          </View>
+          </View> */}
           <AppText
             text={"Choose the most relevant specialties from the list "}
             style={styles.text3}
