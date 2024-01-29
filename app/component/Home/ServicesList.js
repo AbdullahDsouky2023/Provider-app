@@ -8,7 +8,7 @@ import LoadingScreen from "../../screens/loading/LoadingScreen";
 import HeaderTextComponent from "./HeaderTextComponent";
 import { BROWSE_ORDERS, OFFERS } from "../../navigation/routes";
 import ServiceCard from "./ServiceCard";
-const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
 export default function ServicesList() {
   const navigation = useNavigation();
@@ -49,7 +49,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
-    padding: 16,
+    display:'flex',
+    paddingHorizontal: height*0.0079,
+    paddingVertical: height*0.01,
     width: width,
   },
 });

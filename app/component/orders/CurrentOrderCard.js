@@ -174,6 +174,8 @@ const styles = StyleSheet.create({
     width: width * 0.88,
     paddingHorizontal: 20,
     maxHeight: height*0.23,
+    // height: 200,
+    minHeight: height*0.2,
     marginTop: 12,
     marginBottom:10,
     flex: 1,

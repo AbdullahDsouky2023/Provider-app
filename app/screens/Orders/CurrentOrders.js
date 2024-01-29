@@ -26,7 +26,7 @@ const fetchData = ()=>{
   const userId = user?.id;
   const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
-  const currentOrders = orders?.filter((item)=>item?.attributes?.userOrderRating === null )
+  const currentOrders = orders?.filter((item)=>item?.attributes?.providerOrderRating === null )
   // console.log("the all curennt ",currentOrders)
   setCurrentData(currentOrders)
   setRefreshing(false);
@@ -95,11 +95,12 @@ const styles = StyleSheet.create({
  listContainer:{
   
     display:'flex',
-    // alignItems:'center',
-    // justifyContent:'center',
+    alignItems:'center',
+    justifyContent:'center',
     flexDirection:'column',
-    // width:width*0.9,
-    // paddingHorizontal:10,
+    width:width*0.90,
+    paddingHorizontal:10,
+    // backgroundColor:'red',
   gap:10,
   height:"100%",
  },

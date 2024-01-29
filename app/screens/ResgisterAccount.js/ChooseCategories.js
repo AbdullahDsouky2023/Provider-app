@@ -121,6 +121,9 @@ return (
             <FlatList
               data={filterCategories()}
               scrollEnabled={false}
+              style={{
+                paddingHorizontal:width*0.015
+              }}
               renderItem={({ item }) => {
                 return (
                   <ItemSelected
@@ -161,19 +164,21 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: RFPercentage(2),
     color: Colors.primaryColor,
+    paddingHorizontal:width*0.015
+
   },
   text2: {
     fontSize: RFPercentage(1.5),
     width: width * 1,
     maxWidth: width * 1,
     color:Colors.blackColor,
-    paddingHorizontal: 50,
+    paddingHorizontal:width*0.065
   },
   searchContainer: {
     display: "flex",
     alignItems: "center",
-    width: width * 1.5,
-    // justifyContent:'center',
+    width: width * 0.9,
+    justifyContent:'center',
     flexDirection: "row",
   },
   text3:{
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     width: width * 1,
     maxWidth: width * 1,
     color:Colors.blackColor,
-    paddingHorizontal: 30,
+    paddingHorizontal: 25,
     paddingVertical:10
   },
   searchinput: {
