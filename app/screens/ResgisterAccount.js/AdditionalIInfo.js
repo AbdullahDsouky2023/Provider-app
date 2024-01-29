@@ -67,6 +67,7 @@ console.log("the notification token is isi for addion",token)
     .required(t("Email is required")),
   });
 
+  // console.log("submiting", route?.params?.status, user?.id);
   const handleFormSubmit = async (values) => {
     try {
       console.log("submiting", route?.params?.status, user?.id);
