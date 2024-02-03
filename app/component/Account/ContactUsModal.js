@@ -10,8 +10,8 @@ const { width } = Dimensions.get("screen");
 
 export default function ContactUsModal({visible,hideModal}) {
     const handleWhatsAppPress = () => {
-        let phoneNumber = "+201164258122"; // Replace with your phone number
-        let message = "Hello, World!"; // Replace with your message
+        let phoneNumber = "+966540860875"; // Replace with your phone number
+        let message = "السلام عليكم"; // Replace with your message
         let encodedMessage = encodeURIComponent(message);
         let url = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
         Linking.openURL(url);
@@ -24,9 +24,9 @@ export default function ContactUsModal({visible,hideModal}) {
        };
        
        const handleEmailPress = () => {
-        let emailAddress = "Njik_development@gmail.com"; // Replace with your email address
+        let emailAddress = "fs@njik.sa"; // Replace with your email address
         let subject = "Hello"; // Replace with your subject
-        let body = "Hello, World!"; // Replace with your body
+        let body = ""; // Replace with your body
         let encodedSubject = encodeURIComponent(subject);
         let encodedBody = encodeURIComponent(body);
         let url = `mailto:${emailAddress}?subject=${encodedSubject}&body=${encodedBody}`;

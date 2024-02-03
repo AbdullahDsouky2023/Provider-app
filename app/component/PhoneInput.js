@@ -13,8 +13,11 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         console.log(e);
         updateState({ phoneNumber: e.phoneNumber, countryCode, length }); // Pass the country code to the parent component
       }}
+      
       flagStyle={{ display: "none" }}
       defaultCountry="EG"
+      disableCountryChange={true}
+    
       containerStyle={styles.phoneNumberTextFieldStyle}
       dialCodeTextStyle={{
         ...Fonts.blackColor17Medium,
@@ -24,14 +27,16 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         textAlign: "left", // Set text alignment to left
         direction: "ltr", //
       }}
+      
       selectionColor={"red"}
-      placeholder={"1xxx xxx xxx"} // Add the placeholder here
+      placeholder={"5xx xxx xxx"} // Add the placeholder here
       phoneInputStyle={{
         flex: 1,
         paddingRight: Sizes.fixPadding,
         ...Fonts.blackColor17Medium,
         flexDirection: "column",
         fontSize: 17,
+        
         textAlign: "left", // Set text alignment to left
         direction: "ltr", // Set text direction to left-to-right (ltr)
       }}

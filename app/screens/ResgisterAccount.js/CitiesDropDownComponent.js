@@ -4,12 +4,13 @@ import { Dropdown } from "react-native-element-dropdown";
 import { Entypo } from "@expo/vector-icons";
 import AppText from "../../component/AppText";
 import { useTranslation } from "react-i18next";
-import { governoratesOfEgypt } from "../../data/governrates";
+import { governoratesOfSaudi } from "../../data/governrates";
 const { width, height } = Dimensions.get("screen");
 
  
 
-const CitiesDropDownComponent = ({value,setValue}) => {
+const 
+CitiesDropDownComponent = ({value,setValue}) => {
   const [isFocus, setIsFocus] = useState(false);
   const { t } = useTranslation();
   const renderLabel = () => {
@@ -33,7 +34,7 @@ const CitiesDropDownComponent = ({value,setValue}) => {
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
-        data={governoratesOfEgypt}
+        data={governoratesOfSaudi}
         maxHeight={300}
         labelField="label"
         valueField="value"

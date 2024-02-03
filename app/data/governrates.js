@@ -27,4 +27,26 @@ export const governoratesOfEgypt = [
     { label: "South Sinai", value: "South Sinai", arabicLabel: "جنوب سيناء" },
     { label: "Suez", value: "Suez", arabicLabel: "السويس" },
    ];
-   
+   export const governoratesOfSaudi = [
+    { "label": "جدة", "value": "جدة", "arabicLabel": "جدة" },
+    { "label": "مكة", "value": "مكة", "arabicLabel": "مكة" },
+    { "label": "الطائف", "value": "الطائف", "arabicLabel": "الطائف" },
+    { "label": "المدينة", "value": "المدينة", "arabicLabel": "المدينة" },
+    { "label": "الرياض", "value": "الرياض", "arabicLabel": "الرياض" },
+    { "label": "ينبع", "value": "ينبع", "arabicLabel": "ينبع" },
+    { "label": "الدمام", "value": "الدمام", "arabicLabel": "الدمام" },
+    { "label": "الخبر", "value": "الخبر", "arabicLabel": "الخبر" },
+    { "label": "ابها", "value": "ابها", "arabicLabel": "ابها" },
+    { "label": "خميس مشيط", "value": "خميس مشيط", "arabicLabel": "خميس مشيط" },
+    { "label": "جيزان", "value": "جيزان", "arabicLabel": "جيزان" },
+    { "label": "نجران", "value": "نجران", "arabicLabel": "نجران" },
+    { "label": "الباحة", "value": "الباحة", "arabicLabel": "الباحة" },
+    { "label": "بريدة", "value": "بريدة", "arabicLabel": "بريدة" },
+    { "label": "الاحساء", "value": "الاحساء", "arabicLabel": "الاحساء" },
+    { "label": "رابغ", "value": "رابغ", "arabicLabel": "رابغ" },
+    { "label": "تبوك", "value": "تبوك", "arabicLabel": "تبوك" },
+    { "label": "حائل", "value": "حائل", "arabicLabel": "حائل" },
+    { "label": "الجبيل", "value": "الجبيل", "arabicLabel": "الجبيل" },
+    { "label": "الخرج", "value": "الخرج", "arabicLabel": "الخرج" }
+  ]
+  

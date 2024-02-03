@@ -31,7 +31,6 @@ const SigninScreen = ({ navigation }) => {
   const recaptchaVerifier = useRef(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const { t } = useTranslation();
-  // Function to toggle agreement
 
   const updateState = (data) => {
     setState((state) => ({ ...state, ...data }));

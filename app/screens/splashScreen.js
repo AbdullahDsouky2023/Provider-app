@@ -76,6 +76,8 @@ const SplashScreen = ({ navigation }) => {
   };
   useEffect(() => {
     fetchData();
+    console.log("SplashScreen..........")
+
   }, []);
   useEffect(() => {
     async function checkUserAndNavigate() {

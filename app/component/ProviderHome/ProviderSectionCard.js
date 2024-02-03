@@ -104,7 +104,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
             <View style={styles.container2}>
               <AppText
                 text={" العروض الواردة "}
-                style={styles.text}
+                style={styles.text3}
                 centered={false}
               />
             </View>
@@ -151,6 +151,11 @@ const styles = StyleSheet.create({
   },
   text2: {
     color: Colors.primaryColor,
+    // ...Fonts.blackColor14Medium
+  },
+  text3: {
+    color: Colors.grayColor,
+    letterSpacing:7
     // ...Fonts.blackColor14Medium
   },
   show: {

@@ -1,6 +1,5 @@
 // categorySlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import serviceSlice from "./serviceSlice";
 
 const categorySlice = createSlice({
   name: "categories",
@@ -8,10 +7,9 @@ const categorySlice = createSlice({
   reducers: {
     setCategories: (state, action) => {
       state.categories = action.payload;
-    },
-    // Add other reducers as needed
+    }
   },
- 
+
 });
 
 export const { setCategories } = categorySlice.actions;

@@ -21,8 +21,8 @@ export default function OrderCreationSuccess({ navigation }) {
     navigation.navigate("App");
   };
   const handleWhatsAppPress = () => {
-    let phoneNumber = "+201164258122"; // Replace with your phone number
-    let message = "Hello, World!"; // Replace with your message
+    let phoneNumber = "+966540860875"; // Replace with your phone number
+    let message = "السلام عليكم"; // Replace with your message
     let encodedMessage = encodeURIComponent(message);
     let url = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
     Linking.openURL(url);
@@ -61,7 +61,7 @@ export default function OrderCreationSuccess({ navigation }) {
           onPress={() => handleWhatsAppPress()}
         >
           <AppText
-            text={"01144251236"}
+            text={"+966540860875"}
             style={{
               fontSize: 15,
               color: Colors.primaryColor,

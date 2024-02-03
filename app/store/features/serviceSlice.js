@@ -1,7 +1,6 @@
 // categorySlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import { setCategories } from "./categorySlice";
-import useServices from "../../../utils/services";
+
 
 const serviceSlice = createSlice({
   name: "services",

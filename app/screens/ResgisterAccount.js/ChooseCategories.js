@@ -114,7 +114,7 @@ return (
               data={filterCategories()}
               scrollEnabled={false}
               style={{
-                paddingHorizontal:width*0.015
+                paddingHorizontal:width*0.015,
               }}
               renderItem={({ item }) => {
                 return (

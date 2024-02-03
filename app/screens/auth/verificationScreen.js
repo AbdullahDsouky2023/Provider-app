@@ -112,7 +112,7 @@ const convertPhoneTovalid=(phone)=>{
             <AppText
               text={"verification"}
               style={{
-                fontSize: 28,
+                fontSize: RFPercentage(3.7),
                 color: Colors.primaryColor,
                 marginBottom: 10,
               }}

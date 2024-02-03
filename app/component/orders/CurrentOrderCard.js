@@ -14,24 +14,25 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import { useNavigation } from "@react-navigation/native";
-import { CHAT_ROOM, ORDERS_DETAILS } from "../../navigation/routes";
+import { CHAT_ROOM, ORDERS_DETAILS, PROVIDER_LOCATION } from "../../navigation/routes";
 import PriceTextComponent from "../PriceTextComponent";
 import AppButton from "../AppButton";
-import { Entypo } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons';
 
 import { setcurrentChatChannel } from "../../store/features/ordersSlice";
-const { width,height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
-import { useDispatch} from  'react-redux'
-export default function CurrentOrderCard({ item ,onPress}) {
+import { useDispatch } from 'react-redux'
+export default function CurrentOrderCard({ item, onPress }) {
   const navigation = useNavigation();
   const dispatch = useDispatch()
+  console.log("nann",item?.attributes?.user?.data?.attributes?.username)
   return (
     <TouchableWithoutFeedback
-    style={styles.scrollContainer}
+      style={styles.scrollContainer}
       onPress={onPress}
     >
-      <View style={[styles.orderCardContainer,{backgroundColor: item?.attributes?.packages?.data.length > 0 ? Colors.piege : Colors.whiteColor}]}>
+      <View style={[styles.orderCardContainer, { backgroundColor: item?.attributes?.packages?.data.length > 0 ? Colors.piege : Colors.whiteColor }]}>
         <View style={styles.headerContainer}>
           {item?.attributes?.services.data.length > 0 && (
             <>
@@ -70,21 +71,20 @@ export default function CurrentOrderCard({ item ,onPress}) {
         <View style={styles.date}>
           <AppText text={`Status`} centered={false} style={styles.status} />
           <AppText
-            text={`${
-              item?.attributes?.status === "assigned"
+            text={`${item?.attributes?.status === "assigned"
                 ? "New"
                 : item?.attributes?.status === "pending"
-                ? "New"
-                : item?.attributes?.status === "accepted"
-                ? "Accepted"
-                : item?.attributes?.status === "working"
-                ? "Working"
-                : item?.attributes?.status === "finish_work"
-                ? "Finished"
-                : item?.attributes?.status === "payed"
-                ? "Payed": item?.attributes?.provider_payment_status === "payment_required" ?"انتظار استلام الدفع"
-                : "Finished"
-            }`}
+                  ? "New"
+                  : item?.attributes?.status === "accepted"
+                    ? "Accepted"
+                    : item?.attributes?.status === "working"
+                      ? "Working"
+                      : item?.attributes?.status === "finish_work"
+                        ? "Finished"
+                        : item?.attributes?.status === "payed"
+                          ? "Payed" : item?.attributes?.provider_payment_status === "payment_required" ? "انتظار استلام الدفع"
+                            : "Finished"
+              }`}
             centered={false}
             style={styles.title}
           />
@@ -103,43 +103,52 @@ export default function CurrentOrderCard({ item ,onPress}) {
             style={styles.title}
           />
         </View>
-        
+
         {/*time */}
-        <View  style={{
-          display:'flex',
-          flexDirection:'row',
-          alignItems:'center',
-          justifyContent:'space-between'
+        <View style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between'
         }}>
           <View style={styles.date}>
 
-          <Ionicons name="person-outline" size={24} color="black" />
-          <AppText
-            text={
-              item?.attributes?.user?.data?.attributes?.username || "العميل"
-            }
-            centered={false}
-            style={styles.title}
+            <Ionicons name="person-outline" size={24} color="black" />
+            <AppText
+              text={
+                item?.attributes?.user?.data?.attributes?.username || "العميل"
+              }
+              centered={false}
+              style={styles.title}
             />
-            </View>
-          <View >
+          </View>
+            {(item?.attributes?.provider?.data?.attributes?.name && item?.attributes?.userOrderRating === null) &&
+          <View style={styles.IconContainer}>
 
-          {item?.attributes?.provider?.data?.attributes?.name &&
-         
-         <TouchableOpacity style={styles.chatContainer}
-         onPress={() => {
 
-           dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
-           
-           navigation.navigate("Chat")
-          }
-          }
-           >
-      <Entypo name="chat" size={24} color="white" />
-      </TouchableOpacity >
-          
-        }
-        </View>
+              <TouchableOpacity style={styles.chatContainer}
+                onPress={() => {
+
+                  dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
+
+                  navigation.navigate("Chat")
+                }
+                }
+              >
+                <Entypo name="chat" size={20} color="white" />
+              </TouchableOpacity >
+
+              <TouchableOpacity style={styles.chatContainer}
+                onPress={() => {
+                  
+                navigation.navigate( PROVIDER_LOCATION,{apiData:item?.attributes?.googleMapLocation})
+                }
+                }
+              >
+                <Entypo name="location-pin" size={20} color="white" />
+              </TouchableOpacity >
+          </View>
+                }
         </View>
         {/*time */}
       </View>
@@ -148,7 +157,7 @@ export default function CurrentOrderCard({ item ,onPress}) {
 }
 
 const styles = StyleSheet.create({
-  scrollContainer:{
+  scrollContainer: {
     height: "100%",
     backgroundColor: Colors.redColor,
 
@@ -173,11 +182,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     width: width * 0.88,
     paddingHorizontal: 20,
-    maxHeight: height*0.23,
-    // height: 200,
-    minHeight: height*0.2,
+    // maxHeight: height * 0.23,
+    height: "auto",
+    // minHeight: height * 0.2,
     marginTop: 12,
-    marginBottom:10,
+    marginBottom: 10,
     flex: 1,
     gap: 5,
     backgroundColor: Colors.whiteColor,
@@ -217,14 +226,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "row",
   },
-  chatContainer:{paddingHorizontal:19,
-    backgroundColor:Colors.primaryColor,
-    width:"auto",
-  height:40,
-  borderRadius:20,
-  // marginHorizontal:width*0.65,
-  left:0,
-  display:"flex",
-  alignItems:'center',
-  justifyContent:'center',}
+  chatContainer: {
+    paddingHorizontal: 15,
+    backgroundColor: Colors.primaryColor,
+    width: width*0.131,
+    height: height*0.04,
+    borderRadius: 20,
+    // marginHorizontal:width*0.65,
+    left: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  IconContainer:{
+    display:'flex',
+    flexDirection:'row',
+    gap:10
+  }
 });
