@@ -166,6 +166,10 @@
  "Family Name":"اسم العائلة",
  "Pricing":"أسعار الخدمات",
  "Rate":"تقييم",
- "Something Went Wrong, Please try again!":"حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى"
+ "Something Went Wrong, Please try again!":"حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى",
+ "Internet connection is available.":"تم استعادة الأتصال بالأنترنت",
+   "No internet connection.":"لا يوجد أتصال بالأنترنت",
+   "Retry":"إعادة المحاولة"
+   
 
 }

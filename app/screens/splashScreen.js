@@ -12,6 +12,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { CommonActions } from "@react-navigation/native";
+import NetInfo from '@react-native-community/netinfo';
 
 import Logo from "../component/Logo";
 import { setUserData, userRegisterSuccess } from "../store/features/userSlice";
@@ -24,7 +25,7 @@ import useOrders from "../../utils/orders";
 import { setOrders } from "../store/features/ordersSlice";
 import useRegions from "../../utils/useRegions";
 import { setRegions } from "../store/features/regionSlice";
-import { ORDER_SUCCESS_SCREEN, REGISTER_ERROR_DOCS } from "../navigation/routes";
+import { NO_CONNECTION_SCREEN, ORDER_SUCCESS_SCREEN, REGISTER_ERROR_DOCS } from "../navigation/routes";
 
 const SplashScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -109,14 +110,37 @@ const SplashScreen = ({ navigation }) => {
                 }))
             }else {
 
-              navigation.push("App");
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name:"App"}],
+                }))
             }
           } else {
-            navigation.push("Auth");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "Auth" }],
+              }))
           }
         } else {
           // navigation.push("App");
-          navigation.push("Auth");
+          NetInfo.fetch().then(state => {
+            if (!state.isConnected || !state.isInternetReachable) {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: NO_CONNECTION_SCREEN }],
+                }))
+            } else {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name:"Auth" ,
+               }],
+                }))
+            }
+          });
         }
       } catch (error) {
         console.log(error);
