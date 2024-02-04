@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     // maxHeight: height * 0.23,
     height: "auto",
     // minHeight: height * 0.2,
-    marginTop: 12,
+    // marginTop: 12,
     marginBottom: 10,
     flex: 1,
     gap: 5,

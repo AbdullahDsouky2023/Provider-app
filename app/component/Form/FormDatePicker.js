@@ -75,11 +75,13 @@ export default FormDatePicker;
 const styles = StyleSheet.create({
   date: {
     borderWidth: 1,
-    width: width * 0.93,
+    width: width * 0.919,
     padding: 10,
     borderRadius: 10,
     display: "flex",
     flexDirection: "row",
+    paddingVertical:11,
+    marginHorizontal: width * 0.004,
     justifyContent: "space-between",
   },
 });

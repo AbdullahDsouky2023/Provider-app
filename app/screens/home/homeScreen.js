@@ -184,12 +184,14 @@ const styles = StyleSheet.create({
   cardContainer: {
     height: 150,
     paddingHorizontal: 20,
-    marginVertical: 10,
+    // marginVertical: 10,
     gap: 30,
+    width:width*1,
+
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   FloatHeaderContainer: {},
   container: {

@@ -73,37 +73,34 @@ const fetchData = ()=>{
 }
 
 const styles = StyleSheet.create({
-  wrapper:{
-      height: "100%",
-      backgroundColor: Colors.whiteColor,
-      // paddingTop:10,
-      // paddingBottom:10,
-  },
   container: {
     height: "100%",
     backgroundColor: Colors.whiteColor,
-    width: width,
-    paddingHorizontal: 20,
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'center',
+    // width: width,
+    // paddingHorizontal: 20,
     // paddingTop:10,
     // paddingBottom:10,
-    paddingVertical: -10,
+    // paddingVertical: -10,
+    // justifyContent:'center',
   },
  listContainer:{
-  display:"flex",
-  flexDirection:'column',
+  // display:"flex",
   gap:1,
-  backgroundColor:Colors.whiteColor,
-
-  // height:height*1,
-  alignItems:'center',
-  justifyContent:'center'
+  marginVertical:10
  },
  noItemContainer:{
   display:'flex',
   alignItems:'center',
   justifyContent:'center',
-  height:400,
+  height:height*0.7,
+  // marginVertical:50,
   width:width,
+  backgroundColor:Colors.whiteColor
+ },
+ wrapper:{
   backgroundColor:Colors.whiteColor
  }
 

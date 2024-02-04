@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginBottom: 0,
-    backgroundColor: "red",
+    backgroundColor: "white",
     position:'relative'
   },
   map: {

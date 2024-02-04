@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native'
 import { Colors,Fonts } from '../../constant/styles'
 import { Image } from 'react-native'
 import AppText from '../AppText'
+import { RFPercentage } from 'react-native-responsive-fontsize'
 const  { width } = Dimensions.get('screen')
 export default function ServiceCard({image,name,onPress}) {
   return (
@@ -18,7 +19,7 @@ export default function ServiceCard({image,name,onPress}) {
 const styles = StyleSheet.create({
     card :{
         height:100,
-        width:width*0.27,
+        width:width*0.28,
         backgroundColor:'#FCF1EA',
         borderRadius:10,
         flex:1,
@@ -28,7 +29,8 @@ const styles = StyleSheet.create({
     },
     text:{
         color:Colors.blackColor,
-        ...Fonts.blackColor14Medium
+        ...Fonts.blackColor14Medium,
+        fontSize:RFPercentage(1.8)
     },
     imageCard :{
         height:40,
