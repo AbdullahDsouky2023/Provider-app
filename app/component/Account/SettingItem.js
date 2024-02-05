@@ -88,7 +88,7 @@ export default function SettingItem({ item }) {
   return (
     <TouchableWithoutFeedback onPress={() => handlePress()}>
       <View style={[styles.item]}>
-        <SimpleLineIcons name={icon} size={24} color={Colors.primaryColor} />
+        <SimpleLineIcons name={icon} size={RFPercentage(3)} color={Colors.primaryColor} />
 
         <View
           style={{

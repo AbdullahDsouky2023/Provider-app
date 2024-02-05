@@ -40,6 +40,7 @@ import FormImagePicker from "../../component/Form/FormImagePicker";
 import { min } from "date-fns";
 import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
 import { ADDITION_INFO, ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
+import { RFPercentage } from "react-native-responsive-fontsize";
 const { width, height } = Dimensions.get("screen");
 const ChooseDocumentScreen = ({ navigation, route }) => {
   const [error, setError] = useState();
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   header: {
-    fontSize: 14,
+    fontSize: RFPercentage(1.9),
     color: Colors.blackColor,
   },
   Star: {

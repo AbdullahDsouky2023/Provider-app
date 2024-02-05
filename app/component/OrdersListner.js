@@ -1,106 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import AppText from "../component/AppText";
-import { useNavigation } from "@react-navigation/native";
-import * as geolib from "geolib";
-import useOrders from "../../utils/orders";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Dimensions } from "react-native";
-import { isEqual } from 'lodash';
-import { Audio } from 'expo-av';
-import { setOrders } from "../store/features/ordersSlice";
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+import useNotifications from '../../utils/notifications'; // Adjust the path to your notifications utility file
+import api from '../../utils';
 
-const { width, height } = Dimensions.get("screen");
+const NEW_ORDER_NOTIFICATION_ID = 'NEW_ORDER_NOTIFICATION';
 
-export default OrdersListner = () => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const { data: orderRedux } = useOrders(); // Get new orders from useOrders
-  const userData = useSelector((state) => state?.user?.userData);
-  const prevOrderRedux = useSelector((state) => state?.orders?.orders);
-  const [selectedItemsData, setselectedItemsData] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
-  const [enableRefetch, setEnableRefetch] = useState(false);
-  const [locationCoordinate, setLocationCorrdinate] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const userCategories = useSelector(
-    (state) => state?.user?.userData.attributes?.categories
-  );
+export default function OrdersListner() {
+ // Get the current orders from the Redux store
+ const currentOrders = useSelector((state) => state?.orders?.orders);
 
-  // Move Sound management inside fetchData
-  async function playSound() {
-    console.log("Playing Sound due to new orders");
-    const { sound } = await Audio.Sound.createAsync(
-      require("../assets/Ring-tone-sound.mp3")
-    );
-    sound.playAsync();
-  }
+ // Fetch orders from the server
+ const { data: ordersData, refetch: refetchOrders } = useQuery({
+    queryKey: ['orders'],
+    queryFn: () => api.get('/api/orders?populate=deep'),
+    refetchIntervalInBackground: true,
+ });
 
-  const fetchData = async (coordinate) => {
+ // Notification hook
+ const { sendPushNotification, token } = useNotifications();
+
+ // Function to check for new orders
+ const checkForNewOrders = async () => {
     try {
-        
-    
-    if (orderRedux && coordinate) {
-      const orders = orderRedux?.data?.filter((item) => {
-        const orderCoordinate = {
-          latitude: item?.attributes?.googleMapLocation?.coordinate?.latitude,
-          longitude: item?.attributes?.googleMapLocation?.coordinate?.longitude,
-        };
-        const distance = geolib?.getDistance(coordinate, orderCoordinate);
-        return distance <= 10000; // 10 kilometers
-      });
+      // Fetch the latest orders from the server
+      const newOrders = await refetchOrders();
 
-      const pendingOrders = orders?.filter(
-        (item) =>
-          item?.attributes?.status === "pending" &&
-          item?.attributes?.services?.data?.length > 0
-      );
-      const filteredOrders = pendingOrders?.filter((order) =>
-        userCategories?.data?.filter((category) => {
-          return (
-            order?.attributes?.services?.data[0]?.attributes?.category?.data
-              ?.id === category?.id
-          );
-        })[0]
-        );
-        setselectedItemsData(filteredOrders);
-        dispatch(setOrders(orderRedux))
-        // Play sound only if orderRedux data has changed
-        console.log("first opening the app ",(prevOrderRedux?.data=== orderRedux?.data))
-       // Compare the length of the orders
-// if (prevOrderRedux?.data?.length !== orderRedux?.data?.length) {
-//   playSound();
-// }
-
-// Compare the IDs of the orders
-if (!orderRedux?.data?.every((order) => prevOrderRedux?.data?.find((prevOrder) => prevOrder.id === order.id))) {
-  playSound();
-}
-
-    //   setOdersorderRedux; // Update prevOrderRedux after playing sound
-    }
-    setRefreshing(false);
-    setEnableRefetch(false);
-    setLoading(false);
-} catch (error) {
-        console.log("error listnent to the orders",error)
-}
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const CurrentLocation = await AsyncStorage.getItem("userLocation");
-        if (CurrentLocation) {
-          setLocationCorrdinate(JSON.parse(CurrentLocation).coordinate);
-          fetchData(JSON.parse(CurrentLocation).coordinate);
-        }
-      } catch (error) {
-        console.log("erraf",error);
-      } finally {
-        setLoading(false);
+      // Compare the new orders with the current orders in the Redux store
+      if (newOrders && newOrders.length > currentOrders.length) {
+        // Send a notification to the user
+        sendPushNotification(token, 'New Order Added', 'A new order has been added.');
       }
-    })();
-  }, [fetchData]);
-    return <AppText text={"FF"} />;
-  };
+    } catch (error) {
+      console.error('Error checking for new orders:', error);
+    }
+ };
+
+ // Effect to run the checkForNewOrders function periodically
+ useEffect(() => {
+    const intervalId = setInterval(checkForNewOrders, 60000); // Check every minute
+
+    return () => {
+      clearInterval(intervalId);
+    };
+ }, [currentOrders, refetchOrders, sendPushNotification, token]);
+
+ // Render nothing, just perform the background task
+ return null;
+}

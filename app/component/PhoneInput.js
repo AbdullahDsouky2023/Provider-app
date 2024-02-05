@@ -1,9 +1,10 @@
 import React from "react";
 import IntlPhoneInput from "react-native-intl-phone-input";
-import { StyleSheet, I18nManager } from "react-native";
+import { StyleSheet, I18nManager, Dimensions } from "react-native";
 
 import { Sizes, Fonts, Colors } from "../constant/styles";
-
+import { RFPercentage } from "react-native-responsive-fontsize";
+const { width , height }=Dimensions.get('screen')
 export default function PhoneNumberTextField({ phoneNumber, updateState }) {
   return (
     <IntlPhoneInput
@@ -23,7 +24,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         ...Fonts.blackColor17Medium,
         paddingVertical: 5,
         paddingLeft: Sizes.fixPadding - 5.0,
-        fontSize: 17,
+        fontSize: RFPercentage(2),
         textAlign: "left", // Set text alignment to left
         direction: "ltr", //
       }}
@@ -32,10 +33,11 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
       placeholder={"5xx xxx xxx"} // Add the placeholder here
       phoneInputStyle={{
         flex: 1,
+        // padding:height*0.007,
         paddingRight: Sizes.fixPadding,
         ...Fonts.blackColor17Medium,
         flexDirection: "column",
-        fontSize: 17,
+        fontSize: RFPercentage(2.1),
         
         textAlign: "left", // Set text alignment to left
         direction: "ltr", // Set text direction to left-to-right (ltr)

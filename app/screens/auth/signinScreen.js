@@ -8,6 +8,7 @@ import {
   ScrollView,
   Alert,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import * as Linking from 'expo-linking'
 
@@ -24,7 +25,7 @@ import { errorMessages } from "../../data/signin";
 import { CheckBox } from "react-native-elements";
 import { useTranslation } from "react-i18next";
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
+const { width ,height } = Dimensions.get('screen')
 const SigninScreen = ({ navigation }) => {
   const [disabled, setDisabled] = useState(true);
   const [state, setState] = useState({ phoneNumber: null });
@@ -110,12 +111,14 @@ const SigninScreen = ({ navigation }) => {
             checked={agreedToTerms}
             style={{ backgroundColor: Colors.whiteColor }}
             checkedColor={Colors.primaryColor}
+            
             containerStyle={{
               backgroundColor: Colors.whiteColor,
               borderWidth: 0,
               marginTop: 10,
+              
             }}
-            textStyle={{color:Colors.blackColor}}
+            textStyle={{color:Colors.blackColor,fontSize:RFPercentage(1.7)}}
             onPress={toggleAgreement}
           />
           <View style={{ backgroundColor: "red" }}>
@@ -129,7 +132,11 @@ const SigninScreen = ({ navigation }) => {
             path={"Verification"}
             title={"Continue"}
             disabled={disabled}
-            style={{borderWidth:0,paddingHorizontal:10,backgroundColor:disabled ?Colors?.grayColor : Colors.primaryColor}}
+            style={{borderWidth:0,
+              paddingVertical:height*0.015,
+              width:width*0.45,
+              alignSelf:'center',
+              backgroundColor:disabled ?Colors?.grayColor : Colors.primaryColor}}
             textStyle={{borderWidth:0,paddingHorizontal:10}}
             onPress={() => handleSendVerificationCode()}
           />

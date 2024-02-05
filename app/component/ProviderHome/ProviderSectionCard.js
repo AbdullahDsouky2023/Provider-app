@@ -24,12 +24,16 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
   
   useEffect(() => {
     const userId = user?.id;
-    const orders = ordersRedux?.data?.filter(
-      (item) => item?.attributes?.provider?.data?.id === userId
-    );
-    setCurrentOrders(orders);
-    console.log("the user current items", orders?.length);
-  }, []);
+    if (Array.isArray(ordersRedux?.data)) {
+      const orders = ordersRedux.data.filter(
+        (item) => item?.attributes?.provider?.data?.id === userId
+      );
+      setCurrentOrders(orders);
+    } else {
+      console.warn('ordersRedux.data is not an array:', ordersRedux?.data);
+    }
+  }, [user, ordersRedux]);
+  
 
   useEffect(() => {
     (async () => {
@@ -134,29 +138,34 @@ const styles = StyleSheet.create({
   },
   ballContainer: {
     backgroundColor: Colors.whiteColor,
-    height: height * 0.067,
+    // Use a percentage or a relative unit instead of a fixed pixel value
+    height: height*0.075, // Example using percentage
+    width:  height*0.08, // Should match the height to maintain aspect ratio
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderColor: Colors.primaryColor,
     borderWidth: 2,
-    width: width * 0.16,
+    // Set the borderRadius to half of the width or height
+    borderRadius: height*0.075*0.5, 
     outline: "blue",
     paddingHorizontal: 5,
-    borderRadius: height * 0.067 * 0.5,
-  },
+   },
+   
   text: {
     color: Colors.grayColor,
-    // ...Fonts.blackColor14Medium
+    // ...Fonts.grayColor14Medium
   },
   text2: {
     color: Colors.primaryColor,
-    // ...Fonts.blackColor14Medium
+    fontSize:20
+    // ...Fonts.grayColor14Medium
   },
   text3: {
     color: Colors.grayColor,
-    letterSpacing:7
-    // ...Fonts.blackColor14Medium
+    // letterSpacing:10,
+    
+    // ...Fonts.grayColor14Medium
   },
   show: {
     fontSize: 17,
@@ -178,3 +187,4 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
 });
+

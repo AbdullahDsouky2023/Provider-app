@@ -27,7 +27,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import useRegions from "../../../utils/useRegions";
 import useOrders from "../../../utils/orders";
 
-const { width } = Dimensions.get("screen");
+const { width ,height} = Dimensions.get("screen");
 
 const VerificationScreen = ({ navigation, route }) => {
   const [isLoading, setisLoading] = useState(false);
@@ -142,7 +142,16 @@ const convertPhoneTovalid=(phone)=>{
            <AppButton
             title={"Continue"}
             path={"Register"}
-            style={{marginTop:otpInput.length !== 6?30:30,borderWidth:0,backgroundColor:otpInput.length === 6 ?Colors.primaryColor : Colors.grayColor}}
+            textStyle={{
+              fontSize:RFPercentage(2.2)
+            }}
+            style={{
+              marginTop:otpInput.length !== 6?30:30,
+              borderWidth:0,
+              paddingVertical:height*0.02,
+              width:width*0.85,
+              alignSelf:'center',
+              backgroundColor:otpInput.length === 6 ?Colors.primaryColor : Colors.grayColor}}
             disabled={otpInput.length !== 6 }
             onPress={confirmVerificationCode}
           />
@@ -150,7 +159,7 @@ const convertPhoneTovalid=(phone)=>{
             <AppText
               text={"didntReceiveOTP"}
               style={{
-                fontSize: 18,
+                fontSize: RFPercentage(2),
                 paddingTop: resendDisabled ? 44 : 11,
                 paddingRight: 20,
                 color:Colors.grayColor
@@ -161,8 +170,12 @@ const convertPhoneTovalid=(phone)=>{
               title={
                 resendDisabled ? ` 00 :${secondsRemaining} ` : "Resend"
               }
-              textStyle={{fontSize:14,color:Colors.whiteColor}}
-              style={{backgroundColor:Colors.primaryColor,borderWidth:0}}
+              textStyle={{fontSize:RFPercentage(1.8),
+                color:Colors.whiteColor}}
+              style={{backgroundColor:Colors.primaryColor,
+                borderWidth:0,
+                
+              }}
               disabled={resendDisabled}
               onPress={() => {
               setResendDisabled(true);
@@ -190,6 +203,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginTop: 40,
+    paddingHorizontal:width*0.04,
     // marginRight: 25,
     justifyContent: "space-between",
     flexDirection: "row",

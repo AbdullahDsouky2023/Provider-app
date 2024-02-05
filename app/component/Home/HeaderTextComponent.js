@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 import AppText from "../AppText";
 import { Colors, Sizes, Fonts } from "../../constant/styles";
@@ -7,12 +7,13 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { OFFERS } from "../../navigation/routes";
-
-export default function HeaderTextComponent({ name, showAll, children }) {
+import { RFPercentage } from "react-native-responsive-fontsize";
+const { width , height } = Dimensions.get('screen')
+export default function HeaderTextComponent({ name, showAll,style, children }) {
   const navigation = useNavigation()
   const { t } = useTranslation()
   return (
-    <View style={styles.Container}>
+    <View style={style}>
       <View style={styles.headerTextContainer}>
         <AppText text={name} style={styles.text} />
         {showAll && (
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 18,
+    paddingHorizontal:width*0.05
   },
   card: {
     height: 100,
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.blackColor,
     ...Fonts.blackColor14Medium,
-    fontSize:18
+    fontSize:RFPercentage(2.2)
   },
   imageCard: {
     height: 40,

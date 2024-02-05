@@ -5,6 +5,7 @@ import { Entypo } from "@expo/vector-icons";
 import AppText from "../../component/AppText";
 import { useTranslation } from "react-i18next";
 import { governoratesOfSaudi } from "../../data/governrates";
+import { RFPercentage } from "react-native-responsive-fontsize";
 const { width, height } = Dimensions.get("screen");
 
  
@@ -34,6 +35,7 @@ CitiesDropDownComponent = ({value,setValue}) => {
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
+        showsVerticalScrollIndicator={false}
         data={governoratesOfSaudi}
         maxHeight={300}
         labelField="label"
@@ -86,13 +88,13 @@ const styles = StyleSheet.create({
     top: 8,
     zIndex: 999,
     paddingHorizontal: 8,
-    fontSize: 14,
+    fontSize: RFPercentage(2),
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: RFPercentage(1.8),
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: RFPercentage(2),
   },
   iconStyle: {
     width: 20,
@@ -100,6 +102,6 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
+    fontSize: RFPercentage(2),
   },
 });

@@ -8,6 +8,7 @@ import LoadingScreen from "../../screens/loading/LoadingScreen";
 import HeaderTextComponent from "./HeaderTextComponent";
 import { BROWSE_ORDERS, OFFERS } from "../../navigation/routes";
 import ServiceCard from "./ServiceCard";
+import { Colors } from "../../constant/styles";
 const { width, height } = Dimensions.get("screen");
 
 export default function ServicesList() {
@@ -25,7 +26,7 @@ export default function ServicesList() {
 
   if (isLoading) return <LoadingScreen />;
   return (
-    <HeaderTextComponent name={"Services"} showAll={false}>
+    <HeaderTextComponent style={styles.container} name={"Services"} showAll={false}>
       <FlatList
         data={selectedCategries}
         style={styles.listContainer}
@@ -53,5 +54,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: height*0.0079,
     paddingVertical: height*0.01,
     width: width,
+    justifyContent:'center'
   },
+  container:{
+    backgroundColor:Colors.white,
+    display: 'flex',
+    marginTop:10,
+    //  alignItems:'center',
+    // justifyContent:'center',
+  }
 });

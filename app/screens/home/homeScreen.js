@@ -43,6 +43,7 @@ import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 import OrdersListner from "../../component/OrdersListner";
 import { useMemo } from "react";
 import AppButton from "../../component/AppButton";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const { width, height } = Dimensions.get("screen");
 const HomeScreen = ({ navigation }) => {
@@ -104,7 +105,7 @@ const HomeScreen = ({ navigation }) => {
           dispatch(userRegisterSuccess(userData));
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   useEffect(() => {
     fetchData();
@@ -114,7 +115,7 @@ const HomeScreen = ({ navigation }) => {
     fetchData();
   };
 
-  if (isLoading ) return <LoadingScreen />;
+  if (isLoading) return <LoadingScreen />;
   if (error) return <ErrorScreen hanleRetry={fetchData} />;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
@@ -134,14 +135,14 @@ const HomeScreen = ({ navigation }) => {
         <TouchableWithoutFeedback>
           <View style={styles.WalletContainer}>
             <AppText
-              style={{ fontSize: 15, color: "white", paddingVertical: 1 }}
+              style={{ fontSize: RFPercentage(1.9), color: "white", paddingVertical: 1 }}
               text={`${userData?.attributes?.wallet_amount} ${CURRENCY}`}
             />
           </View>
         </TouchableWithoutFeedback>
       </View>
       <ScrollView
-      showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -151,7 +152,7 @@ const HomeScreen = ({ navigation }) => {
           <View style={styles.swithContainer}>
             <AppText text={"Receive Orders"} style={styles.switchText} />
             <ToggleSwitch
-              isOn={switchValue }
+              isOn={switchValue}
               onColor={Colors.success}
               offColor={Colors.grayColor}
               label={t("Receive Orders")}
@@ -166,11 +167,14 @@ const HomeScreen = ({ navigation }) => {
               onToggle={handleChangeStatus}
             />
           </View>
+          <View style={styles.ImageContainer}>
+
           <Image
             source={require("../../assets/images/worker.png")}
             resizeMode="contain"
-            style={{ height: 130, width: 120, flex: 1.1 }}
-          />
+            style={{ height: 120, width: width*0.5, flex: 1.1 }}
+            />
+            </View>
         </View>
         {/* <Orders Listner/> */}
         <ProviderSectionCard onPress={() => navigation.navigate(MY_ORDERS)} />
@@ -186,8 +190,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     // marginVertical: 10,
     gap: 30,
-    width:width*1,
-
+    width: width * 1,
+    // backgroundColor: 'red',
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -216,10 +220,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryColor,
     padding: 15,
     borderRadius: 15,
+    width: width * 0.5
   },
   switchText: {
     color: Colors.whiteColor,
   },
+  ImageContainer:{
+    backgroundColor:Colors.whiteColor,
+
+  }
 });
 
 export default HomeScreen;

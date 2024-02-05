@@ -4,7 +4,7 @@ import * as Location from "expo-location";
 const reverseGeoCode = async (location) => {
   try {
     const parseLocation = JSON.parse(location);
-    if (parseLocation) {
+    if (parseLocation?.longitude) {
       const reverGeoCodeAdress = await Location.reverseGeocodeAsync({
         longitude: parseLocation.longitude,
         latitude: parseLocation.latitude,

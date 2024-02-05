@@ -23,6 +23,7 @@ import useCategories from "../../../utils/categories";
 import AppButton from "../../component/AppButton";
 import { setCurrentRegisterProperties } from "../../store/features/registerSlice";
 import { CHOOSE_DCOUMENT } from "../../navigation/routes";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 const { height, width } = Dimensions.get("screen");
 export default function ChooseCategories({navigation,}) {
   const [gender, setGender] = useState("");
@@ -135,7 +136,7 @@ return (
           </ScrollView>
           {
             getSelectedIds()?.length > 0 &&
-          <AppButton title={"Confirm"} onPress={()=>handlePressConfirm()} />
+          <AppButton title={"Confirm"} style={{marginBottom:10,paddingVertical:15}} onPress={()=>handlePressConfirm()} />
         }
         </View>
       </View>
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
 });
 const ItemSelected = ({ setGender, text, onPress, checked }) => {
   return (
-    <TouchableOpacity         onPress={onPress}
+    <TouchableWithoutFeedback         onPress={onPress}
     style={Genderstyles.container}>
         <AppText text={text} style={{color:Colors.blackColor,fontSize:RFPercentage(2)}}/>
       <Checkbox
@@ -223,7 +224,7 @@ const ItemSelected = ({ setGender, text, onPress, checked }) => {
         color={Colors.primaryColor}
         status={checked}
       />
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 const Genderstyles = StyleSheet.create({

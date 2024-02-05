@@ -16,7 +16,6 @@ const LoadingScreen = ({ navigation }) => {
         "Janna-Lt": require("../assets/fonts/Janna-LT-Bold.ttf"),
 
       });
-      console.log("LoadingScreen..........")
       navigation.navigate('Splash');
     }
     loadFont();

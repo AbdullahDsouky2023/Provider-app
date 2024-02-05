@@ -126,7 +126,7 @@ const FormImagePicker = ({ name, width, ...otherProps }) => {
             
 
             <View>
-              <AppText text={"Choose Image"} />
+              <AppText text={"Choose Image"}  style={{color:Colors.blackColor}}/>
             </View>
           </View>
         </TouchableOpacity>
@@ -137,7 +137,7 @@ const FormImagePicker = ({ name, width, ...otherProps }) => {
             </View>
 
             <View>
-              <AppText text={"Take a photo"} />
+              <AppText text={"Take a photo"} style={{color:Colors.blackColor}} />
             </View>
           </View>
         </TouchableOpacity>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   imagePicker: {
     // borderWidth: 1,
     width: width * 0.17,
-    borderRadius: width * 0.1 * 0.5,
+    borderRadius: width * 0.17 * 0.5,
     height: width * 0.17,
     backgroundColor: Colors.primaryColor,
     justifyContent: "center",

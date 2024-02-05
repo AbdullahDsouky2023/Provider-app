@@ -55,6 +55,7 @@ const App = () => {
             logoHeight={height*1.2}
             logoWidth={width*1.2}
           >
+            
             <RootNavigator />
           </AnimatedSplash>
         </QueryClientProvider>
