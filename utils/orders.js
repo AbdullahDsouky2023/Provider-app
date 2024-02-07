@@ -22,6 +22,19 @@ export const postOrder = async (values) => {
     console.error("Error:", error.message); // Log the error response
   }
 };
+export const delay_order_request = async (values) => {
+  try {
+    const data = await api.post(`/api/delay-requests`, {
+      data: {
+        ...values,
+      },
+    });
+    console.log("res delay data",data?.data?.data?.id)
+    return data?.data?.data || null
+  } catch (error) {
+    console.error("Error 22:", error.message); // Log the error response
+  }
+};
 
 export const cancleOrder = async (id) => {
   try {
@@ -111,13 +124,7 @@ export default function useOrders() {
     queryKey: ["orders"],
     queryFn: fetchOrders,
     refetchIntervalInBackground:true,
-    // refetchInterval:1000,
-    onDataChange: (newData) => {
-      // Play sound when new data arrives
-      console.log("the data has been changed abdullah notify the user",newData)
-      // soundObject.playAsync();
-    },  }); // Changed the query key to 'superheroes'
-
+  })
 
   return {
     refetch,

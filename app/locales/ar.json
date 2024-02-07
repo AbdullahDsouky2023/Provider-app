@@ -169,7 +169,9 @@
  "Something Went Wrong, Please try again!":"حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى",
  "Internet connection is available.":"تم استعادة الأتصال بالأنترنت",
    "No internet connection.":"لا يوجد أتصال بالأنترنت",
-   "Retry":"إعادة المحاولة"
+   "Retry":"إعادة المحاولة",
+   "Request Date Change":"طلب تغيير الموعد",
+   "Please enter delay reason":"سبب التأجيل"
    
 
 }

@@ -33,6 +33,7 @@ import LoadingScreen from "../loading/LoadingScreen";
 import ChargeWalletScreen from "../wallet/ChargeWalletScreen";
 import ActiveScreenAlert from "../ActiveScreenAlert";
 import { Audio } from 'expo-av';
+import { setProviderCurrentOffers } from "../../store/features/ordersSlice";
 
 const CurrentOffersScreen = ({ route, subPage }) => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
 
   const fetchData = (coordinate) => {
     if (orderRedux && coordinate) {
+      if (Array.isArray(orderRedux?.data)) {
 
       const orders = orderRedux?.data?.filter((item) => {
         const orderCoordinate = {
@@ -72,10 +74,12 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
       const filteredOrders = pendingOrders?.filter((order)=>  userCategories?.data?.filter((category)=>{
         return  (order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id)})[0])
       setselectedItemsData(filteredOrders);
+     dispatch( setProviderCurrentOffers(filteredOrders?.length))
     }
     setRefreshing(false);
     setEnableRefetch(false);
     setLoading(false)
+  }
   };
 // Pass the orderRedux state as a dependency
   
@@ -97,6 +101,7 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
       }
     })();
   }, []);
+
   const getServices = async () => {
     if (data) {
       dispatch(setServices(data));

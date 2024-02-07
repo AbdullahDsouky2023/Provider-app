@@ -29,8 +29,6 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
         (item) => item?.attributes?.provider?.data?.id === userId
       );
       setCurrentOrders(orders);
-    } else {
-      console.warn('ordersRedux.data is not an array:', ordersRedux?.data);
     }
   }, [user, ordersRedux]);
   
@@ -48,6 +46,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
     })();
   }, []);
   const fetchData = (coordinate) => {
+    if (Array.isArray(ordersRedux?.data)) {
     if (ordersRedux && coordinate) {
       const orders = ordersRedux?.data?.filter((item) => {
         const orderCoordinate = {
@@ -73,7 +72,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
       );
       //  setselectedItemsData(filteredOrders);
       setCurrentOffers(filteredOrders);
-    }
+    }}
   };
   useEffect(() => {
     fetchData(locationCoordinate);

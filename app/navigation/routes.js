@@ -30,3 +30,4 @@ export const PAY_AFTER_SERVICES_SCREEN ="Pay-after-services"
 export const CURRENCY = " ر.س"
 export const PROVIDER_LOCATION = "ProviderLocationScreen"
 export const NO_CONNECTION_SCREEN="noconnection"
+export const CHANGE_ORDER_DATE = 'ChangeDateOrderScreen'

@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { TextInput} from 'react-native-paper'
 I18nManager.allowRTL(true);
 
-function FormTextInput({ icon, width = "100%", ...otherProps }) {
+function FormTextInput({ icon, width = "100%",height, ...otherProps }) {
   const { t } = useTranslation();
   return (
     <View style={[styles.container, { width }]}>
@@ -19,6 +19,9 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
         underlineColor={Colors.grayColor}
         activeUnderlineColor={Colors.primaryColor}
         placeholderTextColor={Colors.grayColor}
+        multiline
+        textAlignVertical="bottom"
+        numberOfLines={10}
         style={{
           
           width: "100%",
@@ -26,8 +29,10 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
           paddingBottom:25,
           fontFamily:mainFont.bold,
           backgroundColor:Colors.grayColor,
-          maxHeight:45,
+          maxHeight:height || 45 ,
+          textAlign:'auto',
           borderBottomWidth:0,
+          // height:400,
           borderRadius: 10,
           fontFamily: mainFont.light,
           writingDirection: "rtl",

@@ -34,6 +34,7 @@ export default function useNotifications() {
     }
     useEffect(() => {
       registerForPushNotificationsAsync().then(token => {
+       
         setExpoPushToken(token)
         if(!userData?.expoPushNotificationToken){
           updateUserData(userData?.id,{"expoPushNotificationToken":token})

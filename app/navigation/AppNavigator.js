@@ -9,7 +9,7 @@ export default function AppNavigator() {
   const Stack = createStackNavigator();
   return (
     <>
-    {/* <OrdersListner/> */}
+    <OrdersListner/>
     <Stack.Navigator
       screenOptions={{
         headerShown: false,

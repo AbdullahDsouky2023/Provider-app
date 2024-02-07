@@ -25,7 +25,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { CHAT_ROOM, CURRENCY, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
+import { CHANGE_ORDER_DATE, CHAT_ROOM, CURRENCY, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native-virtualized-view";
@@ -198,7 +198,7 @@ export default function OrderDetails({ navigation, route }) {
       setIsLoading(false);
     }
   };
-
+  console.log("resulting new order ",item?.attributes?.delay_request?.data)
   if (isLoading) return <LoadingScreen />;
   return (
     <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
@@ -436,7 +436,14 @@ export default function OrderDetails({ navigation, route }) {
               style={{ backgroundColor: Colors.redColor }}
               onPress={() => handleOrderCancle(item.id)}
             />
-
+            {
+              (item?.attributes?.delay_request?.data ===null && item?.attributes?.status === 'assigned') &&
+<AppButton
+            title={"Request Date Change"}
+            style={{ backgroundColor: Colors.success }}
+            onPress={() =>navigation.navigate(CHANGE_ORDER_DATE,{item:item,orderId:item?.id})}
+            />
+          }
            
           </View>)
           :null
@@ -449,7 +456,7 @@ export default function OrderDetails({ navigation, route }) {
         isModalVisible={isModalVisible}
         message={<AppText text={"تأكيد رفض الطلب"}/>}
         setModalVisible={setModalVisible}
-        onPress={() => handleOrderCancle(item.id)}
+        onPress={() => handleOrderCancle(item?.id)}
       />
     </ScrollView>
   );

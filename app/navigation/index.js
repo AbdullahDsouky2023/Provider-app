@@ -8,7 +8,7 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { ADDITION_INFO, BROWSE_ORDERS, CHARGE_WALLET_SCREEN, CHAT_ROOM, CHOOSE_CATEGORIES,PROVIDER_LOCATION, CHOOSE_DCOUMENT, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN, REGISTER_ERROR_DOCS, NO_CONNECTION_SCREEN } from "./routes";
+import { ADDITION_INFO, BROWSE_ORDERS, CHARGE_WALLET_SCREEN, CHAT_ROOM, CHOOSE_CATEGORIES,PROVIDER_LOCATION, CHOOSE_DCOUMENT, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN, REGISTER_ERROR_DOCS, NO_CONNECTION_SCREEN, CHANGE_ORDER_DATE } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
 import OrderCreationSuccess from "../screens/OrderCreationSuccess";
@@ -27,6 +27,7 @@ import PaymentAfterServiceDetails from "../screens/PaymentAfterServiceDetails";
 import StarsComponent from "../component/StarsComponent";
 import ProviderLocationScreen from "../screens/location/ProviderLocationScreen";
 import NoConnectionScreen from "../screens/NoConnectionScreen";
+import ChangeDateOrderScreen from "../screens/Orders/ChangeOrderDate";
 LogBox.ignoreAllLogs();
 
 const Stack = createSharedElementStackNavigator();
@@ -87,6 +88,11 @@ const RootNavigator = () => {
         <Stack.Screen
           name={CHARGE_WALLET_SCREEN}
           component={ChargeWalletScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={CHANGE_ORDER_DATE}
+          component={ChangeDateOrderScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
