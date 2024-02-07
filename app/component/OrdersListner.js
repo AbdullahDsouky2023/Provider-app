@@ -11,7 +11,8 @@ import { setOrders, setProviderCurrentOffers } from '../store/features/ordersSli
 import io from 'socket.io-client';
 import useOrders from '../../utils/orders';
 
-
+import { Audio } from 'expo-av';
+import { EXPO_PUBLIC_BASE_URL} from '@env'
 const NEW_ORDER_NOTIFICATION_ID = 'NEW_ORDER_NOTIFICATION';
 const BACKGROUND_FETCH_TASK = 'background-fetch'; // Task name
 
@@ -44,19 +45,38 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
         const newOrderFetched2 = orderRedux?.data?.filter((item)=>item?.id === newOrderId)
         // console.log("fiiiiiiiiiiiiiiii",newOrderFetched,newOrderFetched2?.length,newOrderId)
         if ( newOrderFetched?.length === 1  ) {
-        sendPushNotification(token, 'New Order Added', 'A new order has been added.');
+          play()
+        // sendPushNotification(token, 'New Order Added', 'A new order has been added.');
       console.log("the current selected prders ",selectedItemsData?.length)
       // console.log("seeing order b use are ",ProviderCurrentOffers)
       dispatch( setProviderCurrentOffers(selectedItemsData?.length))
-      
-      
     }
   }
     } catch (error) {
       console.error('Error checking for new orders:', error);
     }
   };
+  let soundObject;
 
+  const playSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(
+      require('../assets/notification-sound.mp3')
+    );
+    soundObject = sound;
+  };
+  const play = async () => {
+    await playSound();
+    await soundObject.playAsync();
+  };
+  useEffect(() => {
+    return soundObject
+      ? () => {
+          soundObject.unloadAsync(); // Make sure to unload the sound
+        }
+      : undefined;
+  }, [soundObject]);
+    
+  
   const fetchData = async(coordinate) => {
     const newOrdersData = await refetchOrders();
     if (newOrdersData && coordinate) {
@@ -88,6 +108,7 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
     setLoading(false)
   }
   };
+
   useEffect(() => {
     (async () => {
       try {
@@ -108,7 +129,7 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
     
   useEffect(() => {
     // Initialize the socket connection when the component mounts
-    const newSocket = io(SERVER_URL);
+    const newSocket = io(EXPO_PUBLIC_BASE_URL);
 
     // Attach event listeners to the socket
     newSocket.on('order:create', async (data) => {
