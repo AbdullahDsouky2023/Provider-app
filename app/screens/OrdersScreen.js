@@ -66,7 +66,12 @@ import ActiveScreenAlert from "./ActiveScreenAlert";
             (item) => item?.attributes?.status === "pending" 
             
             );
-            const categoryOrders = pendingOrders.filter((order)=>order?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name === category )
+            const categoryOrders = pendingOrders.filter((order)=>{
+              const CartServiceCategoryName = order?.attributes?.service_carts?.data[0]?.attributes?.service?.data?.attributes?.category?.data?.attributes?.name
+
+              console.log("pending order",CartServiceCategoryName)
+              return order?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name === category || CartServiceCategoryName === category
+            } )
             setCategoryOrders(categoryOrders)
           }
     }
