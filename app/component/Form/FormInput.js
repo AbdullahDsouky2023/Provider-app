@@ -19,9 +19,9 @@ function FormTextInput({ icon, width = "100%",height, ...otherProps }) {
         underlineColor={Colors.grayColor}
         activeUnderlineColor={Colors.primaryColor}
         placeholderTextColor={Colors.grayColor}
-        multiline
+     
         textAlignVertical="bottom"
-        numberOfLines={10}
+        // numberOfLines={10}
         style={{
           
           width: "100%",
