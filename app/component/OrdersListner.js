@@ -98,8 +98,8 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
       );
       const filteredOrders = pendingOrders?.filter((order)=>  userCategories?.data?.filter((category)=>{
         const CartServiceCategoryId = order?.attributes?.service_carts?.data[0]?.attributes?.service?.data?.attributes?.category?.data?.id
-
-        return  (order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id || CartServiceCategoryId === category?.id)})[0])
+        console.log("auser ii",CartServiceCategoryId)
+        return  ((order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id )|| (CartServiceCategoryId === category?.id))})[0])
       setselectedItemsData(filteredOrders);
       setCurrentOffers(filteredOrders)
       // dispatch( setProviderCurrentOffers(filteredOrders?.length))
