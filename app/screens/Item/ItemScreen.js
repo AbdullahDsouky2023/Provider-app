@@ -110,10 +110,10 @@ export default function ItemScreen({ navigation, route }) {
             style={styles.container}
             showsVerticalScrollIndicator={false}
           >
-            {item?.attributes?.services.data.length > 0 ? (
+            {item?.attributes?.services?.data?.length > 0 ? (
           <View style={styles.itemContainer}>
             <FlatList
-              data={item?.attributes?.services.data}
+              data={item?.attributes?.services?.data}
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item, index) => item.id}
               style={{
@@ -157,7 +157,79 @@ export default function ItemScreen({ navigation, route }) {
               }}
             />
           </View>
-        ) : (
+        ) : (item?.attributes?.service_carts?.data?.length > 0) ? 
+        <View style={styles.itemContainer}>
+        <FlatList
+          data={ item?.attributes?.service_carts?.data}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+
+          keyExtractor={(item, index) => item.id}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            direction: "rtl",
+            flexWrap: "wrap",
+            marginTop: 15,
+            gap: 15,
+            width: width,
+          }}
+          renderItem={({ item }) => {
+            return (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  flexWrap:'wrap',
+                  maxWidth:width*0.90,
+                  gap: 15,
+                }}
+              >
+                <AppText
+                  centered={false}
+                  text={item?.attributes?.service?.data?.attributes?.name}
+                  style={[styles.name, { fontSize:RFPercentage(1.65), paddingRight: 10,paddingTop:10 }]}
+                />
+                 <View style={styles.CartServiceStylesContainer}>
+                 <PriceTextComponent
+            style={{
+              backgroundColor: Colors.primaryColor,
+              fontSize: RFPercentage(1.5),
+              padding: 6,
+              borderRadius: 40,
+              color: Colors.whiteColor,
+            }}
+            price={item?.attributes?.service?.data?.attributes?.Price}
+          />
+                 <AppText
+            style={{
+              backgroundColor: Colors.whiteColor,
+              fontSize: RFPercentage(1.8),
+              padding: 6,
+              borderRadius: 40,
+              paddingHorizontal:15,
+              color: Colors.primaryColor,
+            }}
+            text={"x"}
+          />
+                 <AppText
+            style={{
+              backgroundColor: Colors.primaryColor,
+              fontSize: RFPercentage(1.5),
+              padding: 6,
+              borderRadius: 40,
+              paddingHorizontal:15,
+              color: Colors.whiteColor,
+            }}
+            text={item?.attributes?.qty}
+          />
+                  </View>
+              </View>
+            );
+          }}
+        />
+      </View> :  (
           <View style={styles.itemContainer}>
             <FlatList
               data={item?.attributes?.packages.data}
@@ -401,5 +473,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     minWidth: width * 0.8,
     // backgroundColor:'red'
-  },
+  }
+  ,
+  CartServiceStylesContainer:{
+    display:'flex',
+  flexDirection:'row',
+  borderWidth:0.5,
+ 
+  padding:5,
+  borderRadius:10,
+  // height:100,
+  // width:100,
+  gap:4,
+  backgroundColor:Colors.piege,
+  borderColor:Colors.grayColor}
 });

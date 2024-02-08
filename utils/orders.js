@@ -111,7 +111,7 @@ export const acceptOrder = async (id, providerId, channel_id) => {
 export default function useOrders() {
   const fetchOrders = async () => {
     try {
-      const response = await api.get(`/api/orders?populate=deep`);
+      const response = await api.get(`/api/orders?populate=deep,4`);
 
       return response.data;
     } catch (error) {

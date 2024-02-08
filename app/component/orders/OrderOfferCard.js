@@ -7,6 +7,8 @@ const { width } = Dimensions.get("screen");
 export default function OrderOfferCard({ item, onPress }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.orderCard}>
+      {
+        item?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name &&
       <View style={styles.headerContainer}>
       <Image 
         height={35}
@@ -19,6 +21,19 @@ export default function OrderOfferCard({ item, onPress }) {
         />
        
       </View>
+      }
+      {item?.attributes?.service_carts?.data?.length >  0 && 
+  <>
+    <AppText
+      text={item?.attributes?.service_carts?.data[0]?.attributes?.service?.data?.attributes?.category?.data?.attributes?.name }
+      style={[
+        styles.header,
+        { color: Colors.primaryColor, fontSize:  17 },
+      ]}
+      centered={false}
+      />
+  </>
+    }
       <View style={styles.headerContainer}>
         <AppText text={":الموعد"} style={styles.header} centered={false} />
         <AppText

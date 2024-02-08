@@ -69,10 +69,12 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
       const pendingOrders = orders?.filter(
         (item) =>
           item?.attributes?.status === "pending" &&
-          item?.attributes?.services?.data?.length > 0
-      );
+          (item?.attributes?.services?.data?.length > 0 || item?.attributes?.service_carts?.data?.length)
+          );
       const filteredOrders = pendingOrders?.filter((order)=>  userCategories?.data?.filter((category)=>{
-        return  (order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id)})[0])
+        const CartServiceCategoryId = order?.attributes?.service_carts?.data[0]?.attributes?.service?.data?.attributes?.category?.data?.id
+
+        return  (order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id || CartServiceCategoryId === category?.id)})[0])
       setselectedItemsData(filteredOrders);
      dispatch( setProviderCurrentOffers(filteredOrders?.length))
     }

@@ -33,7 +33,7 @@ export default function CurrentOrderCard({ item, onPress }) {
     >
       <View style={[styles.orderCardContainer, { backgroundColor: item?.attributes?.packages?.data.length > 0 ? Colors.piege : Colors.whiteColor }]}>
         <View style={styles.headerContainer}>
-          {item?.attributes?.services.data.length > 0 && (
+          {item?.attributes?.services?.data?.length > 0 && (
             <>
               <Image
                 height={22}
@@ -56,7 +56,19 @@ export default function CurrentOrderCard({ item, onPress }) {
               />
             </>
           )}
-          {item?.attributes?.packages && (
+          {item?.attributes?.service_carts?.data?.length >  0 && 
+  <>
+    <AppText
+      text={item?.attributes?.service_carts?.data[0]?.attributes?.service?.data?.attributes?.category?.data?.attributes?.name }
+      style={[
+        styles.header,
+        { color: Colors.primaryColor, fontSize:  17 },
+      ]}
+      centered={false}
+      />
+  </>
+    }
+          {item?.attributes?.packages?.data?.length > 0  && (
             <AppText
               text={item?.attributes?.packages?.data[0]?.attributes?.name}
               style={[

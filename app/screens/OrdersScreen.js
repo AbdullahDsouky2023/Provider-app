@@ -63,7 +63,8 @@ import ActiveScreenAlert from "./ActiveScreenAlert";
          
           
           const pendingOrders = orders?.filter(
-            (item) => item?.attributes?.status === "pending"
+            (item) => item?.attributes?.status === "pending" 
+            
             );
             const categoryOrders = pendingOrders.filter((order)=>order?.attributes?.services?.data[0]?.attributes?.category?.data?.attributes?.name === category )
             setCategoryOrders(categoryOrders)
