@@ -115,7 +115,7 @@ export default function useNotifications() {
           alert('Must use physical device for Push Notifications');
         }
       
-        return token.data;
+        return token?.data;
       }
 
       async function  getExpoPushTokenStorage  () {

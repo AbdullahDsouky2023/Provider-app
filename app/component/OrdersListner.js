@@ -4,13 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import useNotifications from '../../utils/notifications'; // Adjust the path to your notifications utility file
 import api from '../../utils';
 import * as BackgroundFetch from 'expo-background-fetch';
-import * as TaskManager from 'expo-task-manager';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as geolib from "geolib";
 import { setOrders, setProviderCurrentOffers } from '../store/features/ordersSlice';
 import io from 'socket.io-client';
 import useOrders from '../../utils/orders';
-
+import * as TaskManager from 'expo-task-manager';
 import { Audio } from 'expo-av';
 import { EXPO_PUBLIC_BASE_URL} from '@env'
 const NEW_ORDER_NOTIFICATION_ID = 'NEW_ORDER_NOTIFICATION';
@@ -26,29 +25,28 @@ export default function OrdersListener() {
   const [enableRefetch, setEnableRefetch] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [currentOffers, setCurrentOffers] = useState([]);
-
 const userCategories = useSelector((state)=>state?.user?.userData.attributes?.categories)
-const SERVER_URL = 'http://192.168.1.3:1337';
 const ProviderCurrentOffers = useSelector((state)=>state?.orders?.currentOffers)
 const { sendPushNotification, token } = useNotifications();
   const dispatch = useDispatch();
 const { data:ordersData,refetch:refetchOrders}=useOrders()
+
+
+
+
   const checkForNewOrders = async (newOrderId) => {
     try {
-      refetchOrders()
+   const ordersData =   await  refetchOrders()
+  //  console.log("orders fetched",ordersData)
       dispatch( setOrders(ordersData))
       const newOrders = await fetchData(locationCoordinate);
-      // console.log('Fetching new order updates...', token, newOrders?.filter((item)=>item?.id === newOrderId), currentOrders?.data?.length,selectedItemsData?.length);
       if(newOrders){
-        
         const newOrderFetched = newOrders?.filter((item)=>item?.id === newOrderId)
-        const newOrderFetched2 = orderRedux?.data?.filter((item)=>item?.id === newOrderId)
-        // console.log("fiiiiiiiiiiiiiiii",newOrderFetched,newOrderFetched2?.length,newOrderId)
+
         if ( newOrderFetched?.length === 1  ) {
-          play()
-        // sendPushNotification(token, 'New Order Added', 'A new order has been added.');
-      console.log("the current selected prders ",selectedItemsData?.length)
-      // console.log("seeing order b use are ",ProviderCurrentOffers)
+
+            play()
+          
       dispatch( setProviderCurrentOffers(selectedItemsData?.length))
     }
   }
@@ -56,18 +54,23 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
       console.error('Error checking for new orders:', error);
     }
   };
+  /******* sound part  */
   let soundObject;
 
   const playSound = async () => {
     const { sound } = await Audio.Sound.createAsync(
-      require('../assets/notification-sound.mp3')
+      require('../assets/notification-sound.mp3'),
+      { shouldPlay: true, staysActiveInBackground: true }
     );
-    soundObject = sound;
+    await sound.playAsync();
   };
+  
+
   const play = async () => {
     await playSound();
     await soundObject.playAsync();
   };
+  
   useEffect(() => {
     return soundObject
       ? () => {
@@ -75,14 +78,17 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
         }
       : undefined;
   }, [soundObject]);
-    
-  
+
+ /******* sound part  */
+
+    /******* fetchData part  */
+
   const fetchData = async(coordinate) => {
     const newOrdersData = await refetchOrders();
-    if (newOrdersData && coordinate) {
+    if (newOrdersData?.data?.data && coordinate) {
       if (Array.isArray(newOrdersData?.data?.data)) {
 
-      const orders = newOrdersData?.data?.data?.filter((item) => {
+      const nearOrders = newOrdersData?.data?.data?.filter((item) => {
         const orderCoordinate = {
           latitude: item.attributes.googleMapLocation.coordinate.latitude,
           longitude: item.attributes.googleMapLocation.coordinate.longitude,
@@ -90,16 +96,18 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
         const distance = geolib.getDistance(coordinate, orderCoordinate);
         return distance <= 10000; // 10 kilometers
       });
-      console.log("searching near location")
-      const pendingOrders = orders?.filter(
+      console.log("searching near location",coordinate)
+      const pendingOrders = nearOrders?.filter(
         (item) =>
           item?.attributes?.status === "pending" &&
           (item?.attributes?.services?.data?.length > 0 || item?.attributes?.service_carts?.data?.length)
       );
-      const filteredOrders = pendingOrders?.filter((order)=>  userCategories?.data?.filter((category)=>{
+      const filteredOrders = pendingOrders?.filter((order)=>  userCategories?.data?.filter((category)=>
+      {
         const CartServiceCategoryId = order?.attributes?.service_carts?.data[0]?.attributes?.service?.data?.attributes?.category?.data?.id
-        console.log("auser ii",CartServiceCategoryId)
-        return  ((order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id )|| (CartServiceCategoryId === category?.id))})[0])
+        return  ((order?.attributes?.services?.data[0]?.attributes?.category?.data?.id === category?.id ) || (CartServiceCategoryId === category?.id))
+      })[0])
+      console.log("filtered one ",filteredOrders?.length)
       setselectedItemsData(filteredOrders);
       setCurrentOffers(filteredOrders)
       // dispatch( setProviderCurrentOffers(filteredOrders?.length))
@@ -110,6 +118,7 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
     setLoading(false)
   }
   };
+    /******* location part  */
 
   useEffect(() => {
     (async () => {
@@ -127,81 +136,83 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
         setLoading(false)
       }
     })();
-  }, []);
+  }, [ordersData]);
+        /******* socket part  */
+
+        useEffect(() => {
+          const newSocket = io(EXPO_PUBLIC_BASE_URL);
+        
+          newSocket.on('order:create', async (data) => {
+            console.log("connecting to the strapi");
+            try {
+              // First, refetch the orders
+              const newOrdersData = await refetchOrders();
+              // After refetching, dispatch the new orders
+              dispatch(setOrders(newOrdersData?.data));
+              // Now, fetch the data based on the updated location coordinate
+              const orders = await fetchData(locationCoordinate);
+              console.log("data", orders?.length, newOrdersData?.data?.length);
+              if (orders?.length >  0) {
+                console.log('Order created! Listening for order...2', data?.data?.id, newOrdersData?.data?.data?.length, orders?.length);
+                checkForNewOrders(data?.data?.id);
+              }
+            } catch (error) {
+              console.log("error reor", error);
+            }
+          });
+        
+          setSocket(newSocket);
+        
+          // Clean up the socket connection when the component unmounts
+          return () => {
+            if (newSocket) {
+              newSocket.off('order:create');
+              newSocket.disconnect();
+            }
+          };
+        }, [locationCoordinate]); // Add locationCoordinate to the dependency array to rerun this effect if the location changes
+        
+  const ORDER_LISTENER_TASK = 'order-listener-task';
+
+TaskManager.defineTask(ORDER_LISTENER_TASK, async ({ data: { orderId }, error }) => {
+  try {
     
-  useEffect(() => {
-    // Initialize the socket connection when the component mounts
-    const newSocket = io(EXPO_PUBLIC_BASE_URL);
+    if (error) {
+      console.log("error define task mangagte",defineTask)
+      // Error occurred - check `error.message` for more details.
+      return;
+    }
+    if (orderId) {
+      // Play the sound for the new order
+      await playSound();
+      sendPushNotification(token,"new order hhhhhhhhhhhhh")
+    }
+    return;
+  } catch (error) {
+    console.log("error define task mangagte2",error)
 
-    // Attach event listeners to the socket
-    newSocket.on('order:create', async (data) => {
-      console.log("connecting to the strapi")
-      try {
-
-        // Fetch orders and wait for the response
-        const newOrdersData = await refetchOrders();
-        // Dispatch the action with the new orders data
-        dispatch(setOrders(newOrdersData?.data));
-        // Now you can use the updated orders data
-        const orders = await fetchData(locationCoordinate);
-        if (orders) {
-          console.log('Order createxd! Listening for order...', data?.data?.id, newOrdersData?.data?.data?.length,orders?.length);
-          checkForNewOrders(data?.data?.id);
-        }
-      } catch (error) {
-        console.log("error reor");
-      }
-    });
-    
-
-    // Save the socket reference in state
-    setSocket(newSocket);
-
-    // Clean up the socket connection when the component unmounts
-    return () => {
-      if (newSocket) {
-        newSocket.off('order:create');
-        newSocket.disconnect();
-      }
-    };
-  }, []); 
-
-
-// // //   //intervalu function 
-//   useEffect(() => {
-//     const intervalId = setInterval(checkForNewOrders, 10000); // Check every minute
-
-//     return () => {
-//       clearInterval(intervalId);
-//     };
-//  }, [currentOrders, refetchOrders, sendPushNotification, token]);
-
-  // Define the background fetch task
-  TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-    const now = Date.now();
-    console.log(`Got background fetch call at date: ${new Date(now).toISOString()}`);
-    // Be sure to return the successful result type!
-    return BackgroundFetch.Result.NewData;
-  });
-
-  // Register the background fetch task
-  const registerBackgroundFetchAsync = async () => {
-    return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-      minimumInterval: 60 * 15, // 15 minutes
-      stopOnTerminate: false, // Android only
-      startOnBoot: true, // Android only
-    });
-  };
-
+  }
+});
   useEffect(() => {
     // Register the task when the component mounts
-    registerBackgroundFetchAsync();
-
-    // Clean up when the component unmounts
-    return () => {
-      BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-    };
+    TaskManager.defineTask(ORDER_LISTENER_TASK, async ({ orderId }) => {
+      try {
+        
+        if (orderId) {
+          // This will be called when the task is executed
+          await playSound();
+          sendPushNotification(token, "New order received.");
+        }
+      } catch (error) {
+        console.log("error define the task ",error)
+      }
+    });
+  
+    // Other setup code...
   }, []);
+  
+
+
 
   return null;
 }

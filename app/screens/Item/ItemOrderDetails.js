@@ -78,9 +78,9 @@ const [isLoading,setIsLoading]=useState(false)
   
       if (data) {
         dispatch(clearCurrentOrder());
-        if (ITEM_PRICE > 0) {
-          navigation.navigate("Payment");
-        } else if (ITEM_PRICE === 0) {
+        // if (ITEM_PRICE > 0) {
+        //   navigation.navigate("Payment");
+        // } else if (ITEM_PRICE === 0) {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
@@ -88,7 +88,7 @@ const [isLoading,setIsLoading]=useState(false)
             })
           );
         }
-      }
+      // }
     } catch (error) {
       Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);

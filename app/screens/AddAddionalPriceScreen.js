@@ -1,11 +1,15 @@
 import { View, Dimensions, TextInput, ScrollView, Alert } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
+// import { ScrollView } from "react-native-virtualized-view";
+import LottieView from "lottie-react-native";
 import { StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { CommonActions } from "@react-navigation/native";
 
 import * as geolib from "geolib";
 const { width, height } = Dimensions.get("screen");
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import AppText from "../component/AppText";
 import { Colors } from "../constant/styles";
@@ -21,7 +25,7 @@ import useNotifications from "../../utils/notifications";
 import LoadingModal from "../component/Loading";
 import LoadingScreen from "./loading/LoadingScreen";
 // import AppText from '../../'
-export default function PaymentAfterServiceDetails({route,navigation}) {
+export default function AddAddionalPriceScreen({route,navigation}) {
   const [AddedAmount, setAddedAmount] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const refRBSheet = useRef();
@@ -61,11 +65,11 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
     refRBSheet.current.close()
   };
   const getAdditionalPriceSum = () => {
-    const amounts = additionalAmounts.map((item) => item?.amount);
+    const amounts = additionalAmounts?.map((item) => item?.amount);
     const sum = amounts.reduce((accumulator, currentValue) => {
       return accumulator + currentValue;
     }, 0); //
-    return Number(sum) + Number(AddedAmount) || Number(Number(AddedAmount));
+    return Number(sum) 
   };
  const handleConfirmAddPrice = async()=>{
     try {
@@ -79,8 +83,9 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
             console.log("the adional aomound ids ",addionalAmmountIds)
         }
       const res = await  UpdateOrder(route?.params?.orderID,{
-        totalPrice:getAdditionalPriceSum(),
+        totalPrice:getAdditionalPriceSum() + route?.params?.totalPrice,
         provider_fee:AddedAmount,
+        PaymentStatus:'pending',
         additional_prices:{
             connect: addionalAmmountIds?.length > 0 ? addionalAmmountIds:[],
 
@@ -147,9 +152,9 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
       >
         <ArrowBack />
         <View style={styles.container2}>
-          <View style={styles.amountContainer}>
+          {/* <View style={styles.amountContainer}>
             <AppText
-              text={"اجرة الفني"}
+              text={"Price"}
               centered={false}
               style={styles.amountText}
             />
@@ -160,7 +165,12 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
               onChangeText={(text) => handleAmountChange(text)}
               style={styles.input}
             />
-          </View>
+            <AppText
+              text={`${CURRENCY}`}
+              centered={false}
+              style={styles.amountText}
+            />
+          </View> */}
           <View>
             <AppText
               text={"Add Additional Price"}
@@ -213,8 +223,8 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
               />
             </PaymentBottomSheetAddPrice>
             <View style={styles.AdditionalAmmountsContainer}>
-              {additionalAmounts.map((amount) => (
-                <View key={amount.description} style={styles.container3}>
+              {additionalAmounts?.map((amount,index) => (
+                <View key={index} style={styles.container3}>
                   <View style={styles?.additionalAmountContainer}>
                     <AppText
                       text={"Amount"}
@@ -257,7 +267,7 @@ export default function PaymentAfterServiceDetails({route,navigation}) {
         isModalVisible={showModal}
         onPress={handleConfirmAddPrice}
       />
-      {AddedAmount > 0 && (
+      {additionalAmounts?.length  > 0 && (
         <View
           style={{
             paddingVertical: 20,
@@ -310,6 +320,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     marginHorizontal: 30,
+    marginVertical: 30,
     alignItems: "center",
     // justifyContent:'center',
     gap: 10,
@@ -459,7 +470,9 @@ const styles = StyleSheet.create({
     gap: 5,
     borderWidth: 1,
     width: width * 0.9,
-    borderRadius: 10,
+    borderColor:Colors.blackColor,
+    // elevation: 4,  
+      borderRadius: 10,
     padding: 10,
   },
   additionalAmountContainer: {

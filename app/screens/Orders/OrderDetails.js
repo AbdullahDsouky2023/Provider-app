@@ -25,7 +25,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { CHANGE_ORDER_DATE, CHAT_ROOM, CURRENCY, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
+import { ADD_ADDITIONAL_SERVICES_SCREEN, CHANGE_ORDER_DATE, CHAT_ROOM, CURRENCY, HOME, OFFERS, ORDERS, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native-virtualized-view";
@@ -520,6 +520,12 @@ export default function OrderDetails({ navigation, route }) {
           </View>)
           :null
         }
+        {(item?.attributes?.status === "finish_work"  && item?.attributes?.provider_payment_status === "pending") && item?.attributes?.totalPrice >0 && (
+          <AppButton
+            title={"Add Additional Price"}
+            style={{ backgroundColor: Colors.success }}
+            onPress={() => navigation.navigate(ADD_ADDITIONAL_SERVICES_SCREEN,{orderID:item?.id,totalPrice:item?.attributes?.totalPrice})}
+          />)}
       </ScrollView>
      {
       isLoading && <LoadingScreen/>
