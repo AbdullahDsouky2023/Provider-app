@@ -52,8 +52,8 @@ const ChangeDateOrderScreen = ({ navigation, route }) => {
     ,
       reason: yup.string()
       .required(t("This Field is Required!"))
-      .min(10, "السبب  المدخله قصير جدا")
-      .max(500, "السبب  المدخله طويل جدا"),
+      .min(10, "السبب  المدخل قصير جدا")
+      .max(500, "السبب  المدخل طويل جدا"),
     
   });
   const handleFormSubmit = async (values) => {
