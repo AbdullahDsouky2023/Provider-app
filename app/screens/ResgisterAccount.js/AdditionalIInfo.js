@@ -43,6 +43,7 @@ import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 import UserDatePicker from "../../component/Account/UserDatePicker";
 import FormDatePicker from "../../component/Form/FormDatePicker";
 import useNotifications from "../../../utils/notifications";
+import UseLocation from "../../../utils/useLocation";
 const { width, height } = Dimensions.get("screen");
 const AdditionInfoScreen = ({ navigation, route }) => {
   const [error, setError] = useState();
@@ -55,6 +56,8 @@ const AdditionInfoScreen = ({ navigation, route }) => {
   const {token} = useNotifications()
   const user = useSelector((state) => state.user.userData);
   const [city, setCity] = useState(null);
+  const { location:userCurrentLocation,coordinate} = UseLocation()
+  const [currentLocation,setCurrenttLocation]=useState()
 
 console.log("the notification token is isi for addion",token)
   const validationSchema = yup.object().shape({
@@ -67,10 +70,9 @@ console.log("the notification token is isi for addion",token)
     .required(t("Email is required")),
   });
 
-  // console.log("submiting", route?.params?.status, user?.id);
   const handleFormSubmit = async (values) => {
     try {
-      console.log("submiting", route?.params?.status, user?.id);
+      console.log("submiting", route?.params?.status, currentLocation ,coordinate, userCurrentLocation);
       let res;
       // const validPhone = auth?.currentUser?.Additional_phone?.replace("+", "")
       setIsLoading(true);
@@ -81,7 +83,9 @@ console.log("the notification token is isi for addion",token)
           ...values,
           city,
           Provider_status: "pending",
-          expoPushNotificationToken:token
+          expoPushNotificationToken:token,
+          googleMapLocation:currentLocation ? currentLocation : userCurrentLocation ,
+
         });
       } else {
         res = await createUser({
@@ -89,7 +93,7 @@ console.log("the notification token is isi for addion",token)
           ...values,
           name,
           expoPushNotificationToken:token,
-
+          googleMapLocation:currentLocation ? currentLocation : userCurrentLocation ,
           phoneNumber: auth?.currentUser?.phoneNumber,
           city,
         });
@@ -124,7 +128,13 @@ console.log("the notification token is isi for addion",token)
       setIsLoading(false);
     }
   };
-
+  useEffect(()=>{
+    (async () => {
+      const currentLocation = await AsyncStorage.getItem("userLocation")
+      setCurrenttLocation(JSON.parse(currentLocation))
+   
+    })();
+  },[])
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />

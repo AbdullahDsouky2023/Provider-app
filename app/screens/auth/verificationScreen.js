@@ -26,6 +26,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 import useRegions from "../../../utils/useRegions";
 import useOrders from "../../../utils/orders";
+import { ORDER_SUCCESS_SCREEN, REGISTER_ERROR_DOCS } from "../../navigation/routes";
 
 const { width ,height} = Dimensions.get("screen");
 
@@ -55,11 +56,27 @@ const VerificationScreen = ({ navigation, route }) => {
         dispatch(setUserData(user));
         dispatch(userRegisterSuccess(user));
         console.log("********user",user)
-        return navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name:"App" }]
-          }))
+        if(user?.attributes?.Provider_status === "pending"){
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name:ORDER_SUCCESS_SCREEN }],
+            }))
+        }else  if(user?.attributes?.Provider_status === "rejected"){
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name:REGISTER_ERROR_DOCS }],
+            }))
+        }else {
+
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name:"App"}],
+            }))
+        }
+        
       } else if(!user) {
         return  navigation.dispatch(
           CommonActions.reset({

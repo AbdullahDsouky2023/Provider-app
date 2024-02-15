@@ -15,11 +15,12 @@ function FormTextInput({ icon, width = "100%",height, ...otherProps }) {
       showSoftInputOnFocus
       selectTextOnFocus
         selectionColor={Colors.primaryColor}
-        textAlign="right"
         underlineColor={Colors.grayColor}
         activeUnderlineColor={Colors.primaryColor}
+        
         placeholderTextColor={Colors.grayColor}
-     
+        writingDirection="rtl"
+        textAlign="right"
         textAlignVertical="bottom"
         // numberOfLines={10}
         style={{
@@ -30,7 +31,7 @@ function FormTextInput({ icon, width = "100%",height, ...otherProps }) {
           fontFamily:mainFont.bold,
           backgroundColor:Colors.grayColor,
           maxHeight:height || 45 ,
-          textAlign:'auto',
+          textAlign:'right',
           borderBottomWidth:0,
           // height:400,
           borderRadius: 10,
