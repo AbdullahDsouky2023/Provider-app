@@ -14,6 +14,7 @@ import * as geolib from "geolib";
 const { width, height } = Dimensions.get("screen");
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 export default function ChargeWalletScreen({}) {
   const navigation = useNavigation();
@@ -66,7 +67,7 @@ export default function ChargeWalletScreen({}) {
               <AppText
                 text={"Recharge Now"}
                 style={{
-                  fontSize: 15,
+                  fontSize: RFPercentage(2.2),
                   color: Colors.whiteColor,
                   paddingHorizontal: 40,
                   paddingVertical: 10,
@@ -174,4 +175,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.whiteColor,
   },
+  text:{
+    color:Colors.blackColor,
+    textAlign:'center',
+    fontSize:RFPercentage(2.2)
+  }
 });
