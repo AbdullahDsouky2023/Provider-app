@@ -141,7 +141,7 @@ export default function CurrentOrderCard({ item, onPress }) {
                 onPress={() => {
 
                   dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
-
+                  console.log("current chat channel abdllah ",item?.attributes?.chat_channel_id)
                   navigation.navigate("Chat")
                 }
                 }

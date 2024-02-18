@@ -171,7 +171,9 @@
    "No internet connection.":"لا يوجد أتصال بالأنترنت",
    "Retry":"إعادة المحاولة",
    "Request Date Change":"طلب تغيير الموعد",
-   "Please enter delay reason":"سبب التأجيل"
+   "Please enter delay reason":"سبب التأجيل",
+   "Start":"بدء",
+   "Pause":"إيقاف"
    
 
 }

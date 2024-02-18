@@ -17,6 +17,7 @@ export const useChatClient = () => {
         
         if (channel) {
           await chatClient.connectUser(user, chatUserToken);
+          // chatClient.setLocale('ar');
           const globalChannel = chatClient.channel("messaging", channel);
           await globalChannel.watch( );
           setClientIsReady(true);
