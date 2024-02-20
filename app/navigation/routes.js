@@ -32,3 +32,5 @@ export const CURRENCY = " ر.س"
 export const PROVIDER_LOCATION = "ProviderLocationScreen"
 export const NO_CONNECTION_SCREEN="noconnection"
 export const CHANGE_ORDER_DATE = 'ChangeDateOrderScreen'
+
+export const CHAT_ROOM_fireBase = " chatroomfirebase"

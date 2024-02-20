@@ -14,7 +14,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import { useNavigation } from "@react-navigation/native";
-import { CHAT_ROOM, ORDERS_DETAILS, PROVIDER_LOCATION } from "../../navigation/routes";
+import { CHAT_ROOM, CHAT_ROOM_fireBase, ORDERS_DETAILS, PROVIDER_LOCATION } from "../../navigation/routes";
 import PriceTextComponent from "../PriceTextComponent";
 import AppButton from "../AppButton";
 import { Entypo } from '@expo/vector-icons';
@@ -141,8 +141,8 @@ export default function CurrentOrderCard({ item, onPress }) {
                 onPress={() => {
 
                   dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
-                  console.log("current chat channel abdllah ",item?.attributes?.chat_channel_id)
-                  navigation.navigate("Chat")
+                  // console.log("current chat channel abdllah ",item?.attributes?.chat_channel_id)
+                  navigation.navigate(CHAT_ROOM_fireBase)
                 }
                 }
               >

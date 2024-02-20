@@ -173,7 +173,9 @@
    "Request Date Change":"طلب تغيير الموعد",
    "Please enter delay reason":"سبب التأجيل",
    "Start":"بدء",
-   "Pause":"إيقاف"
+   "Pause":"إيقاف",
+   "Type a message....":"أكتب رسالة ... "
+
    
 
 }

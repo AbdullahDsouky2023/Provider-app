@@ -1,8 +1,10 @@
 import { getFirestore, initializeFirestore} from 'firebase/firestore';
+import { getStorage} from 'firebase/storage';
 import {initializeApp} from 'firebase/app';
 import { initializeAuth ,getReactNativePersistence} from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-// //abdodsouky edge
+
+//abdodsouky edge
 export const firebaseConfig = {
     apiKey: "AIzaSyCkFySoGyh-fH1ir8OZxbnmO33VEWg10Dk",
     authDomain: "home-services-user-b9504.firebaseapp.com",
@@ -11,7 +13,7 @@ export const firebaseConfig = {
     messagingSenderId: "886597742556",
     appId: "1:886597742556:web:869a9f71557314fd722919"
   };
-//Chrome
+// Chrome
 // export const firebaseConfig = {
 //   apiKey: "AIzaSyCfFPu1VIgGhgRgzvcfbAzipgd4_MYfkAs",
 //   authDomain: "home-service2.firebaseapp.com",
@@ -65,6 +67,7 @@ export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage)
   });
  export  const db = getFirestore(app);
+ export  const  FIRE_BASE_Storage = getStorage(app);
 
   
 
