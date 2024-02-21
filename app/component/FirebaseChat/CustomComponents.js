@@ -1,14 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useRef} from 'react';
 import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { auth } from '../../../firebaseConfig';
 import { GiftedChat, Bubble, MessageText,InputToolbar } from 'react-native-gifted-chat';
 import { Colors, mainFont } from '../../constant/styles';
-import { TextInput, View, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { TextInput, View, StyleSheet, Dimensions, TouchableOpacity, Image ,Text,ProgressBar} from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'react-native-paper';
+// import { Button, ProgressBar } from 'react-native-paper';
 import { Ionicons,MaterialIcons } from '@expo/vector-icons';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import { Text } from 'react-native';
+// import { Audio } from 'expo-av';
+// import AudioListItem from './AudioListItem';
+// import OptionModal from './OptionModal';
+// import PlayListDetail from './PlayListDetail';
+// import PlayListInputModal from './PlayListInputModal';
+// import PlayerButton from './PlayerButton';
+// import Screen from './Screen';
+// import { storeAudioForNextOpening } from './helper';
+// import { selectAudio } from './audioController';
+// import color from './color';
+
+
 
 const { height , width } = Dimensions.get('screen')
 export const CustomBubble = (props) => {
@@ -40,11 +51,9 @@ export const CustomBubble = (props) => {
       />
     );
   };
-  
-
   export const renderMessageImage = ({ currentMessage }) => (
     <TouchableOpacity >
-      <Image source={{ uri: currentMessage.image }} style={styles.image} />
+      <Image source={{ uri: currentMessage.image }} style={styles2.image} />
     </TouchableOpacity>
   );
 export   const CustomMessageText = (props) => {
@@ -75,7 +84,7 @@ export const CustomMessageViewer=(props)=>{
     if (imagePath) {
         console.log("the image uri i ",imagePath)
         return (
-          <View style={styles.chatFooter}>
+          <View style={styles2.chatFooter}>
             <Image source={{uri: imagePath}} style={{height: height*0.1,borderRadius:15, width: width*0.2}} />
             <TouchableOpacity
               onPress={() => props.handleImageSelected(imagePath)}
@@ -87,7 +96,6 @@ export const CustomMessageViewer=(props)=>{
         );
       }
 }
-
 export const CustomInputToolbar = (props) => {
   return (
     <InputToolbar
@@ -104,7 +112,7 @@ export const CustomInputToolbar = (props) => {
 };
 export const CustomComposer = (props) => {
     const { t } = useTranslation();
-    const [FitHeight, setHeight] = useState(40); // Initial height
+    const [FitHeight, setHeight] = useState(height*0.17); // Initial height
 
   const onContentSizeChange = (contentWidth, contentHeight) => {
     // Adjust the height based on the content height
@@ -117,7 +125,7 @@ export const CustomComposer = (props) => {
         cursorColor={Colors.primaryColor}
         placeholder={t("Type a message....")}
         placeholderTextColor='#999'
-        style={[styles.composer,{height:FitHeight,borderRadius:FitHeight*0.2}]}
+        style={[styles.composer,{height:FitHeight,borderRadius:FitHeight*0.2, width:props?.textInputValue ? width*0.82 : width * 0.8}]}
         multiline={true}
         
         numberOfLines={4}
@@ -133,8 +141,6 @@ export const CustomComposer = (props) => {
       />
     );
   };
-  
-
 export const CustomSend = (props) => {
     const { t} = useTranslation()
   return (
@@ -169,7 +175,7 @@ const styles = StyleSheet.create({
       borderColor: '#ccc',
       borderWidth:  1,
       borderRadius:  height*0.01,
-    width:width*0.80,
+    // width:width*0.80,
     paddingLeft:  10,
     padding:10,
     fontFamily:mainFont.bold,
@@ -215,3 +221,81 @@ const styles = StyleSheet.create({
     left:0
   }
 });
+
+
+
+
+
+// export const CustomVoiceMessage = ({ currentMessage }) => {
+//   const [sound, setSound] = useState(null);
+//   const [isPlaying, setIsPlaying] = useState(false);
+//   const [duration, setDuration] = useState(0);
+//   const [position, setPosition] = useState(0);
+//   const [visible, setVisible] = useState(false);
+//   const [playListVisible, setPlayListVisible] = useState(false);
+//   const [playListName, setPlayListName] = useState('');
+//   const [playList, setPlayList] = useState(null);
+//   const url = currentMessage?.audio
+//   useEffect(() => {
+//     loadAudio();
+//   }, []);
+
+//   const loadAudio = async () => {
+//     const { sound } = await Audio.Sound.createAsync(
+//       { uri: url },
+//       { shouldPlay: true }
+//     );
+//     setSound(sound);
+//     sound.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+//   };
+
+//   const onPlaybackStatusUpdate = (status) => {
+//     setIsPlaying(status.isPlaying);
+//     setDuration(status.durationMillis ||   0);
+//     setPosition(status.positionMillis ||   0);
+//   };
+
+//   const togglePlayPause = async () => {
+//     isPlaying ? await sound.pauseAsync() : await sound.playAsync();
+//     setIsPlaying(!isPlaying);
+//   };
+
+//   const playAudio = async (audio) => {
+//     await selectAudio(audio, setVisible, playListVisible);
+//   };
+
+//   return (
+//     <Screen>
+//       <AudioListItem
+//         title="Audio Title"
+//         duration={position}
+//         onAudioPress={togglePlayPause}
+//         isPlaying={isPlaying}
+//       />
+//       <PlayerButton
+//         iconType={isPlaying ? 'PAUSE' : 'PLAY'}
+//         onPress={togglePlayPause}
+//       />
+//       <OptionModal
+//         visible={visible}
+//         currentItem={{ filename: "Audio Title" }}
+//         onClose={() => setVisible(false)}
+//         options={[{ title: 'Option  1', onPress: () => {} }, { title: 'Option  2', onPress: () => {} }]}
+//         onPlayPress={togglePlayPause}
+//         onPlayListPress={() => setPlayListVisible(true)}
+//       />
+//       <PlayListDetail
+//         visible={playListVisible}
+//         playList={playList}
+//         onClose={() => setPlayListVisible(false)}
+//         onAudioPress={playAudio}
+//       />
+//       <PlayListInputModal
+//         visible={playListVisible}
+//         onClose={() => setPlayListVisible(false)}
+//         onSubmit={(name) => setPlayListName(name)}
+//       />
+//     </Screen>
+//   );
+// };
+

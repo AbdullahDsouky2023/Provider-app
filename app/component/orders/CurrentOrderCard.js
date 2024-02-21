@@ -142,7 +142,10 @@ export default function CurrentOrderCard({ item, onPress }) {
 
                   dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
                   // console.log("current chat channel abdllah ",item?.attributes?.chat_channel_id)
-                  navigation.navigate(CHAT_ROOM_fireBase)
+                  navigation.navigate(CHAT_ROOM_fireBase,{
+                    ProviderToken:item?.attributes?.provider?.data?.attributes?.expoPushNotificationToken                    ,
+                    ProviderId:item?.attributes?.provider?.data?.id
+                  })
                 }
                 }
               >

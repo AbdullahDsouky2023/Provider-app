@@ -99,7 +99,7 @@ const SigninScreen = ({ navigation }) => {
             <AppText
               centered={true}
               text={"Signin with Phone Number"}
-              style={{ marginBottom: 10, fontSize:RFPercentage(2),color:Colors.primaryColor,fontSize: RFPercentage(2.1) ,textAlign:'center'}}
+              style={{ marginBottom: width*0.05, fontSize:RFPercentage(1.9),color:Colors.primaryColor ,textAlign:'center'}}
             />
           </View>
           <PhoneNumberTextField
@@ -132,12 +132,8 @@ const SigninScreen = ({ navigation }) => {
             path={"Verification"}
             title={"Continue"}
             disabled={disabled}
-            style={{borderWidth:0,
-              paddingVertical:height*0.015,
-              width:width*0.45,
-              alignSelf:'center',
-              backgroundColor:disabled ?Colors?.grayColor : Colors.primaryColor}}
-            textStyle={{borderWidth:0,paddingHorizontal:10}}
+            style={{marginTop:height*0.05, paddingHorizontal: width * 0.3, alignSelf: 'center' }}
+            textStyle={{ fontSize: RFPercentage(2.3) }}
             onPress={() => handleSendVerificationCode()}
           />
           <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
@@ -145,7 +141,9 @@ const SigninScreen = ({ navigation }) => {
               text={"We'll send OTP for Verification"}
               style={{
                 marginTop: Sizes.fixPadding - 5.0,
-                ...Fonts.whiteColor16Medium,
+                ...Fonts.grayColor18Medium,
+                fontSize:RFPercentage(2.3)
+
               }}
             />
           </View>

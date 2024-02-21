@@ -26,10 +26,14 @@ import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 import { setUserData } from "../../store/features/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from "@react-navigation/native";
-import { HOME } from "../../navigation/routes";
+import { HOME, SELECT_LAN } from "../../navigation/routes";
 import { useTranslation } from "react-i18next";
 import DocumentDownloadComponent from "../../component/Account/DocumentDownloadComponent";
 import FormDatePicker from "../../component/Form/FormDatePicker";
+import { Switch } from "react-native-elements";
+import AppButton from "../../component/AppButton";
+import { AntDesign} from '@expo/vector-icons'
+
 const { width } = Dimensions.get("screen");
 
 const UserInfo = ({ navigation }) => {
@@ -39,6 +43,8 @@ const UserInfo = ({ navigation }) => {
   const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state) => state?.user?.userData);
   const { t } = useTranslation();
+  const [isSwitchedOn, setIsSwitchedOn] = useState(false);
+
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
@@ -106,7 +112,11 @@ const UserInfo = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
+      <View style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingTop:10,flexDirection:'row'}}>
+        <AntDesign onPress={()=>navigation?.navigate(SELECT_LAN)} name="earth" size={26} color={Colors.primaryColor}/>
         <ArrowBack />
+
+        </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1, alignItems: "center",paddingBottom:40 }}>
             <AppText
@@ -183,6 +193,18 @@ const UserInfo = ({ navigation }) => {
               <HeaderComponent header={"Documents"} />
 
               <DocumentDownloadComponent />
+              <View style={styles.switchContainer}>
+              <AppText text={"Allow Offers"} style={styles.allow_offers} />
+
+                <Switch
+                  value={isSwitchedOn}
+                  
+                  style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+                  trackColor={{ false: "#767577", true: Colors.primaryColor }}
+                  thumbColor={isSwitchedOn ? Colors.primaryColor : "#f4f3f4"}
+                  onValueChange={setIsSwitchedOn}
+                />
+              </View>
 
               
             </AppForm>
@@ -199,7 +221,7 @@ export default UserInfo;
 const styles = StyleSheet.create({
   inputStyle: {
     borderWidth: 1,
-    width: width * 0.9,
+    width: width * 0.90,
     backgroundColor: Colors.whiteColor,
     display:'flex',
     // alignItems:'center',
@@ -208,8 +230,8 @@ const styles = StyleSheet.create({
   },
   dateStyle: {
     // borderWidth: 1,
-    width: width * 0.99,
-    marginRight:-26,
+    width: width * 0.94,
+    marginRight:-width*0.04,
     backgroundColor: Colors.whiteColor,
     borderRadius: 10,
     alignSelf:'center',
@@ -244,6 +266,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 27,
     marginBottom: -13,
     // paddingVertical: 0,
+    marginTop:5,
     margin: 0,
     gap: 4,
   },
@@ -254,6 +277,15 @@ const styles = StyleSheet.create({
   Star: {
     color: Colors.primaryColor,
   },
+  switchContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: width * 0.90,
+    marginHorizontal:width*0.4
+  },allow_offers:{
+    color:Colors.primaryColor
+  }
 });
 
 const HeaderComponent = ({ header }) => (

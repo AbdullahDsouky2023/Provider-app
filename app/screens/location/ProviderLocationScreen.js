@@ -27,8 +27,8 @@ export default function ProviderLocationScreen({route}) {
       >
         <Marker
           coordinate={apiData?.coordinate}
-          title="This is the location from the api"
-          description="This is a marker example"
+          title="موقع الطلب الحالي"
+          // description="This is a marker example"
           />
       </MapView>
     </View>
