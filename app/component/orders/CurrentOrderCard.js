@@ -18,6 +18,7 @@ import { CHAT_ROOM, CHAT_ROOM_fireBase, ORDERS_DETAILS, PROVIDER_LOCATION } from
 import PriceTextComponent from "../PriceTextComponent";
 import AppButton from "../AppButton";
 import { Entypo } from '@expo/vector-icons';
+import * as Linking from "expo-linking";
 
 import { setcurrentChatChannel } from "../../store/features/ordersSlice";
 const { width, height } = Dimensions.get("screen");
@@ -155,7 +156,8 @@ export default function CurrentOrderCard({ item, onPress }) {
               <TouchableOpacity style={styles.chatContainer}
                 onPress={() => {
                   
-                navigation.navigate( PROVIDER_LOCATION,{apiData:item?.attributes?.googleMapLocation})
+                // navigation.navigate( PROVIDER_LOCATION,{apiData:item?.attributes?.googleMapLocation})
+                Linking.openURL("https://maps.app.goo.gl/UXMEAg7v7eAQCQAp9")
                 }
                 }
               >

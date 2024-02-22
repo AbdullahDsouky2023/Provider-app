@@ -269,9 +269,6 @@ export function CustomVoiceMessage({ currentMessage }) {
         isPlaying ?   
         <View style={voiceStyles.audio}>
 
-        
-{/* <ProgressBar progress={safeProgress} color="#00695C" /> */}
-
         <AntDesign key="pause" name="pausecircleo" size={24} color={Colors.whiteColor}
         onPress={() => {
           sound.pauseAsync();
