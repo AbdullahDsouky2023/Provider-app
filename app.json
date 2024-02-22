@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Njik-Provider",
-    "slug": "rn-NijkProvider-",
+    "slug": "rn-NijkProvider-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon3.png",
