@@ -17,7 +17,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
       
       flagStyle={{ display: "none" }}
       defaultCountry="EG"
-      disableCountryChange={true}
+      // disableCountryChange={true}
     
       containerStyle={styles.phoneNumberTextFieldStyle}
       dialCodeTextStyle={{
