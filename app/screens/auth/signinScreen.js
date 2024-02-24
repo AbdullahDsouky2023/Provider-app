@@ -99,7 +99,7 @@ const SigninScreen = ({ navigation }) => {
             <AppText
               centered={true}
               text={"Signin with Phone Number"}
-              style={{ marginBottom: width*0.05, fontSize:RFPercentage(1.9),color:Colors.primaryColor ,textAlign:'center'}}
+              style={{ marginBottom: width*0.05, fontSize:RFPercentage(1.95),color:Colors.primaryColor ,textAlign:'center'}}
             />
           </View>
           <PhoneNumberTextField

@@ -24,7 +24,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         ...Fonts.blackColor17Medium,
         paddingVertical: 5,
         paddingLeft: Sizes.fixPadding - 5.0,
-        fontSize: RFPercentage(2),
+        fontSize: 17,
         textAlign: "left", // Set text alignment to left
         direction: "ltr", //
       }}
@@ -37,7 +37,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         paddingRight: Sizes.fixPadding,
         ...Fonts.blackColor17Medium,
         flexDirection: "column",
-        fontSize: RFPercentage(2.1),
+        fontSize: 17,
         textAlign: "left", // Set text alignment to left
         direction: "ltr", // Set text direction to left-to-right (ltr)
       }}
