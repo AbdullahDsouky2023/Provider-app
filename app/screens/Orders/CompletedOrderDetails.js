@@ -314,13 +314,16 @@ import ArrowBack from "../../component/ArrowBack";
               />
           </View>
           }
-           {item?.attributes?.images?.data ? (
+             {item?.attributes?.orderImages?.length > 0 && (
           <View style={styles.descriptionContainer}>
             <>
               <AppText centered={false} text={"Images"} style={styles.title} />
               <Carousel
-                data={item?.attributes?.images?.data}
+                data={item?.attributes?.orderImages}
                 sliderWidth={width}
+                inactiveSlideOpacity={1}
+                inactiveSlideScale={1}
+
                 slideStyle={{
                   backgroundColor: "transparent",
                   flex: 1,
@@ -329,21 +332,20 @@ import ArrowBack from "../../component/ArrowBack";
                 }}
                 autoplay={true}
                 loop={true}
-                inactiveSlideOpacity={1}
-                inactiveSlideScale={1}
                 autoplayInterval={10000}
                 itemWidth={width}
                 renderItem={({ item }) => {
+                  console.log("the iamges data",item);
                   return (
                     <Image
                       //  resizeMethod="contain"
                       source={{
-                        uri: item?.attributes?.url,
+                        uri: item
                       }}
                       style={{
                         height: height * 0.2,
                         width: width * 0.6,
-                        objectFit: "contain",
+                        objectFit: "fill",
                         borderRadius: 10,
                       }}
                     />
@@ -352,7 +354,7 @@ import ArrowBack from "../../component/ArrowBack";
               />
             </>
           </View>
-        ) : null}
+        ) }
     {(item?.attributes?.provider_payment_status === "payed" && item?.attributes?.providerOrderRating === null ) && (
           <AppButton
             title={"Rate"}

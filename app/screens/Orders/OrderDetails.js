@@ -425,13 +425,16 @@ export default function OrderDetails({ navigation, route }) {
             />
           </View>
         )}
-         {item?.attributes?.images?.data ? (
+      {item?.attributes?.orderImages?.length > 0 && (
           <View style={styles.descriptionContainer}>
             <>
               <AppText centered={false} text={"Images"} style={styles.title} />
               <Carousel
-                data={item?.attributes?.images?.data}
+                data={item?.attributes?.orderImages}
                 sliderWidth={width}
+                inactiveSlideOpacity={1}
+                inactiveSlideScale={1}
+
                 slideStyle={{
                   backgroundColor: "transparent",
                   flex: 1,
@@ -439,8 +442,6 @@ export default function OrderDetails({ navigation, route }) {
                   justifyContent: "center",
                 }}
                 autoplay={true}
-                inactiveSlideOpacity={1}
-                inactiveSlideScale={1}
                 loop={true}
                 autoplayInterval={10000}
                 itemWidth={width}
@@ -449,12 +450,12 @@ export default function OrderDetails({ navigation, route }) {
                     <Image
                       //  resizeMethod="contain"
                       source={{
-                        uri: item?.attributes?.url,
+                        uri: item
                       }}
                       style={{
                         height: height * 0.2,
                         width: width * 0.6,
-                        objectFit: "contain",
+                        objectFit: "fill",
                         borderRadius: 10,
                       }}
                     />
@@ -463,7 +464,7 @@ export default function OrderDetails({ navigation, route }) {
               />
             </>
           </View>
-        ) : null}
+        )}
         {(item?.attributes?.provider_payment_status === "payed" && item?.attributes?.providerOrderRating === null ) && (
           <AppButton
             title={"Rate and Finish Work"}

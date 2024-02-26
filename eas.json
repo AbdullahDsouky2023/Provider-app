@@ -15,9 +15,9 @@
       "buildType":"apk"
      },
      "env":{
-      "EXPO_PUBLIC_BASE_URL" : "https://n.epento.com",
-      "EXPO_PUBLIC_CHAT_SECRET" : "283pmvy4h9bmugfa74fk7kgemd3a94gnn8suydxp6bgq9hw29bf3383jcxbgzzby",
-      "EXPO_PUBLIC_CHAT_API_KEY" : "fj9es6pdkbm7",
+      "EXPO_PUBLIC_BASE_URL" : " https://n.epento.com",
+      "EXPO_PUBLIC_CLOUDINARY_PERSIST":"tegmyn81",
+      "EXPO_PUBLIC_CLOUDINARY_KEY":"dwtxbh9ms",
       "EXPO_PUBLIC_SECRET_PASSWORD" : "NIJK_DEVELOPMENT",
       "EXPO_PUBLIC_JWT_SECRET" : "NIJK_DEVELOPMENT_*2020411/16"
      },
