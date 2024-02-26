@@ -38,10 +38,10 @@ export default function ChooseCategories({navigation,}) {
   const filterCategories = () => {
     // If the query is empty, return the original array
     if (query === "") {
-      return categories?.data;
+      return categories;
     }
     // Otherwise, return the filtered array
-    return categories?.data.filter((item) => {
+    return categories?.filter((item) => {
       // Check if the name attribute contains the query
       return item?.attributes?.name.toLowerCase().includes(query.toLowerCase());
     });

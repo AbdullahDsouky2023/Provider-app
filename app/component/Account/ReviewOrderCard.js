@@ -59,7 +59,7 @@ export default function ReviewOrderCard({ item }) {
             item?.attributes?.userOrderReview  &&
   <AppText
   
-  text={item?.attributes?.userOrderReview || null}
+  text={item?.attributes?.userOrderReview.length >  20 ? item?.attributes?.userOrderReview.substring(0,  26) + '...' : item?.attributes?.userOrderReview}
   style={styles.review} centered={false}/>
 }
           </View>

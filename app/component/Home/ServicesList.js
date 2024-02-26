@@ -18,7 +18,7 @@ export default function ServicesList() {
     (state) => state?.user?.userData?.attributes?.categories?.data
   );
   const selectedCategries = user.map((category) => {
-    return categories?.data?.filter((item) => item?.id == category?.id)[0];
+    return categories?.filter((item) => item?.id == category?.id)[0];
   });
   const handleServiceCardPress = (item) => {
     navigation.navigate(BROWSE_ORDERS, { name: item?.attributes?.name });

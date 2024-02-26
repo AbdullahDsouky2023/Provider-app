@@ -632,8 +632,8 @@ const styles = StyleSheet.create({
     color: Colors.blackColor,
     marginTop: 5,
     paddingHorizontal:10,
-    // minWidth:width*0.8,
-    // backgroundColor:'red
+    minWidth:width*0.85,
+    // backgroundColor:'red'
   },
   CartServiceStylesContainer:{
     display:'flex',

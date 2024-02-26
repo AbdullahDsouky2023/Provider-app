@@ -310,8 +310,8 @@ import ArrowBack from "../../component/ArrowBack";
                   ? item?.attributes?.description
                   : "لا يوجد"
               }
-              style={styles.price}
-            />
+              style={[styles.price,{minWidth:width*0.8}]}
+              />
           </View>
           }
            {item?.attributes?.images?.data ? (

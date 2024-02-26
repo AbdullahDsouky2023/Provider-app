@@ -9,17 +9,36 @@ const api = axios.create({
 
 
 export default function useServices() {
-  const fetchCategories = async () => {
+  const fetchServices = async () => {
     try {
-      const response = await api.get(`/api/services?populate=*`);
-      
-      return response.data
+      let allServices = [];
+      let page =   1; // Start with the first page
+  
+      while (true) {
+        const response = await api.get(`/api/services?populate=*&pagination[page]=${parseInt(page,   10)}`);
+        console.log("Response data:", response?.data?.data?.length); // Log the response data
+  
+        // Assuming response.data is an array, proceed with adding to the allServices array
+        const currentPageServices = response?.data?.data || [];
+        allServices = [...allServices, ...currentPageServices];
+  
+        // Check if there is a next page in the pagination information
+        const nextPage = response?.data?.meta?.pagination.pageCount;
+        if (nextPage === page) {
+          break; // No more pages, exit the loop
+        }
+  
+        // Move to the next page
+        page++;
+      }
+  
+      return allServices;
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.log("Error fetching services:", error);
       throw error;
     }
   };
-
+  
   const { data , isLoading,isError } = useQuery(
     { queryKey: ["services"], queryFn: fetchCategories }
   ); // Changed the query key to 'superheroes'

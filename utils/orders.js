@@ -111,14 +111,36 @@ export const acceptOrder = async (id, providerId, channel_id) => {
 export default function useOrders() {
   const fetchOrders = async () => {
     try {
-      const response = await api.get(`/api/orders?populate=deep,4`);
-
-      return response.data;
+      let allOrders = [];
+      let page =   1; // Start with the first page
+  
+      while (true) {
+        const response = await api.get(`/api/orders?populate=deep,4&pagination[page]=${parseInt(page,   10)}`);
+        console.log("Response data:", response?.data?.data?.length); // Log the response data
+  
+        // Assuming response.data is an array, proceed with adding to the allOrders array
+        const currentPageOrders = response?.data?.data || [];
+        allOrders = [...allOrders, ...currentPageOrders];
+  
+        // Check if there is a next page in the pagination information
+        const nextPage = response?.data?.meta?.pagination.pageCount;
+        if (nextPage === page) {
+          break; // No more pages, exit the loop
+        }
+  
+        // Move to the next page
+        page++;
+      }
+  
+      return{
+        data: allOrders
+      }
     } catch (error) {
-      console.error("Error fetching order:", error);
+      console.log("Error fetching orders:", error);
       throw error;
     }
   };
+  
 
   const { data, isLoading, isError,refetch } = useQuery({
     queryKey: ["orders"],

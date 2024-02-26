@@ -329,8 +329,8 @@ export default function ItemScreen({ navigation, route }) {
                       ? item?.attributes?.description
                       : "لا يوجد"
                   }
-                  style={styles.price}
-                />
+                  style={[styles.price,{minWidth:width*0.85}]}
+                  />
               </View>
             )}
             {item?.attributes?.images?.data ? (
