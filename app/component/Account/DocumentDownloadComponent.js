@@ -22,10 +22,10 @@ const DocumentDownloadComponent = () => {
     const pdfWidthInPixels = pdfWidth * pixelsPerInch / 72;
     const pdfHeightInPixels = pdfHeight * pixelsPerInch / 72;
     const userData = useSelector((state)=>state?.user?.userData)
-    const personalImageSource=  userData?.attributes?.Personal_image?.data[0]?.attributes?.url
-    const  PersonalCardSource=  userData?.attributes?.Personal_card?.data[0]?.attributes?.url
-    const CommercialRecordSource=  userData?.attributes?.Commercial_record?.data[0]?.attributes?.url
-    const professionalLicenceSource=  userData?.attributes?.professional_licence?.data[0]?.attributes?.url
+    const personalImageSource=  userData?.attributes?.Personal_image
+    const  PersonalCardSource=  userData?.attributes?.Personal_card
+    const CommercialRecordSource=  userData?.attributes?.Commercial_record
+    const professionalLicenceSource=  userData?.attributes?.professional_licence
     // Define the function that handles the button press
   // Define the function that downloads the images
   async function handlePress() {

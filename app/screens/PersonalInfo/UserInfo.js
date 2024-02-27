@@ -95,8 +95,7 @@ const UserInfo = ({ navigation }) => {
       console.log("error getting the user fo rthe fir", error);
     }
   };
-  console.log("user data bir",userData?.attributes?.Personal_image?.data[0]
-  ?.attributes?.url)
+  console.log("user data bir",userData?.attributes?.Personal_image)
   const convertPhoneTovalid = (phone) => {
     const phoneNumberWithoutPlus = phone?.replace("+", "");
 
@@ -131,13 +130,11 @@ const UserInfo = ({ navigation }) => {
             >
               <ErrorMessage error={error} visible={error} />
               {
-                userData?.attributes?.Personal_image?.data[0]
-                ?.attributes?.url &&
+                userData?.attributes?.Personal_image &&
               <View style={styles.ImageContainer}>
                 <Image
                   source={{
-                    uri: userData?.attributes?.Personal_image?.data[0]
-                    ?.attributes?.url
+                    uri: userData?.attributes?.Personal_image
                   }}
                   
                   style={styles.image}

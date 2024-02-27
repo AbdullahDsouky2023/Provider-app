@@ -50,7 +50,7 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
   const user = useSelector((state) => state.user.user);
   const [city, setCity] = useState(null);
   const currentRegisterData = useSelector((state) => state?.register.currentRegisterDate);
-   console.log(currentRegisterData)
+  //  console.log(currentRegisterData)
   // const { phoneNumber } = route?.params
   const validationSchema = yup.object().shape({
     Personal_image: yup
@@ -87,6 +87,8 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
      await  uploadImage(values.Personal_card,values,"Personal_card")
      await  uploadImage(values.Personal_image,values,"Personal_image")
      await  uploadImage(values.professional_licence,values,"professional_licence")
+    //  console.log("the curren ren",currentRegisterData)
+    setIsLoading(false)
      navigation.navigate(ADDITION_INFO, {status:route?.params?.status})
 // dispatch(setCurrentRegisterProperties(values))
 // navigation.dispatch(
@@ -118,45 +120,62 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
       setIsLoading(false);
     }
   };
-  const uploadImage = async (image, values,ImageName) => {
+  const uploadImage = async (images, values, ImageName, retryCount =  0) => {
     try {
-      const imageIds = [];
-      console.log("the items is ",image)
-      console.log("the images array ",image)
-    for (const imageUri of image) {
-      const formData = new FormData();
-      formData.append("files", {
-        name: `Nijk_IMAGE_ORDER`,
-        type: "image/jpeg",
-        uri: Platform.OS === "ios" ? imageUri.replace("file://", "") : imageUri,
-      });
-
-      try {
-        const response = await fetch(`${EXPO_PUBLIC_BASE_URL}/api/upload`, {
-          method: "POST",
-          body: formData,
+      setIsLoading(true);
+      const imageUrls = []; // Use an array to store image URLs
+  
+      for (const imageUri of images) {
+        const formData = new FormData();
+        formData.append("files", {
+          name: `Nijk_IMAGE_ORDER`,
+          type: "image/jpeg", // Ensure this matches the file type
+          uri: Platform.OS === "ios" ? imageUri.replace("file://", "") : imageUri,
         });
-
-        if (!response.ok) {
-          throw new Error(`Image upload failed with status: ${response.status}`);
+  
+        try {
+          const response = await fetch(`${EXPO_PUBLIC_BASE_URL}/api/upload`, {
+            method: "POST",
+            body: formData,
+          });
+  
+          if (!response.ok) {
+            throw new Error(`Image upload failed with status: ${response.status}`);
+          }
+  
+          const responseData = await response.json();
+          const imageId = responseData[0]?.id;
+          const imageUrl = responseData[0]?.url; // Assuming the response includes the URL of the uploaded image
+  
+          if (imageUrl && imageId) {
+            imageUrls.push(imageUrl); // Store the URL
+            console.log("The image URL:", imageUrl);
+          } else {
+            console.error("Error: imageUrl or imageId is undefined");
+          }
+        } catch (error) {
+          console.error("Error uploading image:", error);
+          // If upload fails and retries are not exhausted, retry
+          if (retryCount < MAX_RETRIES -  1) {
+            console.log(`Retrying upload... Attempt ${retryCount +  1}`);
+            return uploadImage(images, values, ImageName, retryCount +  1);
+          } else {
+            console.error("Upload failed after maximum retries.");
+          }
         }
-
-        const responseData = await response.json();
-        const imageId = responseData[0]?.id;
-        imageIds.push(imageId);
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        // Handle error gracefully
       }
+      console.log("the images was upload correctly", { [ImageName]: imageUrls });
+      // Dispatch the image URLs to your Redux store or handle them as needed
+      dispatch(setCurrentRegisterProperties({ [ImageName]: imageUrls[0] }));
+  
+      return imageUrls;
+    } catch (error) {
+      console.log("Error uploading image", error);
+    } finally {
+      // setIsLoading(false);
     }
-    console.log("the image ids are ",imageIds)
-    dispatch(setCurrentRegisterProperties({ [ImageName]: imageIds }));
-
-    // ... continue with form submission ...
-  } catch (error) {
-    // ... error handling ...
-  }
   };
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />

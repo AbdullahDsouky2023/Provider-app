@@ -44,6 +44,7 @@ import UserDatePicker from "../../component/Account/UserDatePicker";
 import FormDatePicker from "../../component/Form/FormDatePicker";
 import useNotifications from "../../../utils/notifications";
 import UseLocation from "../../../utils/useLocation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { width, height } = Dimensions.get("screen");
 const AdditionInfoScreen = ({ navigation, route }) => {
   const [error, setError] = useState();
@@ -58,6 +59,7 @@ const AdditionInfoScreen = ({ navigation, route }) => {
   const [city, setCity] = useState(null);
   const { location:userCurrentLocation,coordinate} = UseLocation()
   const [currentLocation,setCurrenttLocation]=useState()
+  const currentRegisterData = useSelector((state) => state?.register.currentRegisterDate);
 
 console.log("the notification token is isi for addion",token)
   const validationSchema = yup.object().shape({
@@ -132,6 +134,7 @@ console.log("the notification token is isi for addion",token)
     (async () => {
       const currentLocation = await AsyncStorage.getItem("userLocation")
       setCurrenttLocation(JSON.parse(currentLocation))
+      console.log("curren register data",registerData)
    
     })();
   },[])
