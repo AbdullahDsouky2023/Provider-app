@@ -15,7 +15,12 @@ export default function ArrowBack() {
                 marginHorizontal: Sizes.fixPadding * 2.0,
                 marginVertical: Sizes.fixPadding * 2.0,
             }}
-            onPress={() => navigation.pop()}
+            onPress={() =>{
+                
+                if (navigation.canGoBack()) {
+                    navigation.goBack();
+                  }
+            }}
         />
     )
 }
