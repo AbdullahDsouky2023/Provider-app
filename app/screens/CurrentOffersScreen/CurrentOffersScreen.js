@@ -34,6 +34,7 @@ import ChargeWalletScreen from "../wallet/ChargeWalletScreen";
 import ActiveScreenAlert from "../ActiveScreenAlert";
 import { Audio } from 'expo-av';
 import { setProviderCurrentOffers } from "../../store/features/ordersSlice";
+import ChargeMoreWalletScreen from "../wallet/ChargeMoreWalletScreen";
 
 const CurrentOffersScreen = ({ route, subPage }) => {
   const dispatch = useDispatch();
@@ -139,7 +140,7 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
           >
             {selectedItemsData?.length > 0 ? (
 
-userData?.attributes?.wallet_amount > 0 ? 
+userData?.attributes?.wallet_amount > 300 ? 
               <View style={styles.container}>
                 <View style={styles.listContainer}>
                   <View style={{ paddingHorizontal: 10 }}>
@@ -164,6 +165,8 @@ userData?.attributes?.wallet_amount > 0 ?
                 </View>
               </View>
             :
+            userData?.attributes?.wallet_amount > 0 ? 
+                      <ChargeMoreWalletScreen amount={           userData?.attributes?.wallet_amount}/>:
             <ChargeWalletScreen/>
             ) 
             : (

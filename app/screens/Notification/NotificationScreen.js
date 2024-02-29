@@ -15,11 +15,19 @@ export default function NotificationScreen() {
   const [notifications, setNotifications] = useState(null);
   useEffect(() => {
     (async () => {
-      const notifications = JSON.parse(
-        await AsyncStorage.getItem("notifications")
-      );
-      setNotifications(notifications);
-      console.log(notifications[0] === null,"current notificaiton")
+      try {
+        const notifications = JSON.parse(
+          await AsyncStorage.getItem("notifications")
+          );
+          if(notifications){
+
+            setNotifications(notifications);
+            console.log(notifications)
+          }
+          
+        } catch (error) {
+          console.log("eror geting data",error)
+        }
     })();
   },[]);
   const deleteNotification = async(item) => {
@@ -30,7 +38,7 @@ export default function NotificationScreen() {
       setNotifications(notifications.filter((n) => n !== item));
       await AsyncStorage.setItem("notifications",JSON.stringify(notifications.filter((n) => n !== item)))
     } catch (error) {
-      
+      console.log("error deleting notifcation ",error)
     }
   };
 

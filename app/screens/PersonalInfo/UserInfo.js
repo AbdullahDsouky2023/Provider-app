@@ -222,10 +222,12 @@ const styles = StyleSheet.create({
   },
   dateStyle: {
     // borderWidth: 1,
-    width: width * 0.94,
+    width: width * 0.95,
     marginRight:-width*0.04,
     backgroundColor: Colors.whiteColor,
     borderRadius: 10,
+    padding:10,
+    
     alignSelf:'center',
     margin:"auto",
     padding:4,

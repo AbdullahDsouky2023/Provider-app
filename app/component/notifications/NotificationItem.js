@@ -91,7 +91,6 @@ const NotificationItem = ({ text, onDeleteNotfication,time:selecttime }) => {
         
           <AppText text= {time.toDateString()} style={styles.date} centered={false}/>
         </View>
-        {/* <View style={styles.time}> */}
         {/* </View> */}
       </View>
     </Swipeable>

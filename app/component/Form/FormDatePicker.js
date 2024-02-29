@@ -10,8 +10,9 @@ import { Button, Dimensions, StyleSheet, Text, TextInput } from "react-native";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
-const { width } = Dimensions.get("screen");
+const { width ,height} = Dimensions.get("screen");
 
 function FormDatePicker({ name, width, style,value,disabled=false,...otherProps }) {
   const { setFieldTouched, setFieldValue, errors, touched, values } =
@@ -46,6 +47,7 @@ function FormDatePicker({ name, width, style,value,disabled=false,...otherProps 
         <View style={styles.date}>
           <TextInput
           editable={false}
+          style={{fontSize:RFPercentage(2.2)}}
             onChangeText={(text) => setFieldValue(name, text)}
             value={ value?value :formattedDate}
             onBlur={() => setFieldTouched(name)}
@@ -75,13 +77,19 @@ export default FormDatePicker;
 const styles = StyleSheet.create({
   date: {
     borderWidth: 1,
-    width: width * 0.919,
+    width: width * 0.91,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 8,
     display: "flex",
     flexDirection: "row",
+    height:height*0.070,
+
+    // backgroundColor:'red',
     paddingVertical:11,
-    marginHorizontal: width * 0.004,
+    marginVertical:10,
+    // marginVertical:10,
+    alignItems:'center',
+    // marginHorizontal: width * 0.004,
     justifyContent: "space-between",
   },
 });

@@ -1,7 +1,7 @@
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons'; 
-import { Sizes } from '../constant/styles';
+import { Sizes } from '../../constant/styles';
 import { useNavigation } from "@react-navigation/native";
 import { NOTIFICATION_SCREEN } from '../../navigation/routes';
 

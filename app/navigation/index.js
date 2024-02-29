@@ -8,7 +8,7 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { ADDITION_INFO, BROWSE_ORDERS, CHARGE_WALLET_SCREEN, CHAT_ROOM, CHOOSE_CATEGORIES,PROVIDER_LOCATION, CHOOSE_DCOUMENT, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN, REGISTER_ERROR_DOCS, NO_CONNECTION_SCREEN, CHANGE_ORDER_DATE, ADD_ADDITIONAL_SERVICES_SCREEN, CHAT_ROOM_fireBase, SELECT_LAN, NOTIFICATION_SCREEN } from "./routes";
+import { ADDITION_INFO, BROWSE_ORDERS, CHARGE_WALLET_SCREEN, CHAT_ROOM, CHOOSE_CATEGORIES,PROVIDER_LOCATION, CHOOSE_DCOUMENT, ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN, PAY_AFTER_SERVICES_SCREEN, RATE_CLIENT_sSCREEN, REGISTER_ERROR_DOCS, NO_CONNECTION_SCREEN, CHANGE_ORDER_DATE, ADD_ADDITIONAL_SERVICES_SCREEN, CHAT_ROOM_fireBase, SELECT_LAN, NOTIFICATION_SCREEN, CHARGE_MORE_WALLET } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
 import OrderCreationSuccess from "../screens/OrderCreationSuccess";
@@ -32,6 +32,7 @@ import AddAddionalPriceScreen from "../screens/AddAddionalPriceScreen";
 import ChatRoom from "../component/FirebaseChat/ChatRoom";
 import SelectLanguageScreen from "../screens/language/SelectLanugageScreen";
 import NotificationScreen from "../screens/Notification/NotificationScreen";
+import ChargeMoreWalletScreen from "../screens/wallet/ChargeMoreWalletScreen";
 LogBox.ignoreAllLogs();
 
 const Stack = createSharedElementStackNavigator();
@@ -128,6 +129,7 @@ const RootNavigator = () => {
         <Stack.Screen name={CHOOSE_DCOUMENT} component={ChooseDocumentScreen}   />
         <Stack.Screen name={NO_CONNECTION_SCREEN} component={NoConnectionScreen}   />
         <Stack.Screen name={ NOTIFICATION_SCREEN} component={NotificationScreen}   />
+        <Stack.Screen name={ CHARGE_MORE_WALLET} component={ChargeMoreWalletScreen}   />
 
              <Stack.Screen name={MANUAL_LOCATION_ADD} component={AddManualLocationScreen} />
              <Stack.Screen name={"Payment"} component={PaymentScreen} />
