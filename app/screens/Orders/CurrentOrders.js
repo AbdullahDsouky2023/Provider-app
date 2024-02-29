@@ -42,9 +42,7 @@ const fetchData = ()=>{
       setRefreshing(true);
       fetchData();
     };
-    const handleCardPress =({item})=>{
-     
-    }
+    
     if(isLoading) return <LoadingScreen/>
     return (
     <ScrollView style={styles.wrapper} refreshControl={

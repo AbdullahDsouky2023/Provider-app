@@ -131,7 +131,9 @@ export default function CurrentOrderCard({ item, onPress }) {
                 item?.attributes?.user?.data?.attributes?.username || "العميل"
               }
               centered={false}
-              style={[styles.title,{width:width*0.45}]}
+              style={[styles.title,{width:width*0.42,
+              
+              }]}
             />
           </View>
             {(item?.attributes?.provider?.data?.attributes?.name && item?.attributes?.userOrderRating === null) &&

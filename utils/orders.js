@@ -115,22 +115,24 @@ export default function useOrders() {
       let page =   1; // Start with the first page
   
       while (true) {
-        const response = await api.get(`/api/orders?populate=deep,4&pagination[page]=${parseInt(page,   10)}`);
-        console.log("Response data:", response?.data?.data?.length); // Log the response data
-  
+        const response = await api.get(`/api/orders?populate=deep,4&pagination[page]=${parseInt(page, 10)}`);
+        console.log("Response data orders:", response?.data?.meta); // Log the response data
+       
         // Assuming response.data is an array, proceed with adding to the allOrders array
         const currentPageOrders = response?.data?.data || [];
         allOrders = [...allOrders, ...currentPageOrders];
-  
+       
         // Check if there is a next page in the pagination information
         const nextPage = response?.data?.meta?.pagination.pageCount;
-        if (nextPage === page) {
-          break; // No more pages, exit the loop
+
+        if (nextPage === page || nextPage === 0) {
+           break; // No more pages, exit the loop
         }
-  
+       
         // Move to the next page
         page++;
-      }
+       }
+       
   
       return{
         data: allOrders

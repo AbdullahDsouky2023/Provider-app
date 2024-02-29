@@ -22,6 +22,7 @@ import SuccessModel from "../../component/SuccessModal";
 import { useDispatch, useSelector} from 'react-redux'
 import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
+import { useTranslation } from "react-i18next";
 const { width } = Dimensions.get("screen");
 export default function WalletScreen() {
   const [state, setState] = useState({
@@ -33,6 +34,7 @@ export default function WalletScreen() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const userData = useSelector((state)=>state?.user?.userData)
   const dispatch = useDispatch()
+  const { t} = useTranslation()
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
   const handleAmountChange = (text) => {
     const parsedAmount = Number(text);
@@ -74,7 +76,7 @@ export default function WalletScreen() {
 
   return (
     <View style={styles.container}>
-      <ArrowBack subPage={true} />
+      <ArrowBack subPage={true} custom={('Account')} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
           <AppText text={"Your Balance"} style={styles.text} />

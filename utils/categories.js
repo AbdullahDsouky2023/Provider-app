@@ -11,7 +11,7 @@ import api from './index'
   
       while (true) {
         const response = await api.get(`/api/categories?populate=*&pagination[page]=${parseInt(page,   10)}`);
-        console.log("Response data:", response?.data?.data?.length); // Log the response data
+        console.log("Response data categories:", response?.data?.data?.length); // Log the response data
   
         // Assuming response.data is an array, proceed with adding to the allCategories array
         const currentPageCategories = response?.data?.data || [];
@@ -19,7 +19,7 @@ import api from './index'
   
         // Check if there is a next page in the pagination information
         const nextPage = response?.data?.meta?.pagination.pageCount;
-        if (nextPage === page) {
+        if (nextPage === page || nextPage === 0) {
           break; // No more pages, exit the loop
         }
   

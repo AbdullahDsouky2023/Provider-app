@@ -31,6 +31,8 @@ export default function useNotifications() {
             "notificationsToken",
             JSON.stringify(token)
           );
+          console.log("setting the notification ",token)
+
     }
     useEffect(() => {
       registerForPushNotificationsAsync().then(token => {

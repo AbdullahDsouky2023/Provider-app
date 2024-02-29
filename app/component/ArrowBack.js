@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Sizes } from "../constant/styles";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ArrowBack() {
+export default function ArrowBack({custom}) {
     const navigation = useNavigation()
     return (
         <MaterialIcons
@@ -16,9 +16,11 @@ export default function ArrowBack() {
                 marginVertical: Sizes.fixPadding * 2.0,
             }}
             onPress={() =>{
-                
-                if (navigation.canGoBack()) {
+                if(custom){
+                    navigation.navigate(custom)
+                }else if (navigation.canGoBack()) {
                     navigation.goBack();
+                    console.log("can nn ")
                   }
             }}
         />
