@@ -32,7 +32,7 @@ const SplashScreen = ({ navigation }) => {
   let user = useSelector((state) => state.user?.user?.phoneNumber);
   const [locationModalVisible, setLocationModalVisible] = useState(false);
   const [locationConfirmed, setLocationConfirmed] = useState(false);
-  const { data, isLoading, isError } = useRegions();
+  // const { data, isLoading, isError } = useRegions();
   const { data: orders } = useOrders();
 
   

@@ -33,6 +33,7 @@ import FormDatePicker from "../../component/Form/FormDatePicker";
 import { Switch } from "react-native-elements";
 import AppButton from "../../component/AppButton";
 import { AntDesign} from '@expo/vector-icons'
+import NotificationComponent from "../../component/notifications/NotificationComponent";
 
 const { width } = Dimensions.get("screen");
 
@@ -43,7 +44,6 @@ const UserInfo = ({ navigation }) => {
   const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state) => state?.user?.userData);
   const { t } = useTranslation();
-  const [isSwitchedOn, setIsSwitchedOn] = useState(false);
 
   const validationSchema = yup.object().shape({
     fullName: yup
@@ -112,8 +112,15 @@ const UserInfo = ({ navigation }) => {
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
       <View style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingLeft:15,paddingTop:10,flexDirection:'row'}}>
-        <AntDesign onPress={()=>navigation?.navigate(SELECT_LAN)} name="earth" size={26} color={Colors.primaryColor}/>
+      {/* <View style={styles.headerContainer}> */}
+        <View style={{display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+        <NotificationComponent />
+        <AntDesign onPress={()=>navigation?.navigate(SELECT_LAN)} name="earth" size={24} color={Colors.primaryColor}/>
+
+        </View>
         <ArrowBack />
+      {/* </View> */}
+        {/* <ArrowBack /> */}
 
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -190,19 +197,7 @@ const UserInfo = ({ navigation }) => {
               <HeaderComponent header={"Documents"} />
 
               <DocumentDownloadComponent />
-              <View style={styles.switchContainer}>
-              <AppText text={"Allow Offers"} style={styles.allow_offers} />
-
-                <Switch
-                  value={isSwitchedOn}
-                  
-                  style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-                  trackColor={{ false: "#767577", true: Colors.primaryColor }}
-                  thumbColor={isSwitchedOn ? Colors.primaryColor : "#f4f3f4"}
-                  onValueChange={setIsSwitchedOn}
-                />
-              </View>
-
+          
               
             </AppForm>
           </View>

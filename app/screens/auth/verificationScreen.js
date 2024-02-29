@@ -38,7 +38,7 @@ const VerificationScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   const { result, handleSendVerificationCode, phoneNumber } = route.params;
-  const { data:regions, isError } = useRegions();
+  // const { data:regions, isError } = useRegions();
   const { data: orders } = useOrders();
 
   const confirmVerificationCode = async () => {

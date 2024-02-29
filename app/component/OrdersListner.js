@@ -13,8 +13,8 @@ import * as TaskManager from 'expo-task-manager';
 import { Audio } from 'expo-av';
 import { EXPO_PUBLIC_BASE_URL} from '@env'
 import { SUPORTED_DISTANCE } from '../navigation/routes';
-const NEW_ORDER_NOTIFICATION_ID = 'NEW_ORDER_NOTIFICATION';
-const BACKGROUND_FETCH_TASK = 'background-fetch'; // Task name
+import BackgroundActions from 'react-native-background-actions';
+import Sound from 'react-native-sound';
 
 export default function OrdersListener() {
   const currentOrders = useSelector((state) => state?.orders?.orders);
@@ -40,7 +40,7 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
    const ordersData =   await  refetchOrders()
   //  console.log("orders fetched",ordersData)
       dispatch( setOrders(ordersData?.data))
-      console.log("setting the redux order",ordersData?.data?.data)
+      console.log("setting the redux order")
       const newOrders = await fetchData(locationCoordinate);
       if(newOrders){
         const newOrderFetched = newOrders?.filter((item)=>item?.id === newOrderId)
@@ -57,29 +57,48 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
     }
   };
   /******* sound part  */
-  let soundObject;
-
-  const playSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
+let soundObject;
+const playSound = async () => {
+  try {
+    const sound = new Sound(
       require('../assets/notification-sound.mp3'),
-      { shouldPlay: true, staysActiveInBackground: true }
+      (error) => {
+        if (error) {
+          console.log('Failed to load the sound', error);
+          return;
+        }
+        // Play the sound
+        sound.play((success) => {
+          if (success) {
+            console.log('Successfully finished playing');
+          } else {
+            console.log('Playback failed due to audio decoding errors');
+          }
+          // Release the sound resource
+          sound.release();
+        });
+      }
     );
-    await sound.playAsync();
-  };
+  } catch (error) {
+    console.log('Error playing sound', error);
+  }
+};
+
   
 
-  const play = async () => {
-    await playSound();
-    await soundObject.playAsync();
-  };
-  
-  useEffect(() => {
-    return soundObject
-      ? () => {
-          soundObject.unloadAsync(); // Make sure to unload the sound
-        }
-      : undefined;
-  }, [soundObject]);
+const play = async () => {
+  await playSound();
+};
+
+// Remove this useEffect hook
+useEffect(() => {
+  return soundObject
+    ? () => {
+        soundObject.unloadAsync(); // Make sure to unload the sound
+      }
+    : undefined;
+}, [soundObject]);
+
 
  /******* sound part  */
 
@@ -174,46 +193,49 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
           };
         }, [locationCoordinate]); // Add locationCoordinate to the dependency array to rerun this effect if the location changes
         
-  const ORDER_LISTENER_TASK = 'order-listener-task';
 
-TaskManager.defineTask(ORDER_LISTENER_TASK, async ({ data: { orderId }, error }) => {
-  try {
-    
-    if (error) {
-      console.log("error define task mangagte",defineTask)
-      // Error occurred - check `error.message` for more details.
-      return;
-    }
-    if (orderId) {
-      // Play the sound for the new order
-      await playSound();
-      sendPushNotification(token,"new order hhhhhhhhhhhhh")
-    }
-    return;
-  } catch (error) {
-    console.log("error define task mangagte2",error)
-
-  }
-});
-  useEffect(() => {
-    // Register the task when the component mounts
-    TaskManager.defineTask(ORDER_LISTENER_TASK, async ({ orderId }) => {
-      try {
+        // / Define the background task
+        const backgroundTask = async (taskData) => {
+         // Establish a socket connection
+         const socket = io(EXPO_PUBLIC_BASE_URL);
         
-        if (orderId) {
-          // This will be called when the task is executed
-          await playSound();
-          sendPushNotification(token, "New order received.");
-        }
-      } catch (error) {
-        console.log("error define the task ",error)
-      }
-    });
-  
-    // Other setup code...
-  }, []);
-  
-
+         // Listen for new order events
+         socket.on('order:create', async (data) => {
+            console.log("New order event received in background task",data?.data?.id);
+            // Call checkForNewOrders function
+          //  await sendPushNotification(token,"new order is fuond")
+          // play()
+            await checkForNewOrders(data?.data?.id);
+         });
+        
+         // Keep the task alive
+         while (true) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+         }
+        };
+        
+        // Start the background task
+        useEffect(() => {
+         const options = {
+            taskName: 'Listen for New Orders',
+            taskTitle: 'Background Task',
+            taskDesc: 'Listening for new orders in the background',
+            taskIcon: {
+              name: 'ic_launcher',
+              type: 'mipmap',
+            },
+            color: '#ff00ff',
+            parameters: {},
+         };
+        
+         BackgroundActions.start(backgroundTask, options);
+        
+         return () => {
+            // Stop the task when the component unmounts
+            BackgroundActions.stop();
+         };
+        }, []);
+        
 
 
   return null;

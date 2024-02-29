@@ -35,5 +35,6 @@ export const CHANGE_ORDER_DATE = 'ChangeDateOrderScreen'
 
 export const CHAT_ROOM_fireBase = " chatroomfirebase"
 export const SELECT_LAN = " select language"
+export const NOTIFICATION_SCREEN= " notificaton screene "
 
 export const SUPORTED_DISTANCE = 3000
