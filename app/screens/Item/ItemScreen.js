@@ -354,7 +354,6 @@ export default function ItemScreen({ navigation, route }) {
                 autoplayInterval={10000}
                 itemWidth={width}
                 renderItem={({ item }) => {
-                  console.log("the iamges data",item);
                   return (
                     <Image
                       //  resizeMethod="contain"

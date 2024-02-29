@@ -18,7 +18,7 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { color } from "react-native-reanimated";
   import LottieView from "lottie-react-native";
-  import { ITEM_DETAILS, ORDER_SELECT_LOCATION } from "../navigation/routes";
+  import { ITEM_DETAILS, ORDER_SELECT_LOCATION, SUPORTED_DISTANCE } from "../navigation/routes";
 import useCategories from "../../utils/categories";
 import useOrders from "../../utils/orders";
 import OrderOfferCard from "../component/orders/OrderOfferCard";
@@ -49,7 +49,9 @@ import ActiveScreenAlert from "./ActiveScreenAlert";
       })();
      }, [])
     const fetchData =(coordinate)=>{
+      console.log("redux order data ",reduxOrders?.data?.length)
       if(reduxOrders  && coordinate){  
+
         const orders = reduxOrders?.data?.filter(
           (item) => {
            const orderCoordinate = {
@@ -57,7 +59,7 @@ import ActiveScreenAlert from "./ActiveScreenAlert";
              longitude: item?.attributes?.googleMapLocation?.coordinate?.longitude,
            };
            const distance = geolib.getDistance( coordinate , orderCoordinate);
-           return distance <= 10000; // 10 kilometers
+           return distance <= SUPORTED_DISTANCE; // 10 kilometers
           }
          );
          

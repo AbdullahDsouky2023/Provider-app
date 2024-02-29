@@ -10,6 +10,7 @@ import * as geolib from "geolib";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HeaderTextComponent from "../Home/HeaderTextComponent";
 import { ActivityIndicator } from 'react-native';
+import { SUPORTED_DISTANCE } from "../../navigation/routes";
 
 const  ProviderSectionCard = ({ image, name, onPress }) => {
   const user = useSelector((state) => state?.user?.userData);
@@ -54,7 +55,7 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
           longitude: item?.attributes?.googleMapLocation?.coordinate?.longitude,
         };
         const distance = geolib.getDistance(coordinate, orderCoordinate);
-        return distance <= 10000; // 10 kilometers
+        return distance <= SUPORTED_DISTANCE; // 10 kilometers
       });
       const pendingOrders = orders?.filter(
         (item) =>

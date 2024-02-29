@@ -335,7 +335,6 @@ import ArrowBack from "../../component/ArrowBack";
                 autoplayInterval={10000}
                 itemWidth={width}
                 renderItem={({ item }) => {
-                  console.log("the iamges data",item);
                   return (
                     <Image
                       //  resizeMethod="contain"

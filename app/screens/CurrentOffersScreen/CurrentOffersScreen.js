@@ -24,7 +24,7 @@ import AppText from "../../component/AppText";
 import AppHeader from "../../component/AppHeader";
 import { setServices } from "../../store/features/serviceSlice";
 import OrderOfferCard from "../../component/orders/OrderOfferCard";
-import { ITEM_DETAILS } from "../../navigation/routes";
+import { ITEM_DETAILS, SUPORTED_DISTANCE } from "../../navigation/routes";
 import useNotifications from "../../../utils/notifications";
 import { ErrorScreen } from "../Error/ErrorScreen";
 const { width, height } = Dimensions.get("screen");
@@ -63,7 +63,7 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
           longitude: item.attributes.googleMapLocation.coordinate.longitude,
         };
         const distance = geolib.getDistance(coordinate, orderCoordinate);
-        return distance <= 10000; // 10 kilometers
+        return distance <= SUPORTED_DISTANCE; // 10 kilometers
       });
 
       const pendingOrders = orders?.filter(

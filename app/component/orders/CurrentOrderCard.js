@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  I18nManager,
   Image,
   StyleSheet,
   Text,
@@ -132,7 +133,7 @@ export default function CurrentOrderCard({ item, onPress }) {
               }
               centered={false}
               style={[styles.title,{width:width*0.42,
-              
+                textAlign: "left", // Align text to the right
               }]}
             />
           </View>

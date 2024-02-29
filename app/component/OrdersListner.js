@@ -12,6 +12,7 @@ import useOrders from '../../utils/orders';
 import * as TaskManager from 'expo-task-manager';
 import { Audio } from 'expo-av';
 import { EXPO_PUBLIC_BASE_URL} from '@env'
+import { SUPORTED_DISTANCE } from '../navigation/routes';
 const NEW_ORDER_NOTIFICATION_ID = 'NEW_ORDER_NOTIFICATION';
 const BACKGROUND_FETCH_TASK = 'background-fetch'; // Task name
 
@@ -38,7 +39,8 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
     try {
    const ordersData =   await  refetchOrders()
   //  console.log("orders fetched",ordersData)
-      dispatch( setOrders(ordersData))
+      dispatch( setOrders(ordersData?.data))
+      console.log("setting the redux order",ordersData?.data?.data)
       const newOrders = await fetchData(locationCoordinate);
       if(newOrders){
         const newOrderFetched = newOrders?.filter((item)=>item?.id === newOrderId)
@@ -94,7 +96,7 @@ const { data:ordersData,refetch:refetchOrders}=useOrders()
           longitude: item.attributes.googleMapLocation.coordinate.longitude,
         };
         const distance = geolib.getDistance(coordinate, orderCoordinate);
-        return distance <= 10000; // 10 kilometers
+        return distance <= SUPORTED_DISTANCE; // 10 kilometers
       });
       console.log("searching near location",coordinate)
       const pendingOrders = nearOrders?.filter(
