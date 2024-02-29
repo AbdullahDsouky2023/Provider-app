@@ -140,7 +140,7 @@ const [prevOrderRedux, setPrevOrderRedux] = useState(null);
           >
             {selectedItemsData?.length > 0 ? (
 
-userData?.attributes?.wallet_amount > 300 ? 
+userData?.attributes?.wallet_amount >= 300 ? 
               <View style={styles.container}>
                 <View style={styles.listContainer}>
                   <View style={{ paddingHorizontal: 10 }}>
