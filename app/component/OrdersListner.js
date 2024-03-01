@@ -195,46 +195,46 @@ useEffect(() => {
         
 
         // / Define the background task
-        const backgroundTask = async (taskData) => {
-         // Establish a socket connection
-         const socket = io(EXPO_PUBLIC_BASE_URL);
+        // const backgroundTask = async (taskData) => {
+        //  // Establish a socket connection
+        //  const socket = io(EXPO_PUBLIC_BASE_URL);
         
-         // Listen for new order events
-         socket.on('order:create', async (data) => {
-            console.log("New order event received in background task",data?.data?.id);
-            // Call checkForNewOrders function
-          //  await sendPushNotification(token,"new order is fuond")
-          // play()
-            await checkForNewOrders(data?.data?.id);
-         });
+        //  // Listen for new order events
+        //  socket.on('order:create', async (data) => {
+        //     console.log("New order event received in background task",data?.data?.id);
+        //     // Call checkForNewOrders function
+        //   //  await sendPushNotification(token,"new order is fuond")
+        //   // play()
+        //     await checkForNewOrders(data?.data?.id);
+        //  });
         
-         // Keep the task alive
-         while (true) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-         }
-        };
+        //  // Keep the task alive
+        //  while (true) {
+        //     await new Promise(resolve => setTimeout(resolve, 1000));
+        //  }
+        // };
         
-        // Start the background task
-        useEffect(() => {
-         const options = {
-            taskName: 'Listen for New Orders',
-            taskTitle: 'Background Task',
-            taskDesc: 'Listening for new orders in the background',
-            taskIcon: {
-              name: 'ic_launcher',
-              type: 'mipmap',
-            },
-            color: '#ff00ff',
-            parameters: {},
-         };
+        // // Start the background task
+        // useEffect(() => {
+        //  const options = {
+        //     taskName: 'Listen for New Orders',
+        //     taskTitle: 'Background Task',
+        //     taskDesc: 'Listening for new orders in the background',
+        //     taskIcon: {
+        //       name: 'ic_launcher',
+        //       type: 'mipmap',
+        //     },
+        //     color: '#ff00ff',
+        //     parameters: {},
+        //  };
         
-         BackgroundActions.start(backgroundTask, options);
+        //  BackgroundActions.start(backgroundTask, options);
         
-         return () => {
-            // Stop the task when the component unmounts
-            BackgroundActions.stop();
-         };
-        }, []);
+        //  return () => {
+        //     // Stop the task when the component unmounts
+        //     BackgroundActions.stop();
+        //  };
+        // }, []);
         
 
 

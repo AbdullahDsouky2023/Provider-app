@@ -25,6 +25,7 @@
     "@tanstack/react-query": "^5.7.2",
     "axios": "^1.6.0",
     "date-fns": "^2.30.0",
+    "eas-cli": "^7.3.0",
     "expo": "^49.0.0",
     "expo-av": "~13.4.1",
     "expo-background-fetch": "~11.3.0",
