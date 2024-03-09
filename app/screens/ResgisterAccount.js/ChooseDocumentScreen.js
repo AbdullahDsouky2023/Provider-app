@@ -21,7 +21,7 @@ import ErrorMessage from "../../component/Form/ErrorMessage";
 import FormField from "../../component/Form/FormField";
 import SubmitButton from "../../component/Form/FormSubmitButton";
 import { auth } from "../../../firebaseConfig";
-import { EXPO_PUBLIC_SECRET_PASSWORD,EXPO_PUBLIC_BASE_URL } from "@env";
+import { EXPO_PUBLIC_BASE_URL,EXPO_PUBLIC_CLOUDINARY_PERSIST ,EXPO_PUBLIC_CLOUDINARY_KEY } from "@env";
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
@@ -75,29 +75,28 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
   
   const handleFormSubmit = async (values) => {
     try {
-      const userLocation = await getLocationFromStorage();
-
-      // const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "")
-      setIsLoading(true);
-      // const res = await createUser({
-      //   email:values.emailAddress,
-      //   name:values.fullName,
-      //   // phoneNumber:phoneNumber
-      // })
-      console.log("values", values.Commercial_record[0],"");
-     await  uploadImage(values.Commercial_record,values,"Commercial_record")
-     await  uploadImage(values.Personal_card,values,"Personal_card")
-     await  uploadImage(values.Personal_image,values,"Personal_image")
-     await  uploadImage(values.professional_licence,values,"professional_licence")
-    //  console.log("the curren ren",currentRegisterData)
-    setIsLoading(false)
-     navigation.navigate(ADDITION_INFO, {status:route?.params?.status})
+       const userLocation = await getLocationFromStorage();
+       setIsLoading(true);
+       console.log("values", values.Commercial_record[0], "");
+   
+       // Use Promise.all to wait for all uploads to complete
+       await Promise.all([
+         uploadImage(values.Commercial_record, values, "Commercial_record"),
+         uploadImage(values.Personal_card, values, "Personal_card"),
+         uploadImage(values.Personal_image, values, "Personal_image"),
+         uploadImage(values.professional_licence, values, "professional_licence")
+       ]);
+   
+       // Only proceed with navigation after all uploads are complete
+       setIsLoading(false);
+       navigation.navigate(ADDITION_INFO, { status: route?.params?.status });
     } catch (err) {
-      console.log("error creating the resi", err.message);
+       console.log("error creating the resi", err.message);
     } finally {
-      setIsLoading(false);
+       setIsLoading(false);
     }
-  };
+   };
+   
   const uploadImage = async (images, values, ImageName, retryCount =  0) => {
     try {
       setIsLoading(true);
@@ -105,14 +104,15 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
   
       for (const imageUri of images) {
         const formData = new FormData();
-        formData.append("files", {
-          name: `Nijk_IMAGE_ORDER`,
+        formData.append("file", {
+          uri: imageUri,
           type: "image/jpeg", // Ensure this matches the file type
-          uri: Platform.OS === "ios" ? imageUri.replace("file://", "") : imageUri,
+          name: `image_${Date.now()}.jpg`, // Generate a unique file name
         });
-  
+        formData.append("upload_preset", EXPO_PUBLIC_CLOUDINARY_PERSIST); // Your Cloudinary upload preset
+
         try {
-          const response = await fetch(`${EXPO_PUBLIC_BASE_URL}/api/upload`, {
+          const response = await fetch("https://api.cloudinary.com/v1_1/dwtxbh9ms/image/upload", {
             method: "POST",
             body: formData,
           });
@@ -122,25 +122,25 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
           }
   
           const responseData = await response.json();
-          const imageId = responseData[0]?.id;
-          const imageUrl = responseData[0]?.url; // Assuming the response includes the URL of the uploaded image
+          const imageUrl = responseData.secure_url; // The URL of the uploaded image
   
-          if (imageUrl && imageId) {
-            imageUrls.push(imageUrl); // Store the URL
+          if (imageUrl) {
+            imageUrls.push(imageUrl);
             console.log("The image URL:", imageUrl);
           } else {
-            console.error("Error: imageUrl or imageId is undefined");
+            console.error("Error: imageUrl is undefined");
           }
         } catch (error) {
           console.error("Error uploading image:", error);
           // If upload fails and retries are not exhausted, retry
-          if (retryCount < MAX_RETRIES -  1) {
-            console.log(`Retrying upload... Attempt ${retryCount +  1}`);
-            return uploadImage(images, values, ImageName, retryCount +  1);
+          if (retryCount < MAX_RETRIES - 1) {
+            console.log(`Retrying upload... Attempt ${retryCount + 1}`);
+            return uploadImage(image, values, ImageName, retryCount + 1);
           } else {
             console.error("Upload failed after maximum retries.");
           }
         }
+      
       }
       console.log("the images was upload correctly", { [ImageName]: imageUrls });
       // Dispatch the image URLs to your Redux store or handle them as needed
