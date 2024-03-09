@@ -23,6 +23,10 @@ export default function ChargeMoreWalletScreen({amount}) {
   const handleNavigation = () => {
     navigation.navigate(t("Account"), { screen: "wallet" });
   };
+  // const handleReturn = () => {
+  //   dispatch(setOrders(orders));
+  //   navigation.navigate("App");
+  // };
   return (
     <>
       <ScrollView
@@ -56,7 +60,7 @@ export default function ChargeMoreWalletScreen({amount}) {
             <AppText
               style={styles.text}
               text={`رصيدك الحالى غير كافى لاستقبال الطلبات الرجاء شحن المحفظة بمبلغ  ${300 - Number(amount)} ${CURRENCY}  لتفعيل الحساب`}
-              onPress={() => handleReturn()}
+              // onPress={() => handleNavigation()}
             />
             <TouchableOpacity
               style={{

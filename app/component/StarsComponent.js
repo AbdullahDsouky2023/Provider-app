@@ -87,7 +87,7 @@ export default function StarsComponent({ route }) {
       const { orderID, item } = route?.params;
       const SelectedRate = RatingEmojs.filter((item)=>item?.explain === focus)[0]
       const res = await UpdateOrder(orderID, {
-        providerOrderRating:SelectedRate.rate.toString(),
+        providerOrderRating:SelectedRate?.rate?.toString(),
         providerOrderReview:description,
       });
       const selectedOrder = UserOrders?.data?.filter(

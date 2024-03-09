@@ -46,7 +46,11 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
       }
     })();
   }, []);
-  const fetchData = (coordinate) => {
+  const fetchData = async(coordinate) => {
+    try{
+
+  
+    console.log("the provide order data",ordersRedux?.data?.length)
     if (Array.isArray(ordersRedux?.data)) {
     if (ordersRedux && coordinate) {
       const orders = ordersRedux?.data?.filter((item) => {
@@ -54,9 +58,14 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
           latitude: item?.attributes?.googleMapLocation?.coordinate?.latitude,
           longitude: item?.attributes?.googleMapLocation?.coordinate?.longitude,
         };
-        const distance = geolib.getDistance(coordinate, orderCoordinate);
+        if (coordinate && orderCoordinate.latitude !== undefined && orderCoordinate.longitude !== undefined) {
+
+        const distance = geolib?.getDistance(coordinate, orderCoordinate);
         return distance <= SUPORTED_DISTANCE; // 10 kilometers
+        }
+        return false
       });
+      
       const pendingOrders = orders?.filter(
         (item) =>
         item?.attributes?.status === "pending" &&
@@ -77,6 +86,9 @@ const  ProviderSectionCard = ({ image, name, onPress }) => {
       //  setselectedItemsData(filteredOrders);
       setCurrentOffers(filteredOrders);
     }}
+  }catch(error){
+    console.log("error geoli")
+  }
   };
   useEffect(() => {
     fetchData(locationCoordinate);

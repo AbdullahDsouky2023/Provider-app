@@ -218,8 +218,9 @@ const styles = StyleSheet.create({
     display:'flex',
     // alignItems:'center',
     justifyContent:'center',
-    borderRadius: 10,
-  },
+    borderTopRightRadius: 6,
+    borderTopLeftRadius: 6,
+    borderRadius: 6,  },
   dateStyle: {
     // borderWidth: 1,
     width: width * 0.95,

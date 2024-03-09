@@ -262,7 +262,7 @@ export default function AddAddionalPriceScreen({route,navigation}) {
         </View>
       </ScrollView>
       <AppModal
-        message={<AppText text={`السعر الكلي : ${getAdditionalPriceSum().toString()} ${CURRENCY}`}/>}
+        message={<AppText text={`السعر الكلي : ${getAdditionalPriceSum()?.toString()} ${CURRENCY}`}/>}
         setModalVisible={setShowModal}
         isModalVisible={showModal}
         onPress={handleConfirmAddPrice}

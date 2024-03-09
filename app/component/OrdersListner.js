@@ -111,11 +111,15 @@ useEffect(() => {
 
       const nearOrders = newOrdersData?.data?.data?.filter((item) => {
         const orderCoordinate = {
-          latitude: item.attributes.googleMapLocation.coordinate.latitude,
-          longitude: item.attributes.googleMapLocation.coordinate.longitude,
+          latitude: item?.attributes?.googleMapLocation?.coordinate?.latitude,
+          longitude: item?.attributes?.googleMapLocation?.coordinate?.longitude,
         };
+        if (coordinate && orderCoordinate.latitude !== undefined && orderCoordinate.longitude !== undefined) {
+
         const distance = geolib.getDistance(coordinate, orderCoordinate);
         return distance <= SUPORTED_DISTANCE; // 10 kilometers
+        }
+        return false;
       });
       console.log("searching near location",coordinate)
       const pendingOrders = nearOrders?.filter(

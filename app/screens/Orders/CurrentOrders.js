@@ -25,7 +25,7 @@ const { data ,isLoading,refetch}=useOrders()
 const fetchData = ()=>{
   const userId = user?.id;
   if (Array.isArray(ordersRedux?.data)) {
-  const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
+  const orders = ordersRedux?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId && item?.attributes?.status !== "canceled")
   const otherordes = data?.data?.filter((item)=>item?.attributes?.provider?.data?.id === userId)
   const currentOrders = orders?.filter((item)=>item?.attributes?.userOrderRating === null )
   // console.log("the all curennt ",currentOrders)

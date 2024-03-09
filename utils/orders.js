@@ -116,7 +116,7 @@ export default function useOrders() {
   
       while (true) {
         const response = await api.get(`/api/orders?populate=deep,4&pagination[page]=${parseInt(page, 10)}`);
-        console.log("Response data orders:", response?.data?.meta); // Log the response data
+        console.log("Response data orders:", response?.data?.data?.length); // Log the response data
        
         // Assuming response.data is an array, proceed with adding to the allOrders array
         const currentPageOrders = response?.data?.data || [];

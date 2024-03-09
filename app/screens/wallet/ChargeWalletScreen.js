@@ -54,7 +54,7 @@ export default function ChargeWalletScreen({}) {
             <AppText
               style={styles.text}
               text={" الرجاء شحن المحفظة حتى تتمكن من  استقبال الطلبات "}
-              onPress={() => handleReturn()}
+              // onPress={() => handleReturn()}
             />
             <TouchableOpacity
               style={{

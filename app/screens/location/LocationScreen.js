@@ -112,7 +112,7 @@ const LocationScreen = ({ navigation, route }) => {
                   //   Render your manual location item here
                   <LocationAddressItem location={item} />
                 )}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item, index) => index?.toString()}
               />
             </View>
           </View>

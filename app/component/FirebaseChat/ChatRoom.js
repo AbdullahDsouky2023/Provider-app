@@ -106,7 +106,7 @@ const ChatRoom = () => {
 
     try {
       const newMessages = [{
-        _id: Math.random().toString(), // Generate a unique ID
+        _id: Math.random()?.toString(), // Generate a unique ID
         text: newMessagesArray?.text, // No text for image messages
         createdAt: new Date(), // Current date and time
         user: {
