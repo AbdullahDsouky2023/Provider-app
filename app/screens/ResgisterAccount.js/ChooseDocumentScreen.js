@@ -49,6 +49,8 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [city, setCity] = useState(null);
+  const MAX_RETRIES =  5; // Maximum number of upload attempts
+
   const currentRegisterData = useSelector((state) => state?.register.currentRegisterDate);
   //  console.log(currentRegisterData)
   // const { phoneNumber } = route?.params
@@ -90,30 +92,6 @@ const ChooseDocumentScreen = ({ navigation, route }) => {
     //  console.log("the curren ren",currentRegisterData)
     setIsLoading(false)
      navigation.navigate(ADDITION_INFO, {status:route?.params?.status})
-// dispatch(setCurrentRegisterProperties(values))
-// navigation.dispatch(
-//       CommonActions.reset({
-//         index: 0,
-//         routes: [{ name: ORDER_SUCCESS_SCREEN}],
-//       })
-//     );
-      // if (res) {
-      //   dispatch(userRegisterSuccess(auth?.currentUser));
-      //   setItem("userData", auth?.currentUser);
-      //   setUserData(res);
-      //   navigation.dispatch(
-      //     CommonActions.reset({
-      //       index: 0,
-      //       routes: [{ name: "App" }],
-      //     })
-      //   );
-      // } else {
-      //   Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ");
-      //   console.log(
-      //     "the is the message befoe email and name is used befoer res",
-      //     res
-      //   );
-      // }
     } catch (err) {
       console.log("error creating the resi", err.message);
     } finally {
