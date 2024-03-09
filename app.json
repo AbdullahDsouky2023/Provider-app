@@ -72,6 +72,11 @@
     },
     "updates": {
       "url": "https://u.expo.dev/82d0aeae-8255-4ee8-b129-b32e752a8cce"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "202e7627-3911-44b2-86c5-5e210c9cd117"
+      }
     }
   }
 }
