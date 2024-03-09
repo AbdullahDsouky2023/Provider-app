@@ -183,7 +183,7 @@ userData?.attributes?.wallet_amount >= 300 ?
           width: width*0.3,
           height: height*0.4,
         }}
-        // Find more Lottie files at https://lottiefiles.com/featured
+        // Find more Lottie files at https:/dds/lottiefiles.com/featured
         source={require("../../assets/empty_orders.json")}
       />
                 <AppText text={"لا يوجد طلبات متاحه حاليا"} />
